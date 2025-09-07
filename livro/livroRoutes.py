@@ -5,12 +5,12 @@ from datetime import datetime
 
 @app.route('/')
 def index():
-    return "Bem-vindo à Livraria!"
+    return render_template("index.html")
 
 @app.route("/livros", methods=['GET'])
 def listarLivros():
     livros = Livro.query.all()
-    return render_template("index.html", livros=livros)
+    return render_template("listaLivros.html", livros=livros)
 
 @app.route("/cadastrar", methods=["GET", "POST"])
 def cadastrarLivro():
@@ -25,7 +25,6 @@ def cadastrarLivro():
         data_lancamento_str = data.get("data_lancamento")
         preco_str = data.get("preco")
 
-        # Valida campos obrigatórios
         if not all([titulo, autor, formato, genero, data_lancamento_str, preco_str]):
             return "Erro: todos os campos são obrigatórios", 400
 
@@ -97,12 +96,18 @@ def atualizar_livro(id_livro):
         return jsonify({"erro": str(e)}), 404
 
 
-
-@app.route("/livros/<int:id_livro>", methods=['DELETE'])
+@app.route("/livros/<int:id_livro>", methods=['POST', 'DELETE'])
 def deletarLivro(id_livro):
     livro = Livro.query.get(id_livro)
     if not livro:
-        raise LivroNaoEncontrado("Aluno não encontrado")
+        raise LivroNaoEncontrado("Livro não encontrado")
+    
     db.session.delete(livro)
     db.session.commit()
-    return 'mensagem: Livro deletado com sucesso', livro
+    
+    # Se for POST (form HTML), redireciona para a página de livros
+    if request.method == 'POST':
+        return redirect(url_for("index"))
+    
+    # Se for DELETE (API), retorna JSON ou mensagem
+    return {'mensagem': 'Livro deletado com sucesso'}

@@ -1,27 +1,17 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html>
 <head>
-    <meta charset="UTF-8">
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>Livraria</title>
-    <link rel="stylesheet" href="/static/style.css">
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='/static/style.css'>
+
 </head>
 <body>
-    <h1>Livros Disponíveis</h1>
+    <h1>Bem Vindos a Livraria!</h1>
 
+    <a href="/livros" class="add-livro">Ver todos os LIvros</a>
     <a href="/cadastrar" class="add-livro">Cadastrar Novo Livro</a>
-
-    <div class="cards-container">
-        {% for livro in livros %}
-        <div class="card">
-            <h2>{{ livro.titulo }}</h2>
-            <p><strong>Autor:</strong> {{ livro.autor }}</p>
-            <p><strong>Formato:</strong> {{ livro.formato }}</p>
-            <p><strong>Gênero:</strong> {{ livro.genero }}</p>
-            <p><strong>Lançamento:</strong> {{ livro.data_lancamento }}</p>
-            <p><strong>Preço:</strong> R$ {{ livro.preco }}</p>
-            <button>Comprar</button>
-        </div>
-        {% endfor %}
-    </div>
 </body>
 </html>
