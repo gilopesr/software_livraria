@@ -1,4 +1,6 @@
-flask 
+flask
+Flask
 flask-sqlalchemy
 flask-cors
 pymysql
+cryptography
