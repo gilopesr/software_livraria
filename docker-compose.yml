@@ -1,23 +1,14 @@
-services:
-  db:
-    image: mysql:8.0
-    container_name: mysql_livraria
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: livraria
-      MYSQL_USER: user
-      MYSQL_PASSWORD: password
-    ports:
-      - "3306:3306"
-    volumes:
-      - ./mysql_data:/var/lib/mysql
+version: '3.8'
 
-app:
+services:
+  sistemalivraria:
     build: .
+    container_name: sistemalivraria
+    ports:
+      - "5000:5000"
     volumes:
-      - .:/app
-    working_dir: /app
-    command: python app.py
-    depends_on:
-      - db
+      - .:/sistemalivraria  # monta o código para hot reload (opcional)
+      - ./app.db:/sistemalivraria/app.db  # persiste o banco SQLite
+    environment:
+      - FLASK_ENV=development
+    command: python /sistemalivraria/app.py
