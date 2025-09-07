@@ -1,0 +1,11 @@
+# Ignorar arquivos temporários do MySQL
+mysql_data/mysql.sock
+mysql_data/ib_logfile*
+mysql_data/ibdata*
+
+# Ignorar arquivos de cache do Python
+*.pyc
+__pycache__/
+
+# Ignorar ambientes virtuais
+venv/

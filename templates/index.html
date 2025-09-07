@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Livraria</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Livros Disponíveis</h1>
+
+    <a href="/cadastrar" class="add-livro">Cadastrar Novo Livro</a>
+
+    <div class="cards-container">
+        {% for livro in livros %}
+        <div class="card">
+            <h2>{{ livro.titulo }}</h2>
+            <p><strong>Autor:</strong> {{ livro.autor }}</p>
+            <p><strong>Formato:</strong> {{ livro.formato }}</p>
+            <p><strong>Gênero:</strong> {{ livro.genero }}</p>
+            <p><strong>Lançamento:</strong> {{ livro.data_lancamento }}</p>
+            <p><strong>Preço:</strong> R$ {{ livro.preco }}</p>
+            <button>Comprar</button>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
