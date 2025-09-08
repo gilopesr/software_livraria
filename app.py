@@ -3,14 +3,14 @@ import time
 from config import app, db
 from livro import livroRoutes
 from sqlalchemy.exc import OperationalError
-from sqlalchemy import text  # <- importante
+from sqlalchemy import text
 
 def wait_for_db(retries=5, delay=3):
     """Tenta se conectar ao DB antes de criar as tabelas"""
     for i in range(retries):
         try:
             with app.app_context():
-                db.session.execute(text('SELECT 1'))  # <-- usar text()
+                db.session.execute(text('SELECT 1'))
             print("Banco de dados conectado!")
             return
         except OperationalError:
