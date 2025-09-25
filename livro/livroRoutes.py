@@ -1,6 +1,7 @@
 from config import app,db
 from flask import jsonify, render_template, request, redirect, url_for
 from livro.livroModel import Livro, LivroNaoEncontrado
+from autor.autorModel import Autor
 from datetime import datetime
 
 @app.route('/')
@@ -12,20 +13,20 @@ def listarLivros():
     livros = Livro.query.all()
     return render_template("listaLivros.html", livros=livros)
 
-@app.route("/cadastrar", methods=["GET", "POST"])
+@app.route("/cadastrarLivro", methods=["GET", "POST"])
 def cadastrarLivro():
     if request.method == "POST":
         # Pegar dados do form ou JSON
         data = request.form if request.form else request.get_json() or {}
         
         titulo = data.get("titulo")
-        autor = data.get("autor")
+        autor_id = data.get("autor_id")
         formato = data.get("formato")
         genero = data.get("genero")
         data_lancamento_str = data.get("data_lancamento")
         preco_str = data.get("preco")
 
-        if not all([titulo, autor, formato, genero, data_lancamento_str, preco_str]):
+        if not all([titulo, autor_id, formato, genero, data_lancamento_str, preco_str]):
             return "Erro: todos os campos são obrigatórios", 400
 
         try:
@@ -40,7 +41,7 @@ def cadastrarLivro():
 
         novo_livro = Livro(
             titulo=titulo,
-            autor=autor,
+            autor_id=autor_id,
             formato=formato,
             genero=genero,
             data_lancamento=data_lancamento,
@@ -57,7 +58,8 @@ def cadastrarLivro():
             return {"msg": "Livro cadastrado!", "titulo": titulo}, 201
 
     # GET: exibe o formulário HTML
-    return render_template("cadastrar.html")
+    autores = Autor.query.all()
+    return render_template("cadastrarLivro.html", autores=autores)
 
 
 @app.route("/livros/<int:id_livro>", methods=["PUT"])
@@ -69,13 +71,13 @@ def atualizar_livro(id_livro):
 
         data = request.json
 
-        campos_obrigatorios = ["titulo", "autor", "formato", "genero", "data_lancamento", "preco"]
+        campos_obrigatorios = ["titulo", "autor_id", "formato", "genero", "data_lancamento", "preco"]
         for campo in campos_obrigatorios:
             if campo not in data or not data[campo]:
                 return jsonify({"erro": f"O campo '{campo}' é obrigatório"}), 400
 
         livro_encontrado.titulo = data["titulo"]
-        livro_encontrado.autor = data["autor"]
+        livro_encontrado.autor_id = data["autor_id"]  
         livro_encontrado.formato = data["formato"]
         livro_encontrado.genero = data["genero"]
 

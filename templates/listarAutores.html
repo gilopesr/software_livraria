@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Autores Cadastrados</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <h1>Autores Cadastrados</h1>
+
+    <a href="/cadastrarAutor" class="add-livro">Cadastrar Novo Autor</a>
+
+    <div class="cards-container">
+        {% for autor in autores %}
+        <div class="card">
+            <h2>{{ autor.nome }}</h2>
+            <p><strong>Data de Nascimento:</strong> {{ autor.dataNasc }}</p>
+            
+            {% if autor.livros %}
+            <p><strong>Livros:</strong></p>
+            <ul>
+                {% for livro in autor.livros %}
+                <li>{{ livro.titulo }} ({{ livro.genero }})</li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p><em>Sem livros cadastrados</em></p>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

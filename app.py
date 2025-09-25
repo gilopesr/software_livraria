@@ -2,8 +2,13 @@ import os
 import time
 from config import app, db
 from livro import livroRoutes
+from autor import autorRoutes
 from sqlalchemy.exc import OperationalError
 from sqlalchemy import text
+from autor.autorModel import Autor
+from livro.livroModel import Livro
+
+
 
 def wait_for_db(retries=5, delay=3):
     """Tenta se conectar ao DB antes de criar as tabelas"""

@@ -2,25 +2,22 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Livraria</title>
+    <title>Livros de {{ autor.nome }}</title>
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-    <h1>Livros Disponíveis</h1>
-
-    <a href="/cadastrarLivro" class="add-livro">Cadastrar Novo Livro</a>
-
+    <h1>Livros de {{ autor.nome }}</h1>
     <div class="cards-container">
         {% for livro in livros %}
         <div class="card">
             <h2>{{ livro.titulo }}</h2>
-            <p>{{ livro.autor.nome }}</p>
             <p><strong>Formato:</strong> {{ livro.formato }}</p>
             <p><strong>Gênero:</strong> {{ livro.genero }}</p>
             <p><strong>Lançamento:</strong> {{ livro.data_lancamento }}</p>
             <p><strong>Preço:</strong> R$ {{ livro.preco }}</p>
-            <button>Comprar</button>
         </div>
+        {% else %}
+        <p>Não há livros cadastrados para este autor.</p>
         {% endfor %}
     </div>
 </body>

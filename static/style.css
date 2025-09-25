@@ -120,3 +120,24 @@ form button {
 form button:hover {
     background-color: #b65b90;
 }
+
+/* Select do formulário */
+form select {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    font-size: 1rem;
+    color: #333;
+    appearance: none; /* remove a seta padrão do navegador */
+    cursor: pointer;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+form select:focus {
+    border-color: #d17cae;
+    box-shadow: 0 0 5px rgba(209, 124, 174, 0.5);
+    outline: none;
+}
