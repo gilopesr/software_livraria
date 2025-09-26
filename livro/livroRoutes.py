@@ -13,6 +13,13 @@ def listarLivros():
     livros = Livro.query.all()
     return render_template("listaLivros.html", livros=livros)
 
+@app.route('/livros/<int:autor_id>',methods=['GET'])
+def buscarLivro_autor(autor):
+    book = Livro.query.get(autor)
+    if not book:
+        raise LivroNaoEncontrado
+    return render_template('listarAutor.html', book=book)
+
 @app.route("/cadastrarLivro", methods=["GET", "POST"])
 def cadastrarLivro():
     if request.method == "POST":
