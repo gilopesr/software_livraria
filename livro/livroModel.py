@@ -11,6 +11,7 @@ class Livro(db.Model):
     genero = db.Column(db.String(50))
     data_lancamento = db.Column(db.Date, nullable=False)
     preco = db.Column(db.Float, nullable=False)
+    isbn = db.Column(db.Integer,nullable=False)
 
 
 class LivroNaoEncontrado(Exception):

@@ -15,10 +15,19 @@ def listarLivros():
 
 @app.route('/livros/<int:autor_id>',methods=['GET'])
 def buscarLivro_autor(autor):
-    book = Livro.query.get(autor)
-    if not book:
-        raise LivroNaoEncontrado
-    return render_template('listarAutor.html', book=book)
+    try:
+      book = Livro.query.get(autor)
+      return render_template('listaLivros.html', book=book)
+    except LivroNaoEncontrado:
+        return f'Erro: O livro com autor {autor} não foi encontrado',404
+     
+@app.route('/livros/<int:isbn>',methods=['GET'])
+def buscarLivro_isbn(isbn):
+    try:
+        livro = Livro.query.all()
+        return render_template('listaLivros.html',livro=livro)
+    except LivroNaoEncontrado:
+        return f'Erro : O livro com isbn {isbn} não foi encontrado!',404
 
 @app.route("/cadastrarLivro", methods=["GET", "POST"])
 def cadastrarLivro():
@@ -32,8 +41,9 @@ def cadastrarLivro():
         genero = data.get("genero")
         data_lancamento_str = data.get("data_lancamento")
         preco_str = data.get("preco")
+        isbn = data.get('isbn')
 
-        if not all([titulo, autor_id, formato, genero, data_lancamento_str, preco_str]):
+        if not all([titulo, autor_id, formato, genero, data_lancamento_str, preco_str,isbn]):
             return "Erro: todos os campos são obrigatórios", 400
 
         try:
@@ -52,7 +62,8 @@ def cadastrarLivro():
             formato=formato,
             genero=genero,
             data_lancamento=data_lancamento,
-            preco=preco
+            preco=preco,
+            isbn=isbn
         )
 
         db.session.add(novo_livro)
@@ -78,7 +89,7 @@ def atualizar_livro(id_livro):
 
         data = request.json
 
-        campos_obrigatorios = ["titulo", "autor_id", "formato", "genero", "data_lancamento", "preco"]
+        campos_obrigatorios = ["titulo", "autor_id", "formato", "genero", "data_lancamento", "preco","isbn"]
         for campo in campos_obrigatorios:
             if campo not in data or not data[campo]:
                 return jsonify({"erro": f"O campo '{campo}' é obrigatório"}), 400
@@ -87,6 +98,7 @@ def atualizar_livro(id_livro):
         livro_encontrado.autor_id = data["autor_id"]  
         livro_encontrado.formato = data["formato"]
         livro_encontrado.genero = data["genero"]
+        livro_encontrado.isbn = data['isbn']
 
         try:
             livro_encontrado.data_lancamento = datetime.strptime(data["data_lancamento"], "%Y-%m-%d").date()
