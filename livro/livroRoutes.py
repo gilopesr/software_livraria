@@ -14,7 +14,7 @@ def listarLivros():
     return render_template("listaLivros.html", livros=livros)
 
 @app.route('/livros/<string:titulo>',methods=['GET'])
-def buscarLivro_autor(titulo):
+def buscarLivro_titulo(titulo):
     livros = Livro.query.filter_by(titulo=titulo).all()
     
     if livros:
@@ -24,11 +24,11 @@ def buscarLivro_autor(titulo):
      
 @app.route('/livros/<int:isbn>',methods=['GET'])
 def buscarLivro_isbn(isbn):
-    try:
-        livros = Livro.query.all()
-        return render_template('listaLivros.html',livros=livros)
-    except LivroNaoEncontrado:
-        return f'Erro : O livro com isbn {isbn} não foi encontrado!',404
+    livro = Livro.query.filter_by(isbn=isbn).first()
+    if livro:
+        return render_template('listaLivros.html', livros=[livro])
+    else:
+        return f'Erro: O livro com ISBN {isbn} não foi encontrado!', 404
 
 @app.route("/cadastrarLivro", methods=["GET", "POST"])
 def cadastrarLivro():
