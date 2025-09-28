@@ -6,6 +6,72 @@
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
+
+    <!-- HEADER / TOP BAR -->
+    <header class="top-bar">
+        <div class="header__logo">
+            <a href="/" style="display: flex; align-items: center; text-decoration: none; color: inherit;">
+                <img src="https://placehold.co/40x40/ffd28c/fff?text=L" alt="Logo Livraria">
+                <span style="margin-left: 8px;">Livraria Impacta</span>
+            </a>
+        </div>
+
+        <div class="header__search">
+            <input id="search-input" type="text" maxlength="800" placeholder="Buscar por Título, ISBN ou Autor">
+            <i id="search-icon" class="fa fa-search"></i>
+        </div>
+
+        <div class="right-menu">
+            <div class="login">
+                <i class="fa fa-user"></i>
+                <span>Seja bem-vindo! <strong>Faça seu login</strong></span>
+            </div>
+            <div class="cart">
+                <i class="fa fa-shopping-bag"></i>
+                <span class="count">0</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- MENU PRINCIPAL COM DROPDOWNS -->
+    <nav class="main-nav">
+        <div class="container nav-container">
+            <ul class="nav-links">
+                <!-- Dropdown: Ver Mais -->
+                <li class="dropdown">
+                    <a href="#" class="nav-link dropbtn">
+                        <i class="fa fa-bars mr-2"> </i>   Ver mais
+                    </a>
+                    <div class="dropdown-content">
+                        <a href="/promocoes">Promoções</a>
+                        <a href="/lancamentos">Lançamentos</a>
+                        <a href="/contato">Contato</a>
+                    </div>
+                </li>
+                
+                <li><a href="#" class="nav-link">Ebooks</a></li>
+                
+                <!-- Dropdown: Gêneros -->
+                <li class="dropdown">
+                    <a href="#" class="nav-link dropbtn">Generos</a>
+                    <div class="dropdown-content">
+                        <!-- Links de gênero com rota base -->
+                        <a href="/livros/genero/Ficcao">Ficção</a>
+                        <a href="/livros/genero/Fantasia">Fantasia</a>
+                        <a href="/livros/genero/Romance">Romance</a>
+                        <a href="/livros/genero/Drama">Drama</a>
+                        <a href="/livros/genero/Biografia">Biografia</a>
+                    </div>
+                </li>
+                
+                <!-- Links simples -->
+                <li><a href="/livros" class="nav-link">Livros</a></li>
+                <li><a href="/autor" class="nav-link">Autores</a></li>
+                <a href="/cadastrarLivro" class="add-livro">Cadastrar Novo Livro</a>
+            </ul>
+        </div>
+    </nav>
+    
     <h1>Livros de {{ autor.nome }}</h1>
     <div class="cards-container">
         {% for livro in livros %}
@@ -15,10 +81,12 @@
             <p><strong>Gênero:</strong> {{ livro.genero }}</p>
             <p><strong>Lançamento:</strong> {{ livro.data_lancamento }}</p>
             <p><strong>Preço:</strong> R$ {{ livro.preco }}</p>
+            <p><strong>ISBN:</strong> {{ livro.isbn }}</p>
         </div>
         {% else %}
         <p>Não há livros cadastrados para este autor.</p>
         {% endfor %}
     </div>
+    <script src="/static/index.js"></script>
 </body>
 </html>

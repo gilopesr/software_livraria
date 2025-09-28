@@ -40,24 +40,14 @@ def cadastrarAutor():
 
     return render_template("cadastrarAutor.html")
 
-@app.route("/autor/<int:id_autor>/livros", methods=['GET'])
-def listarAutorLivros(id_autor):
-    autor = Autor.query.get(id_autor)
+@app.route("/autor/<path:nome>/livros", methods=['GET'])
+def listarAutorLivros(nome):
+    autor = Autor.query.filter(Autor.nome.ilike(f'%{nome}%')).first()
+    
     if not autor:
-        return {"erro": "Autor(a) não encontrado(a)"}, 404
+        return f'Erro: Autor(a) não encontrado(a)', 404
     
-    livros = [
-        {
-            "id": livro.id,
-            "titulo": livro.titulo,
-            "formato": livro.formato,
-            "genero": livro.genero,
-            "data_lancamento": livro.data_lancamento.strftime("%Y-%m-%d"),
-            "preco": livro.preco
-        } for livro in autor.livros
-    ]
-    
-    return {"autor": {"id": autor.id, "nome": autor.nome}, "livros": livros}, 200
+    return render_template('livrosAutor.html', autor=autor, livros=autor.livros)
 
 
 
