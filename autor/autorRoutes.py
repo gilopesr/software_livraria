@@ -42,7 +42,7 @@ def cadastrarAutor():
 
 @app.route("/autor/<path:nome>/livros", methods=['GET'])
 def listarAutorLivros(nome):
-    autor = Autor.query.filter(Autor.nome.ilike(nome)).first()
+    autor = Autor.query.filter(Autor.nome.ilike(f'%{nome}%')).first()
     
     if not autor:
         return f'Erro: Autor(a) não encontrado(a)', 404

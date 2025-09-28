@@ -13,17 +13,15 @@
     --color-primary: #d17cae; /* Rosa suave */
     --color-bg-light: #f5f5f5; /* Cinza claro */
     --color-text-dark: #333;
-    --color-highlight-card: #e0b0d6; /* Rosa mais claro para cards de destaque */
+    --color-highlight-card: #e0b0d6; /* Rosa mais claro */
 }
 
-/* Corpo da página */
 body {
     background-color: var(--color-bg-light); 
     color: var(--color-text-dark);
     padding: 0; 
 }
 
-/* Container de largura máxima */
 .container {
     max-width: 1200px;
     margin: 0 auto;
@@ -59,7 +57,6 @@ h1 {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    /* Cor de fundo para o ícone */
     background-color: #ffd28c; 
 }
 
@@ -222,21 +219,21 @@ h1 {
 /* ======================================================= */
 
 .slideshow-container {
-    max-width: 2000px; /* Tamanho do placeholder */
+    max-width: 2000px;
     position: relative;
     margin: 30px auto;
     border-radius: 12px;
-    overflow: hidden; /* Garante que as imagens não vazem */
+    overflow: hidden;
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
 .mySlides img {
-    width: 100%; /* Faz a imagem preencher o contêiner */
+    width: 100%;
     height: 300px;
-    object-fit: cover; /* Garante que a imagem cubra a área sem distorcer */
+    object-fit: cover;
+    display: block;
 }
 
-/* Indicadores (Pontos) */
 .dot {
     cursor: pointer;
     height: 12px;
@@ -249,7 +246,7 @@ h1 {
 }
 
 .active, .dot:hover {
-    background-color: var(--color-primary); /* Rosa suave */
+    background-color: var(--color-primary);
 }
 
 /* Animação de Fade */
@@ -273,7 +270,7 @@ h2.section-title {
     font-size: 2rem;
     font-weight: 700;
     margin-bottom: 40px;
-    margin-top: 40px; /* Adicionado margem para afastar do carrossel */
+    margin-top: 40px;
 }
 
 .highlight-container {
@@ -348,7 +345,6 @@ h2.section-title {
 }
 
 .card:hover {
-    transform: translateY(-5px);
     box-shadow: 0 8px 16px rgba(0,0,0,0.2);
 }
 
@@ -369,19 +365,42 @@ h2.section-title {
     padding: 10px;
     border-radius: 8px;
     border: none;
-    background-color: var(--color-secondary); 
+    background-color: #6bb18c; 
     color: #fff;
     font-weight: bold;
     cursor: pointer;
-    transition: background-color 0.2s;
+    
 }
 
 .card button:hover {
-    background-color: #6bb18c;
+    background-color: #108044;
+}
+
+/*card autores*/
+.card ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 10px 0 0 0;
+}
+
+.card ul li {
+    background-color: #f0f0f0;
+    padding: 8px 12px;
+    margin-bottom: 5px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    color: #444;
+}
+
+.card .no-books {
+    font-style: italic;
+    color: #888;
+    text-align: left;
+    margin-top: 10px;
 }
 
 /* ======================================================= */
-/* FORMULÁRIO (Seu CSS original) */
+/* FORMULÁRIO*/
 /* ======================================================= */
 form {
     max-width: 400px;
