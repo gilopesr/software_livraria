@@ -13,7 +13,7 @@ def listarLivros():
     livros = Livro.query.all()
     return render_template("listaLivros.html", livros=livros)
 
-@app.route('/livros/<string:titulo>',methods=['GET'])
+@app.route('/livros/titulo/<path:titulo>',methods=['GET'])
 def buscarLivro_titulo(titulo):
     livros = Livro.query.filter_by(titulo=titulo).all()
     
@@ -21,6 +21,15 @@ def buscarLivro_titulo(titulo):
         return render_template('listaLivros.html', livros=livros)
     else:
         return f'Erro: Nenhum livro com título {titulo} foi encontrado", 404'
+    
+@app.route('/livros/genero/<string:genero>',methods=['GET'])
+def buscarLivro_genero(genero):
+    livros = Livro.query.filter(Livro.genero.ilike(genero)).all()
+    
+    if livros:
+        return render_template('listaLivros.html', livros=livros)
+    else:
+        return f'Erro: Nenhum livro com genero de {genero} foi encontrado", 404'
      
 @app.route('/livros/<int:isbn>',methods=['GET'])
 def buscarLivro_isbn(isbn):
