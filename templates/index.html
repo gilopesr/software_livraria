@@ -1,26 +1,29 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Livraria</title>
+    <title>Livraria Impacta</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' href='/static/style.css'>
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-
 </head>
 <body>
-    <div class="top-bar">
-        <!-- Campo de busca -->
-        <div class="header__search">
-            <input id="search-input" type="text" maxlength="800" placeholder="Buscar">
-            <i class="fa fa-search"></i>
+    <!-- HEADER / TOP BAR -->
+    <header class="top-bar">
+        <div class="header__logo">
+            <!-- Ícone de placeholder para a logo -->
+            <img src="https://placehold.co/40x40/ffd28c/fff?text=L" alt="Logo Livraria">
+            <span>Livraria Impacta</span>
         </div>
 
-        
+        <div class="header__search">
+            <input id="search-input" type="text" maxlength="800" placeholder="Buscar por Título, ISBN ou Autor">
+            <i id="search-icon" class="fa fa-search"></i>
+        </div>
 
-        <!-- Menu à direita -->
         <div class="right-menu">
             <div class="login">
                 <i class="fa fa-user"></i>
@@ -31,18 +34,94 @@
                 <span class="count">0</span>
             </div>
         </div>
+    </header>
+
+    <!-- MENU PRINCIPAL COM DROPDOWNS -->
+    <nav class="main-nav">
+        <div class="container nav-container">
+            <ul class="nav-links">
+                <!-- Dropdown: Ver Mais -->
+                <li class="dropdown">
+                    <a href="#" class="nav-link dropbtn">
+                        <i class="fa fa-bars mr-2"> </i>   Ver mais
+                    </a>
+                    <div class="dropdown-content">
+                        <a href="/promocoes">Promoções</a>
+                        <a href="/lancamentos">Lançamentos</a>
+                        <a href="/contato">Contato</a>
+                    </div>
+                </li>
+                
+                <li><a href="#" class="nav-link">Ebooks</a></li>
+                
+                <!-- Dropdown: Gêneros -->
+                <li class="dropdown">
+                    <a href="#" class="nav-link dropbtn">Generos</a>
+                    <div class="dropdown-content">
+                        <!-- Links de gênero com rota base -->
+                        <a href="/livros/genero/Ficcao">Ficção</a>
+                        <a href="/livros/genero/Fantasia">Fantasia</a>
+                        <a href="/livros/genero/Romance">Romance</a>
+                        <a href="/livros/genero/Drama">Drama</a>
+                        <a href="/livros/genero/Biografia">Biografia</a>
+                    </div>
+                </li>
+                
+                <!-- Links simples -->
+                <li><a href="/livros" class="nav-link">Livros</a></li>
+                <li><a href="/autor" class="nav-link">Autores</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <!-- ÁREA DO CARROSSEL (BANNERS) -->
+        <section class="slideshow-container">
+            
+            <!-- Slide 1: Placeholder de Literatura -->
+            <div class="mySlides fade">
+                <img src="/static/banner1.jpg" alt="Banner de Literatura">
+            </div>
+
+            <!-- Slide 2: Placeholder de Fantasia -->
+            <div class="mySlides fade">
+                <img src="/static/banner1.jpg" alt="Banner de Fantasia">
+            </div>
+
+            <!-- Slide 3: Placeholder de Romance -->
+            <div class="mySlides fade">
+                <img src="/static/banner1.jpg" alt="Banner de Romance">
+            </div>
+        </section>
+        
+        <!-- Indicadores (Pontos) -->
+        <div style="text-align:center; margin-top: 15px;">
+            <span class="dot" onclick="currentSlide(1)"></span>
+            <span class="dot" onclick="currentSlide(2)"></span>
+            <span class="dot" onclick="currentSlide(3)"></span>
+        </div>
+
+        <!-- DESTAQUES DO MÊS -->
+        <h2 class="section-title">Destaques do Mês</h2>
+
+        <!-- Imagens serão adicionadas depois, mantendo o campo/card -->
+        <section class="highlight-container">
+            <div class="highlight-card">Livro 1</div>
+            <div class="highlight-card">Livro 2</div>
+            <div class="highlight-card">Livro 3</div>
+        </section>
+        
+        <!-- LINKS DE CADASTRO -->
+        <div class="cadastro-links-container">
+            <a href="/cadastrarLivro" class="add-livro">Cadastrar Novo Livro</a>
+            <a href="/cadastrarAutor" class="add-livro">Cadastrar Novo Autor</a>
+        </div>
+
+        <!-- ÁREA DE RESULTADO DA BUSCA -->
+        <div id="resultado" class="cards-container">
+            <!-- Os resultados da busca serão injetados aqui -->
+        </div>
     </div>
-
-    <h1>Bem Vindos à Livraria!</h1>
-
-    <a href="/livros" class="add-livro">Ver todos os Livros</a>
-    <a href="/cadastrarLivro" class="add-livro">Cadastrar Novo Livro</a>
-    <a href="/autor" class="add-livro">Ver todos os Autores</a>
-    <a href="/cadastrarAutor" class="add-livro">Cadastrar Novo Autor</a>
-    <div id="resultado" class="cards-container"></div>
-
     <script src="/static/index.js"></script>
 </body>
-
-
 </html>
