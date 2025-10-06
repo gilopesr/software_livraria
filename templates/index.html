@@ -36,11 +36,11 @@
         </div>
     </header>
 
-    <!-- MENU PRINCIPAL COM DROPDOWNS -->
+    <!-- MENU PRINCIPAL-->
     <nav class="main-nav">
         <div class="container nav-container">
             <ul class="nav-links">
-                <!-- Dropdown: Ver Mais -->
+                <!-- Ver Mais -->
                 <li class="dropdown">
                     <a href="#" class="nav-link dropbtn">
                         <i class="fa fa-bars mr-2"> </i>   Ver mais
@@ -54,7 +54,7 @@
                 
                 <li><a href="#" class="nav-link">Ebooks</a></li>
                 
-                <!-- Dropdown: Gêneros -->
+                <!-- Gêneros -->
                 <li class="dropdown">
                     <a href="#" class="nav-link dropbtn">Generos</a>
                     <div class="dropdown-content">
@@ -63,11 +63,11 @@
                         <a href="/livros/genero/Fantasia">Fantasia</a>
                         <a href="/livros/genero/Romance">Romance</a>
                         <a href="/livros/genero/Drama">Drama</a>
+                        <a href="/livros/genero/Geek">Geek</a>
                         <a href="/livros/genero/Biografia">Biografia</a>
                     </div>
                 </li>
-                
-                <!-- Links simples -->
+
                 <li><a href="/livros" class="nav-link">Livros</a></li>
                 <li><a href="/autor" class="nav-link">Autores</a></li>
             </ul>
@@ -75,51 +75,47 @@
     </nav>
     
     <div class="container">
-        <!-- ÁREA DO CARROSSEL (BANNERS) -->
+        <!-- CARROSSEL-->
         <section class="slideshow-container">
             
-            <!-- Slide 1: Placeholder-->
+            <!-- Slide 1-->
             <div class="mySlides fade">
                 <img src="/static/img/color1.jpg" alt="Banner">
             </div>
 
-            <!-- Slide 2: Placeholder-->
+            <!-- Slide 2-->
             <div class="mySlides fade">
                 <img src="/static/img/color2.jpg" alt="Banner">
             </div>
 
-            <!-- Slide 3: Placeholder-->
+            <!-- Slide 3-->
             <div class="mySlides fade">
                 <img src="/static/img/color3.jpg" alt="Banner">
             </div>
         </section>
-        
-        <!-- Indicadores (Pontos) -->
+
         <div style="text-align:center; margin-top: 15px;">
             <span class="dot" onclick="currentSlide(1)"></span>
             <span class="dot" onclick="currentSlide(2)"></span>
             <span class="dot" onclick="currentSlide(3)"></span>
         </div>
 
-        <!-- DESTAQUES DO MÊS -->
         <h2 class="section-title">Destaques do Mês</h2>
 
-        <!-- Imagens serão adicionadas depois, mantendo o campo/card -->
+        <!-- Imagens do livro-->
         <section class="highlight-container">
             <div class="highlight-card">Livro 1</div>
             <div class="highlight-card">Livro 2</div>
             <div class="highlight-card">Livro 3</div>
         </section>
         
-        <!-- LINKS DE CADASTRO -->
         <div class="cadastro-links-container">
             <a href="/cadastrarLivro" class="add-livro">Cadastrar Novo Livro</a>
             <a href="/cadastrarAutor" class="add-livro">Cadastrar Novo Autor</a>
         </div>
 
-        <!-- ÁREA DE RESULTADO DA BUSCA -->
         <div id="resultado" class="cards-container">
-            <!-- Os resultados da busca serão injetados aqui -->
+            <!-- resultados aqui -->
         </div>
     </div>
     <script src="/static/index.js"></script>

@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Adiciona um listener para a busca, caso não exista
     const searchInput = document.getElementById("search-input");
     const searchIcon = document.getElementById("search-icon");
     if (searchIcon && searchInput) {
@@ -19,22 +18,19 @@ document.addEventListener('DOMContentLoaded', () => {
     // Seletor para o elemento que exibe a contagem do carrinho
     const cartCountElement = document.querySelector('.cart .count');
 
-    // Adiciona um listener de clique a cada botão de "Comprar"
     buyButtons.forEach(button => {
         button.addEventListener('click', () => {
             // Converte o texto da contagem para um número
             let currentCount = parseInt(cartCountElement.textContent, 10);
-            
-            // Incrementa a contagem em 1
+
             currentCount += 1;
-            
-            // Atualiza o texto do contador no carrinho
+
             cartCountElement.textContent = currentCount;
         });
     });
 });
 
-// Esta é a função que você já tinha, ligeiramente ajustada
+
 async function performSearch(termo) {
     if (!termo) {
         alert("Por favor, digite um termo de busca.");

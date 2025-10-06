@@ -41,19 +41,24 @@ def buscarLivro_isbn(isbn):
 
 @app.route("/cadastrarLivro", methods=["GET", "POST"])
 def cadastrarLivro():
+
+    lista_formato = ["Capa Comum", "Capa Dura", "Ebook", "Audiobook"]
+    lista_genero = ["Romance", "Ficção Científica", "Fantasia", "Biografia", "Geek", "Drama"]
+
     if request.method == "POST":
         # Pegar dados do form ou JSON
         data = request.form if request.form else request.get_json() or {}
         
         titulo = data.get("titulo")
         autor_id = data.get("autor_id")
-        formato = data.get("formato")
-        genero = data.get("genero")
+        formato_selecionado = data.get("formato")
+        genero_selecionado = data.get("genero")
         data_lancamento_str = data.get("data_lancamento")
         preco_str = data.get("preco")
         isbn = data.get('isbn')
+        url_img=data.get('url_img')
 
-        if not all([titulo, autor_id, formato, genero, data_lancamento_str, preco_str,isbn]):
+        if not all([titulo, autor_id, formato_selecionado, genero_selecionado, data_lancamento_str, preco_str,isbn,url_img]):
             return "Erro: todos os campos são obrigatórios", 400
 
         try:
@@ -69,11 +74,12 @@ def cadastrarLivro():
         novo_livro = Livro(
             titulo=titulo,
             autor_id=autor_id,
-            formato=formato,
-            genero=genero,
+            formato=formato_selecionado,
+            genero=genero_selecionado,
             data_lancamento=data_lancamento,
             preco=preco,
-            isbn=isbn
+            isbn=isbn,
+            url_img=url_img
         )
 
         db.session.add(novo_livro)
@@ -87,7 +93,7 @@ def cadastrarLivro():
 
     # GET: exibe o formulário HTML
     autores = Autor.query.all()
-    return render_template("cadastrarLivro.html", autores=autores)
+    return render_template("cadastrarLivro.html", autores=autores, formatos=lista_formato, generos=lista_genero)
 
 
 @app.route("/livros/<int:id_livro>", methods=["PUT"])

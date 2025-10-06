@@ -34,11 +34,9 @@
         </div>
     </header>
 
-    <!-- MENU PRINCIPAL COM DROPDOWNS -->
     <nav class="main-nav">
         <div class="container nav-container">
             <ul class="nav-links">
-                <!-- Dropdown: Ver Mais -->
                 <li class="dropdown">
                     <a href="#" class="nav-link dropbtn">
                         <i class="fa fa-bars mr-2"> </i>   Ver mais
@@ -51,21 +49,20 @@
                 </li>
                 
                 <li><a href="#" class="nav-link">Ebooks</a></li>
-                
-                <!-- Dropdown: Gêneros -->
+
                 <li class="dropdown">
                     <a href="#" class="nav-link dropbtn">Generos</a>
                     <div class="dropdown-content">
-                        <!-- Links de gênero com rota base -->
+
                         <a href="/livros/genero/Ficcao">Ficção</a>
                         <a href="/livros/genero/Fantasia">Fantasia</a>
                         <a href="/livros/genero/Romance">Romance</a>
                         <a href="/livros/genero/Drama">Drama</a>
+                        <a href="/livros/genero/Geek">Geek</a>
                         <a href="/livros/genero/Biografia">Biografia</a>
                     </div>
                 </li>
                 
-                <!-- Links simples -->
                 <li><a href="/livros" class="nav-link">Livros</a></li>
                 <li><a href="/autor" class="nav-link">Autores</a></li>
                 <a href="/cadastrarLivro" class="add-livro">Cadastrar Novo Livro</a>
@@ -78,6 +75,9 @@
     <div class="cards-container">
         {% for livro in livros %}
         <div class="card">
+            <div class="card-image-wrapper"> 
+                <img src="{{ livro.url_img }}" alt="Capa do livro">
+            </div>
             <h2>{{ livro.titulo }}</h2>
             <p>{{ livro.autor.nome }}</p>
             <p><strong>Formato:</strong> {{ livro.formato }}</p>
