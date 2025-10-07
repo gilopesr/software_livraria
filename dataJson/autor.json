@@ -1,0 +1,54 @@
+[
+    {
+        "nome": "Clarice Lispector",
+        "dataNasc": "1920-12-10"
+    },
+    {
+        "nome": "Eiichiro Oda",
+        "dataNasc": "1975-01-01"
+    },
+    {
+        "nome": "Lewis Carroll",
+        "dataNasc": "1832-01-27"
+    },
+    {
+        "nome": "Akira Toriyama",
+        "dataNasc": "1955-04-05"
+    },
+    {
+        "nome": "Naoko Takeuchi",
+        "dataNasc": "1967-03-15"
+    },
+    {
+        "nome": "Masashi Kishimoto",
+        "dataNasc": "1974-11-08"
+    },
+    {
+        "nome": "J. R. R. Tolkien",
+        "dataNasc": "1892-01-03"
+    },
+    {
+        "nome": "J. K. Rowling",
+        "dataNasc": "1965-07-31"
+    },
+    {
+        "nome": "Neil Gaiman",
+        "dataNasc": "1960-11-10"
+    },
+    {
+        "nome": "Cassandra Clare",
+        "dataNasc": "1973-07-30"
+    },
+    {
+        "nome": "Fiódor Dostoiévski",
+        "dataNasc": "1821-11-11"
+    },
+    {
+        "nome": "Charles Dickens",
+        "dataNasc": "1812-02-07"
+    },
+    {
+        "nome": "Virginia Woolf",
+        "dataNasc": "1882-01-25"
+    }
+]

@@ -1,0 +1,112 @@
+[
+    {
+        "titulo": "Felicidade Clandestina",
+        "autor_id": 1,
+        "formato": "Capa Comum",
+        "genero": "Romance",
+        "data_lancamento": "1971-01-01",
+        "preco": "44,90",
+        "isbn": "978853",
+        "url_img": "https://m.media-amazon.com/images/I/711lRhyTjIL.jpg"
+    },
+    {
+        "titulo": "Alice no País das Maravilhas",
+        "autor_id": 3,
+        "formato": "Capa Dura",
+        "genero": "Fantasia",
+        "data_lancamento": "1865-01-01",
+        "preco": "59,90",
+        "isbn": "978972",
+        "url_img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQn-p3SRKbFxEu2keOpTKlUJUDsjlb1Atsv2A&s"
+    },
+    {
+        "titulo": "Dragon Ball - Volume 1",
+        "autor_id": 4,
+        "formato": "Capa Comum",
+        "genero": "Geek",
+        "data_lancamento": "1985-12-05",
+        "preco": "38,90",
+        "isbn": "40887",
+        "url_img": "https://m.media-amazon.com/images/I/91KQLMVwqBL._UF1000,1000_QL80_.jpg"
+    },
+    {
+        "titulo": "Sailor Moon - Volume 1",
+        "autor_id": 5,
+        "formato": "Capa Comum",
+        "genero": "Geek",
+        "data_lancamento": "1992-07-06",
+        "preco": "35,90",
+        "isbn": "9784063",
+        "url_img": "https://m.media-amazon.com/images/I/71cb3CRmnAL._UF1000,1000_QL80_.jpg"
+    },
+    {
+        "titulo": "Naruto - Volume 23",
+        "autor_id": 6,
+        "formato": "Capa Comum",
+        "genero": "Geek",
+        "data_lancamento": "1999-03-04",
+        "preco": "36,90",
+        "isbn": "408872",
+        "url_img": "https://m.media-amazon.com/images/I/81YJjycp4FL._UF1000,1000_QL80_.jpg"
+    },
+    {
+        "titulo": "O Hobbit",
+        "autor_id": 7,
+        "formato": "Capa Dura",
+        "genero": "Fantasia",
+        "data_lancamento": "1937-09-21",
+        "preco": "79,90",
+        "isbn": "978859",
+        "url_img": "https://m.media-amazon.com/images/I/91M9xPIf10L.jpg"
+    },
+    {
+        "titulo": "Harry Potter e a Pedra Filosofal",
+        "autor_id": 8,
+        "formato": "Capa Dura",
+        "genero": "Fantasia",
+        "data_lancamento": "1997-06-26",
+        "preco": "69,90",
+        "isbn": "9788532",
+        "url_img": "https://m.media-amazon.com/images/I/81ibfYk4qmL._UF1000,1000_QL80_.jpg"
+    },
+    {
+        "titulo": "Deuses Americanos",
+        "autor_id": 9,
+        "formato": "Capa Dura",
+        "genero": "Fantasia",
+        "data_lancamento": "2001-06-19",
+        "preco": "20,90",
+        "isbn": "9788551",
+        "url_img": "https://m.media-amazon.com/images/I/61R+m9G+l7L._UF1000,1000_QL80_.jpg"
+    },
+    {
+        "titulo": "Cidade dos Ossos (Os Instrumentos Mortais, Vol. 1)",
+        "autor_id": 10,
+        "formato": "Capa Comum",
+        "genero": "Fantasia",
+        "data_lancamento": "2007-03-27",
+        "preco": "46,45",
+        "isbn": "978850",
+        "url_img": "https://m.media-amazon.com/images/I/91MWcXJPigL.jpg"
+    },
+    {
+        "titulo": "Um Conto de Duas Cidades",
+        "autor_id": 12,
+        "formato": "Ebook",
+        "genero": "Romance",
+        "data_lancamento": "1859-01-01",
+        "preco": "24,90",
+        "isbn": "978854",
+        "url_img": "https://m.media-amazon.com/images/I/61fD+SMxHeL._UF1000,1000_QL80_.jpg"
+    },
+    {
+        "titulo": "Mrs. Dalloway",
+        "autor_id": 13,
+        "formato": "Capa Comum",
+        "genero": "Drama",
+        "data_lancamento": "1925-05-14",
+        "preco": "39,90",
+        "isbn": "9788520",
+        "url_img": "https://m.media-amazon.com/images/I/91rOgmnZpJS.jpg"
+    }
+]
