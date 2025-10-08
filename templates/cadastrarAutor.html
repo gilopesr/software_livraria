@@ -2,19 +2,29 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Cadastrar Autor</title>
+    <title>{% if autor %}Editar Autor{% else %}Cadastrar Autor{% endif %}</title>
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-    <h1>Cadastrar Autor</h1>
-    <form method="POST" action="/cadastrarAutor">
-    <label>Nome:</label>
-    <input type="text" name="nome" required><br>
+    <h1>{% if autor %}Editar Autor:{% else %}Cadastrar Autor{% endif %}</h1>
+     
+    <form method="POST" action="">
+        <label>Nome:</label>
+        <input type="text" name="nome" required 
+        value="{{ autor.nome if autor else '' }}"><br>
 
-    <label>Data de Nascimento:</label>
-    <input type="date" name="dataNasc" required><br>
-
-    <button type="submit">Cadastrar</button>
+        <label>Data de Nascimento:</label>
+        <input type="date" name="dataNasc" required 
+            value="{% if autor %}{{ autor.dataNasc}}{% endif %}"><br>
+        
+        {% if autor %}
+            <div class="botoes-edicao"> 
+                <button type="submit" name="action" value="atualizar" id="atualizar">Atualizar</button>
+                <button type="submit" name="action" value="excluir" id="excluir">Excluir</button>
+            </div>
+        {% else %}
+            <button type="submit" name="action" value="cadastrar" id="cadastrar">Cadastrar</button>
+        {% endif %}
     </form>
 </body>
 </html>

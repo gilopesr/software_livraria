@@ -30,6 +30,15 @@ def buscarLivro_genero(genero):
         return render_template('listaLivros.html', livros=livros)
     else:
         return f'Erro: Nenhum livro com genero de {genero} foi encontrado", 404'
+    
+@app.route('/livros/formato/<string:formato>',methods=['GET'])
+def buscarLivro_formato(formato):
+    livros = Livro.query.filter(Livro.formato.ilike(formato)).all()
+    
+    if livros:
+        return render_template('listaLivros.html', livros=livros)
+    else:
+        return f'Erro: Nenhum livro no formato {formato} foi encontrado", 404'
      
 @app.route('/livros/<int:isbn>',methods=['GET'])
 def buscarLivro_isbn(isbn):
@@ -39,15 +48,30 @@ def buscarLivro_isbn(isbn):
     else:
         return f'Erro: O livro com ISBN {isbn} não foi encontrado!', 404
 
-@app.route("/cadastrarLivro", methods=["GET", "POST"])
-def cadastrarLivro():
-
+@app.route("/cadastrarLivro", defaults={'livro_id': None}, methods=["GET", "POST"])
+@app.route("/cadastrarLivro/<int:livro_id>", methods=["GET", "POST"])
+def gerenciarLivro(livro_id):
     lista_formato = ["Capa Comum", "Capa Dura", "Ebook", "Audiobook"]
     lista_genero = ["Romance", "Ficção Científica", "Fantasia", "Biografia", "Geek", "Drama"]
+    
+    livro = None
+    if livro_id:
+        #buscar o livro para EDIÇÃO/EXCLUSÃO
+        livro = Livro.query.get(livro_id)
+        if not livro:
+            return "Livro não encontrado", 404
+
 
     if request.method == "POST":
-        # Pegar dados do form ou JSON
-        data = request.form if request.form else request.get_json() or {}
+        action = request.form.get('action') 
+        data = request.form
+
+        if action == 'excluir' and livro:
+            db.session.delete(livro)
+            db.session.commit()
+            return redirect(url_for("listarLivros"))
+
+        target_livro = livro if livro else Livro() 
         
         titulo = data.get("titulo")
         autor_id = data.get("autor_id")
@@ -56,95 +80,40 @@ def cadastrarLivro():
         data_lancamento_str = data.get("data_lancamento")
         preco_str = data.get("preco")
         isbn = data.get('isbn')
-        url_img=data.get('url_img')
-
-        if not all([titulo, autor_id, formato_selecionado, genero_selecionado, data_lancamento_str, preco_str,isbn,url_img]):
+        url_img = data.get('url_img')
+        
+        if not all([titulo, autor_id, formato_selecionado, genero_selecionado, data_lancamento_str, preco_str, isbn, url_img]):
             return "Erro: todos os campos são obrigatórios", 400
 
+        target_livro.titulo = titulo
+        target_livro.autor_id = autor_id
+        target_livro.formato = formato_selecionado
+        target_livro.genero = genero_selecionado
+        target_livro.isbn = isbn
+        target_livro.url_img = url_img
+
         try:
-            data_lancamento = datetime.strptime(data_lancamento_str, "%Y-%m-%d").date()
+            target_livro.data_lancamento = datetime.strptime(data_lancamento_str, "%Y-%m-%d").date()
         except ValueError:
             return "Erro: data_lancamento deve estar no formato YYYY-MM-DD", 400
 
         try:
-            preco = float(preco_str)
+            target_livro.preco = float(preco_str)
         except ValueError:
             return "Erro: preço deve ser um número válido", 400
-
-        novo_livro = Livro(
-            titulo=titulo,
-            autor_id=autor_id,
-            formato=formato_selecionado,
-            genero=genero_selecionado,
-            data_lancamento=data_lancamento,
-            preco=preco,
-            isbn=isbn,
-            url_img=url_img
-        )
-
-        db.session.add(novo_livro)
+        
+        if not livro:
+            db.session.add(target_livro) 
+            
         db.session.commit()
+        return redirect(url_for("listarLivros"))
 
-        # Redireciona se vier de form HTML, ou retorna JSON se vier de API
-        if request.form:
-            return redirect(url_for("listarLivros"))
-        else:
-            return {"msg": "Livro cadastrado!", "titulo": titulo}, 201
 
-    # GET: exibe o formulário HTML
     autores = Autor.query.all()
-    return render_template("cadastrarLivro.html", autores=autores, formatos=lista_formato, generos=lista_genero)
-
-
-@app.route("/livros/<int:id_livro>", methods=["PUT"])
-def atualizar_livro(id_livro):
-    try:
-        livro_encontrado = Livro.query.get(id_livro)
-        if not livro_encontrado:
-            raise LivroNaoEncontrado("Livro não encontrado")
-
-        data = request.json
-
-        campos_obrigatorios = ["titulo", "autor_id", "formato", "genero", "data_lancamento", "preco","isbn"]
-        for campo in campos_obrigatorios:
-            if campo not in data or not data[campo]:
-                return jsonify({"erro": f"O campo '{campo}' é obrigatório"}), 400
-
-        livro_encontrado.titulo = data["titulo"]
-        livro_encontrado.autor_id = data["autor_id"]  
-        livro_encontrado.formato = data["formato"]
-        livro_encontrado.genero = data["genero"]
-        livro_encontrado.isbn = data['isbn']
-
-        try:
-            livro_encontrado.data_lancamento = datetime.strptime(data["data_lancamento"], "%Y-%m-%d").date()
-        except ValueError:
-            return jsonify({"erro": "data_lancamento deve estar no formato YYYY-MM-DD"}), 400
-
-        try:
-            livro_encontrado.preco = float(data["preco"])
-        except ValueError:
-            return jsonify({"erro": "O preço deve ser um Float: 10.59"}), 400
-
-        db.session.commit()
-        return jsonify({"mensagem": "Livro atualizado com sucesso!"}), 200
-
-    except LivroNaoEncontrado as e:
-        return jsonify({"erro": str(e)}), 404
-
-
-@app.route("/livros/<int:id_livro>", methods=['POST', 'DELETE'])
-def deletarLivro(id_livro):
-    livro = Livro.query.get(id_livro)
-    if not livro:
-        raise LivroNaoEncontrado("Livro não encontrado")
-    
-    db.session.delete(livro)
-    db.session.commit()
-    
-    # Se for POST (form HTML), redireciona para a página de livros
-    if request.method == 'POST':
-        return redirect(url_for("index"))
-    
-    # Se for DELETE (API), retorna JSON ou mensagem
-    return {'mensagem': 'Livro deletado com sucesso'}
+    return render_template(
+        "cadastrarLivro.html", 
+        autores=autores, 
+        formatos=lista_formato, 
+        generos=lista_genero,
+        livro=livro
+    )

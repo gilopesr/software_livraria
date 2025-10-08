@@ -6,9 +6,6 @@
     font-family: 'Arial', sans-serif;
 }
 
-/* ======================================================= */
-/* VARIÁVEIS DE COR E BASE */
-/* ======================================================= */
 :root {
     --color-primary: #d17cae;
     --color-bg-light: #f5f5f5;
@@ -34,9 +31,9 @@ h1 {
     margin: 30px 0;
 }
 
-/* ======================================================= */
-/* BARRA SUPERIOR E BUSCA (HEADER) */
-/* ======================================================= */
+/* ======================== */
+/* BARRA SUPERIOR E BUSCA */
+/* ========================*/
 .top-bar {
     display: flex;
     justify-content: space-between;
@@ -131,9 +128,9 @@ h1 {
     padding: 2px 6px;
 }
 
-/* ======================================================= */
-/* MENU PRINCIPAL (Main Navigation) */
-/* ======================================================= */
+/* ================== */
+/* MENU PRINCIPAL*/
+/* ================== */
 .main-nav {
     background-color: #fff;
     padding: 10px 0;
@@ -208,9 +205,9 @@ h1 {
     display: block;
 }
 
-/* ======================================================= */
+/* ======================= */
 /* CARROSSEL (SLIDESHOW)*/
-/* ======================================================= */
+/* ====================== */
 
 .slideshow-container {
     max-width: 1200px;
@@ -254,9 +251,9 @@ h1 {
 }
 
 
-/* ======================================================= */
+/* ==================== */
 /* DESTAQUES DO MÊS */
-/* ======================================================= */
+/* ==================== */
 h2.section-title {
     color: var(--color-text-dark);
     text-align: center;
@@ -294,9 +291,9 @@ h2.section-title {
 }
 
 
-/* ======================================================= */
+/* ==================== */
 /* LINKS DE CADASTRO */
-/* ======================================================= */
+/* =================== */
 .cadastro-links-container {
     display: flex;
     justify-content: center;
@@ -319,9 +316,9 @@ h2.section-title {
     background-color: #b65b90;
 }
 
-/* ======================================================= */
+/* =====================*/
 /* CARDS DE RESULTADO*/
-/* ======================================================= */
+/* ==================== */
 .cards-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -363,23 +360,76 @@ h2.section-title {
     color: #555;
 }
 
-.card button {
-    width: 100%;
+.card #compra, 
+.card #editar { 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
     padding: 10px;
     border-radius: 8px;
     border: none;
-    background-color: #6bb18c; 
     color: #fff;
     font-weight: bold;
     cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%; 
     
 }
 
-.card button:hover {
+.card #compra {
+    border: none;
+    margin-bottom: 5px;
+}
+
+.card #compra { 
+    background-color: #6bb18c; 
+}
+
+.card #compra:hover {
     background-color: #108044;
 }
 
+.card #editar {
+    background-color: #e0b0d6;
+}
+
+.card #editar:hover { 
+    background-color: #c988be;
+}
+
+
+/*-------------*/
 /*card autores*/
+/*-------------*/
+.card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 5px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 3px;
+}
+
+.card-header h2 {
+    margin: 0;
+    font-size: 1.2em;
+    margin-right: 15px; 
+}
+
+.edit-btn {
+    text-decoration: none;
+    color: #d17cae;
+    font-size: 1.2em;
+    padding: 5px;
+    cursor: pointer;
+    transition: color 0.2s ease;
+    flex-shrink: 0; 
+}
+
+.edit-btn:hover {
+    color: #b65b90;
+}
 .card ul {
     list-style-type: none;
     padding: 0;
@@ -402,11 +452,6 @@ h2.section-title {
     margin-top: 10px;
 }
 
-
-/* -------------------------------------- */
-/* ESTILOS PARA PADRONIZAR AS IMAGENS */
-/* -------------------------------------- */
-
 .card-image-wrapper {
     height: 280px;
     background-color: #ffffff;
@@ -426,9 +471,9 @@ h2.section-title {
     display: block;
 }
 
-/* ======================================================= */
+/* =============*/
 /* FORMULÁRIO*/
-/* ======================================================= */
+/* ============= */
 form {
     max-width: 400px;
     margin: 0 auto;
@@ -477,4 +522,40 @@ form select:focus {
     border-color: var(--color-primary);
     box-shadow: 0 0 5px rgba(209, 124, 174, 0.5);
     outline: none;
+}
+
+
+/*botoes de att e exluir*/
+
+.botoes-edicao {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.botoes-edicao button {
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    flex-grow: 1; 
+}
+
+#atualizar {
+    background-color: #c988be;
+}
+
+#atualizar:hover {
+    background-color: #b65b90; 
+}
+
+#excluir {
+    background-color: #d63646;
+}
+
+#excluir:hover {
+    background-color: #a81826; 
 }
