@@ -118,3 +118,48 @@ window.onload = function() {
     showSlides(slideIndex);
     autoTimeout = setTimeout(autoRotate, 5000);
 };
+
+const loginRegisters = [];
+
+function cadastro(){
+    var name = document.querySelector('input#name').value;
+    var email = document.querySelector('input#email').value;
+    var data_nasc = document.querySelector('input#data_nasc').value;
+    var endereco = document.querySelector('input#endereco').value;
+    var user_name = document.querySelector('input#user').value;
+    var password = document.querySelector('input#password_user').value;
+    var confirm_password = document.querySelector('input#confirm_password').value;
+
+    var error = document.querySelector('p#error');
+    error.style.color = 'red'
+
+    if(name==='' || email==='' || data_nasc==='' || endereco===''){
+        error.textContent = 'Todos os campos devem ser preenchidos!';
+    }else if(password != confirm_password){
+        error.textContent = 'As senhas devem ser iguais'
+    }else{
+        loginRegisters.push({'usuário':user_name,'senha':password})
+        console.log(loginRegisters)
+        window.alert('Direcionando para a próxima página!');
+        location.href = '/templates/login.html'
+    }
+
+    
+}
+
+function login(){
+    var user_name = document.getElementById('user');
+    var password = document.getElementById('password');
+    
+        console.log(loginRegisters)
+    for(let user of loginRegisters){
+            if(user.usuário != user_name || password != user.senha){
+                alert('Erro ! senha ou usuário inválidos')
+            }else{
+                location.href = '/templates/index.html'
+            }
+    }
+
+    
+}
+
