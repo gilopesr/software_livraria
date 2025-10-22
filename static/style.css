@@ -31,10 +31,6 @@ header#header_client{
     font-size: 30px;
 }
 
-header#header_login{
-    text-align: center;
-}
-
 h1 {
     color: var(--color-primary); 
     text-align: center;
@@ -575,5 +571,14 @@ a#login{
 }
 
 form.login{
-     margin: 20px 300px;
+     margin: 30px 400px;
+}
+
+#header_login{
+   text-align:center ;
+}
+
+form.login > p> a{
+    text-decoration: none;
+    color: var(--color-highlight-card);
 }

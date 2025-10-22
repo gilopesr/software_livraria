@@ -119,7 +119,8 @@ window.onload = function() {
     autoTimeout = setTimeout(autoRotate, 5000);
 };
 
-const loginRegisters = [];
+//lista para o armazenamento dos dados do usuário(username e senha)
+const loginRegisters = []; 
 
 function cadastro(){
     var name = document.querySelector('input#name').value;
@@ -141,7 +142,7 @@ function cadastro(){
         loginRegisters.push({'usuário':user_name,'senha':password})
         console.log(loginRegisters)
         window.alert('Direcionando para a próxima página!');
-        location.href = '/templates/login.html'
+        location.href = '/login'
     }
 
     
@@ -150,13 +151,17 @@ function cadastro(){
 function login(){
     var user_name = document.getElementById('user');
     var password = document.getElementById('password');
+
+    var loginSucess = false
     
-        console.log(loginRegisters)
+    console.log(loginRegisters)
     for(let user of loginRegisters){
-            if(user.usuário != user_name || password != user.senha){
-                alert('Erro ! senha ou usuário inválidos')
+            if(user.usuário === user_name || password === user.senha){
+                loginSucess = true
+                location.href = '/index.html'
+                            
             }else{
-                location.href = '/templates/index.html'
+               window.alert('')
             }
     }
 
