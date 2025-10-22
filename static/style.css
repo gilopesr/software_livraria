@@ -49,11 +49,22 @@ h1 {
     gap: 10px;
 }
 
+.header__logo a {
+    display: flex;
+    align-items: center;
+    gap: 8px; 
+    text-decoration: none;
+    color: inherit;
+}
+
+.header__logo span {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--color-text-dark);
+}
 .header__logo img {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background-color: #ffd28c; 
+    width: 60px;
+    height: 60px;
 }
 
 .header__logo span {
@@ -126,6 +137,97 @@ h1 {
     font-weight: bold;
     border-radius: 50%;
     padding: 2px 6px;
+}
+
+.cart-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.cart-container .cart {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+}
+
+.cart-card.hidden {
+    display: none;
+}
+
+.cart-card {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 320px;
+    max-height: 500px;
+    overflow-y: auto;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 15px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+.cart-items-list {
+    display: flex;
+    flex-direction: column; 
+    margin-bottom: 10px;
+}
+
+.cart-item {
+    display: flex; 
+    justify-content: space-between;
+    width: 100%;
+    padding: 8px 0;
+    border-bottom: 1px dashed #eee;
+    font-size: 0.9em;
+}
+
+.cart-item:last-child {
+    border-bottom: none;
+}
+
+.cart-item p {
+    flex-grow: 1;
+    max-width: 70%; 
+    padding-right: 10px;
+    margin: 0;
+    font-weight: normal;
+    color: #555;
+}
+
+.cart-item span {
+    flex-shrink: 0;
+    text-align: right;
+    font-weight: bold;
+    margin-top: 0;
+    color: #333;
+}
+
+.cart-total {
+    clear: both; 
+    font-weight: bold;
+    margin: 10px 0;
+    padding-top: 10px;
+    border-top: 2px solid #f0f0f0;
+    text-align: right;
+}
+
+.checkout-btn {
+    width: 100%;
+    padding: 10px;
+    background-color: #cd4795;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
 }
 
 /* ================== */
@@ -277,17 +379,42 @@ h2.section-title {
     height: 250px;
     border-radius: 12px;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center; 
     color: white;
     font-size: 1.5rem;
     font-weight: bold;
     box-shadow: 0 6px 12px rgba(0,0,0,0.15);
     transition: transform 0.3s;
+    padding: 10px; 
 }
 
-.highlight-card:hover {
-    transform: scale(1.03);
+.book-cover-simple {
+    width: 100%; 
+    max-height: 80%;
+    object-fit: contain;
+    border-radius: 6px;
+    margin-bottom: 5px;
+}
+
+
+.book-link-simple {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+}
+
+.book-title-simple {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-top: auto;
+    padding: 5px 0;
 }
 
 
@@ -475,7 +602,7 @@ h2.section-title {
 /* FORMULÁRIO*/
 /* ============= */
 form {
-    max-width: 400px;
+    max-width: 500px;
     margin: 0 auto;
     background-color: #fff;
     padding: 25px;

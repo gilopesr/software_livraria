@@ -1,33 +1,100 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const searchInput = document.getElementById("search-input");
-    const searchIcon = document.getElementById("search-icon");
-    if (searchIcon && searchInput) {
-        searchIcon.addEventListener('click', () => {
-            performSearch(searchInput.value);
-        });
-        searchInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                performSearch(searchInput.value);
-            }
+function getCart() {
+    const cartJson = localStorage.getItem('shoppingCart');
+    return cartJson ? JSON.parse(cartJson) : [];
+}
+
+// itens são salvos no localstorage
+function saveCart(cart) {
+    localStorage.setItem('shoppingCart', JSON.stringify(cart));
+    updateCartDisplay(cart);
+}
+
+function addToCart(itemData) {
+    const cart = getCart();
+
+    const existingItem = cart.find(item => item.id === itemData.id);
+
+    if (existingItem) {
+        existingItem.quantity += 1;
+    } else {
+        cart.push({
+            id: itemData.id,
+            title: itemData.titulo,
+            price: parseFloat(itemData.preco), 
+            quantity: 1
         });
     }
 
-    // Seletor para todos os botões de "Comprar" na página
-    const buyButtons = document.querySelectorAll('.card button');
-    
-    // Seletor para o elemento que exibe a contagem do carrinho
-    const cartCountElement = document.querySelector('.cart .count');
+    saveCart(cart);
+}
 
+function updateCartDisplay(cart) {
+    const cartCountElement = document.querySelector('#cart-icon .count');
+    const cartItemsList = document.getElementById('cart-items-list');
+    const cartTotalValue = document.getElementById('cart-total-value');
+    
+    const totalUnits = cart.reduce((sum, item) => sum + item.quantity, 0);
+    if (cartCountElement) {
+        cartCountElement.textContent = totalUnits;
+    }
+    
+    let total = 0;
+    
+    if (cartItemsList) {
+        cartItemsList.innerHTML = '';
+        
+        if (cart.length === 0) {
+            cartItemsList.innerHTML = '<p class="empty-message">Sua sacola está vazia.</p>';
+        } else {
+            cart.forEach(item => {
+                const subtotal = item.price * item.quantity;
+                total += subtotal;
+                
+                const itemElement = document.createElement('div');
+                itemElement.classList.add('cart-item');
+                itemElement.innerHTML = `
+                    <p class="item-details">${item.title} (${item.quantity}x)</p>
+                    <span>R$ ${subtotal.toFixed(2).replace('.', ',')}</span>
+                `;
+                cartItemsList.appendChild(itemElement);
+            });
+        }
+    }
+    
+    if (cartTotalValue) {
+        cartTotalValue.textContent = total.toFixed(2).replace('.', ',');
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const buyButtons = document.querySelectorAll('.add-to-cart-btn');
     buyButtons.forEach(button => {
         button.addEventListener('click', () => {
-            // Converte o texto da contagem para um número
-            let currentCount = parseInt(cartCountElement.textContent, 10);
-
-            currentCount += 1;
-
-            cartCountElement.textContent = currentCount;
+            const itemData = {
+                id: button.dataset.id,
+                titulo: button.dataset.titulo,
+                preco: button.dataset.preco
+            };
+            addToCart(itemData);
         });
     });
+
+    updateCartDisplay(getCart());
+    const cartIcon = document.getElementById('cart-icon');
+    const cartCard = document.getElementById('cart-card');
+    
+    if (cartIcon && cartCard) {
+        cartIcon.addEventListener('click', (e) => {
+            e.preventDefault();
+            cartCard.classList.toggle('hidden');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!cartCard.contains(e.target) && !cartIcon.contains(e.target) && !cartCard.classList.contains('hidden')) {
+                cartCard.classList.add('hidden');
+            }
+        });
+    }
 });
 
 

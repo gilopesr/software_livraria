@@ -13,7 +13,7 @@ class Livro(db.Model):
     data_lancamento = db.Column(db.Date, nullable=False)
     preco = db.Column(db.Float, nullable=False)
     isbn = db.Column(db.Integer,nullable=False)
-
+    destaque = db.Column(db.Boolean, default=False)
 
 class LivroNaoEncontrado(Exception):
     pass

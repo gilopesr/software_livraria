@@ -6,7 +6,9 @@ from datetime import datetime
 
 @app.route('/')
 def index():
-    return render_template("index.html")
+    livros_destaque = Livro.query.filter_by(destaque=True).limit(3).all()
+    return render_template('index.html', livros_destaque=livros_destaque)
+    
 
 @app.route("/livros", methods=['GET'])
 def listarLivros():
