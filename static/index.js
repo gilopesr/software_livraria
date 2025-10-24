@@ -229,26 +229,28 @@ function login(){
     }
 
     
-document.addEventListener('DOMContentLoaded',(eve) => {
+document.addEventListener('DOMContentLoaded',() => {
     var make_login = document.querySelector('a#login')
     var user_name = localStorage.getItem('Nome')
     var logout = document.createElement('span')
-    var login_link = document.querySelector('a#login')
+    var div_login = document.querySelector('div.login')
 
-    logout.style.color = "green"
+    logout.style.color = 'red'
     logout.textContent = 'sair'
+    logout.style.cursor = 'pointer';
 
     if(make_login && user_name){
-        make_login.textContent = user_name +" | " + logout
-        logout.appendChild(logout)
-    }
+        make_login.textContent = user_name + " | " 
+         div_login.appendChild(logout)
 
-    
-    logout.addEventListener("click",function() {
-        make_login.textContent = 'Faça seu login'
-        logout.remove()
+         logout.addEventListener("click", function() {
+             make_login.textContent = 'Faça seu login'
+             logout.remove()
+         })
+    }else{
         
-    })
+       
+    }
+}
 
-})
-
+)

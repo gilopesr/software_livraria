@@ -687,7 +687,6 @@ form select:focus {
     background-color: #a81826; 
 }
 
-/*
 header#header_client{
     text-align: center;
     color: var(--color-text-dark);
@@ -702,11 +701,8 @@ form.login{
      margin: 30px 400px;
 }
 
-#header_login{
-   text-align:center ;
-}
 
 form.login > p> a{
     text-decoration: none;
     color: var(--color-highlight-card);
-}*/
+}
