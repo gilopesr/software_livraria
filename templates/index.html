@@ -3,7 +3,8 @@
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Livraria Impacta</title>
+    <title>Livraria Entrelinhas</title>
+    <link rel="shortcut icon" type="imagex/png" href="/static/img/livro_img.png">
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' href='/static/style.css'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -13,9 +14,9 @@
     <!-- HEADER / TOP BAR -->
     <header class="top-bar">
         <div class="header__logo">
-            <a href="/" style="display: flex; align-items: center; text-decoration: none; color: inherit;">
-                <img src="https://placehold.co/40x40/ffd28c/fff?text=L" alt="Logo Livraria">
-                <span style="margin-left: 8px;">Livraria Impacta</span>
+            <a href="/" style="text-decoration: none; color: inherit;">
+                <img src="/static/img/livro_img.png" alt="Logo Livraria">
+                <span>Livraria Entrelinhas</span>
             </a>
         </div>
 
@@ -24,15 +25,28 @@
             <i id="search-icon" class="fa fa-search"></i>
         </div>
 
+
         <div class="right-menu">
             <div class="login">
                 <i class="fa fa-user"></i>
                 <span>Seja bem-vindo! <a href="/login" id="login"><strong>Faça seu login</strong></a></span>
             </div>
-            <div class="cart">
+                        
+ <div class="cart-container">
+            <a href="#" id="cart-icon" class="cart">
                 <i class="fa fa-shopping-bag"></i>
                 <span class="count">0</span>
+            </a>
+            
+            <div id="cart-card" class="cart-card hidden">
+                <div id="cart-items-list" class="cart-items-list">
+                    </div>
+                <p class="cart-total">
+                    Total: R$ <span id="cart-total-value">0,00</span>
+                </p>
+                <button class="checkout-btn">Finalizar Compra</button>
             </div>
+        </div>
         </div>
     </header>
 
@@ -40,7 +54,6 @@
     <nav class="main-nav">
         <div class="container nav-container">
             <ul class="nav-links">
-                <!-- Ver Mais -->
                 <li class="dropdown">
                     <a href="#" class="nav-link dropbtn">
                         <i class="fa fa-bars mr-2"> </i>   Ver mais
@@ -78,19 +91,16 @@
         <!-- CARROSSEL-->
         <section class="slideshow-container">
             
-            <!-- Slide 1-->
             <div class="mySlides fade">
-                <img src="/static/img/mesCriancaBanner.png" alt="Banner">
+                <img src="/static/img/png1.png" alt="Banner">
             </div>
 
-            <!-- Slide 2-->
             <div class="mySlides fade">
-                <img src="/static/img/color2.jpg" alt="Banner">
+                <img src="/static/img/png2.png" alt="Banner">
             </div>
 
-            <!-- Slide 3-->
             <div class="mySlides fade">
-                <img src="/static/img/color3.jpg" alt="Banner">
+                <img src="/static/img/png3.png" alt="Banner">
             </div>
         </section>
 
@@ -102,11 +112,33 @@
 
         <h2 class="section-title">Destaques do Mês</h2>
 
-        <!-- Imagens do livro-->
         <section class="highlight-container">
-            <div class="highlight-card">Livro 1</div>
-            <div class="highlight-card">Livro 2</div>
-            <div class="highlight-card">Livro 3</div>
+            
+            {% for livro in livros_destaque %}
+            <div class="highlight-card">
+                
+                <a href="{{ url_for('listarLivros', id=livro.id) }}" class="book-link-simple">
+                    
+                    {% if livro.destaque_tag %}
+                        <span class="destaque-tag">{{ livro.destaque_tag }}</span>
+                    {% endif %}
+
+                    <img src="{{ livro.url_img }}" alt="Capa de {{ livro.titulo }}" class="book-cover-simple">
+                    
+                    <span class="book-title-simple">{{ livro.titulo }}</span>
+                    
+                </a>
+            </div>
+            {% endfor %}
+            
+            {% if livros_destaque|length < 3 %}
+                {% for _ in range(3 - livros_destaque|length) %}
+                    <div class="highlight-card">
+                        <span>Disponível em Breve!</span>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
         </section>
 
         <div id="resultado" class="cards-container">
