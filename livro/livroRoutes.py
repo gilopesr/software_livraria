@@ -14,6 +14,10 @@ def index():
 def login():
     return render_template('login.html')
 
+@app.route('/cadastroClientes')
+def cadastroClientes():
+    return render_template('cadastroClientes.html')
+
 
 @app.route("/livros", methods=['GET'])
 def listarLivros():

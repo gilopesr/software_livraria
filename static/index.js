@@ -208,7 +208,7 @@ function cadastro(){
         loginRegisters.push({'usuário':user_name,'senha':password})
         console.log(loginRegisters)
         window.alert('Direcionando para a próxima página!');
-        location.href = '/templates/login.html'
+        location.href = '/login'
     }
 
     
