@@ -186,7 +186,6 @@ window.onload = function() {
     autoTimeout = setTimeout(autoRotate, 5000);
 };
 
-const loginRegisters = [];
 
 function cadastro(){
     var name = document.querySelector('input#name').value;
@@ -205,8 +204,7 @@ function cadastro(){
     }else if(password != confirm_password){
         error.textContent = 'As senhas devem ser iguais'
     }else{
-        loginRegisters.push({'usuário':user_name,'senha':password})
-        console.log(loginRegisters)
+        localStorage.setItem("Nome",user_name)
         window.alert('Direcionando para a próxima página!');
         location.href = '/login'
     }
@@ -215,18 +213,47 @@ function cadastro(){
 }
 
 function login(){
-    var user_name = document.getElementById('user');
-    var password = document.getElementById('password');
-    
-        console.log(loginRegisters)
-    for(let user of loginRegisters){
-            if(user.usuário != user_name || password != user.senha){
-                alert('Erro ! senha ou usuário inválidos')
-            }else{
-                location.href = '/templates/index.html'
+    var user_name = document.getElementById('user_name').value;
+    var password = document.getElementById('password').value;
+
+    var loginSucess = false
+
+            if(localStorage.getItem('Nome') === user_name || localStorage.getItem('senha')===password){
+                loginSucess = true
+                location.href = '/'
+                            
+            }else if(localStorage.getItem('Nome') === '' ){
+                window.alert('Primeiro realize o login!!')
+            }else if(user_name === '' || password === ''){
+                window.alert('campos vazios')
+                return
+            }
+            else{
+               window.alert('Usuário ou senha inválidos!')
             }
     }
 
     
+document.addEventListener('DOMContentLoaded',() => {
+    var make_login = document.querySelector('a#login')
+    var user_name = localStorage.getItem('Nome')
+    var logout = document.createElement('span')
+    var div_login = document.querySelector('div.login')
+
+    logout.style.color = 'red';
+    logout.textContent = 'sair';
+    logout.style.cursor = 'pointer';
+
+    if(make_login && user_name){
+        make_login.textContent = user_name + " | " 
+         div_login.appendChild(logout)
+
+         logout.addEventListener("click", function() {
+             make_login.textContent = 'Faça seu login';
+             localStorage.removeItem('Nome');
+             window.location.reload();
+         })
+    }
 }
 
+)
