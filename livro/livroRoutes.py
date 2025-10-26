@@ -10,6 +10,11 @@ def index():
     return render_template('index.html', livros_destaque=livros_destaque)
     
 
+@app.route('/login')
+def login():
+    return render_template('login.html')
+
+
 @app.route("/livros", methods=['GET'])
 def listarLivros():
     livros = Livro.query.all()
@@ -53,6 +58,9 @@ def buscarLivro_isbn(isbn):
 @app.route("/cadastrarLivro", defaults={'livro_id': None}, methods=["GET", "POST"])
 @app.route("/cadastrarLivro/<int:livro_id>", methods=["GET", "POST"])
 def gerenciarLivro(livro_id):
+
+
+
     lista_formato = ["Capa Comum", "Capa Dura", "Ebook", "Audiobook"]
     lista_genero = ["Romance", "Ficção Científica", "Fantasia", "Biografia", "Geek", "Drama"]
     
