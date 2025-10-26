@@ -2,6 +2,7 @@ from config import app,db
 from flask import jsonify, render_template, request, redirect, url_for
 from autor.autorModel import Autor, AutorNaoEncontrado
 from datetime import datetime
+from livro.livroModel import Livro
 
 @app.route("/autor", methods=['GET'])
 def listarAutores():
