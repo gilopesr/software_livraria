@@ -16,13 +16,13 @@
 
     <main>
       <form method="POST" class="login">
-      
+         <h2>Faça seu login</h2>
          <label for="user_name">Usuário:</label>
-         <input type="text" mame="user_name" id="user_name">
+         <input type="text" name="user_name" id="user_name">
          <label for="senha">Senha:</label>
-         <input type="password">
-         <button type="button">Entrar</button>
-         <p>Não tem conta?<a href="/templates/cadastroClientes.html">Criar uma</a></p> 
+         <input type="password" id="password">
+         <button type="button" onclick="login()">Entrar</button>
+         <p>Não tem conta?<a href="/cadastroClientes">Criar uma</a></p> 
       
     </form>
     </main>

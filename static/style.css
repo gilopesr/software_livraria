@@ -25,16 +25,6 @@ body {
     padding: 0 20px;
 }
 
-header#header_client{
-    text-align: center;
-    color: var(--color-text-dark);
-    font-size: 30px;
-}
-
-header#header_login{
-    text-align: center;
-}
-
 h1 {
     color: var(--color-primary); 
     text-align: center;
@@ -697,10 +687,22 @@ form select:focus {
     background-color: #a81826; 
 }
 
+header#header_client{
+    text-align: center;
+    color: var(--color-text-dark);
+    font-size: 30px;
+}
+
 a#login{
     text-decoration: none;
 }
 
 form.login{
-     margin: 20px 300px;
+     margin: 30px 400px;
+}
+
+
+form.login > p> a{
+    text-decoration: none;
+    color: var(--color-highlight-card);
 }
