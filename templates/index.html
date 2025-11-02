@@ -121,7 +121,7 @@
             {% for livro in livros_destaque %}
             <div class="highlight-card">
                 
-                <a href="{{ url_for('listarLivros', id=livro.id) }}" class="book-link-simple">
+                <a href="{{ url_for('livro.listarLivros', id=livro.id) }}" class="book-link-simple">
                     
                     {% if livro.destaque_tag %}
                         <span class="destaque-tag">{{ livro.destaque_tag }}</span>
