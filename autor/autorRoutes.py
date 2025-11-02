@@ -1,27 +1,25 @@
-from config import app,db
-from flask import jsonify, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for, session, flash
+from config import db
 from autor.autorModel import Autor, AutorNaoEncontrado
 from datetime import datetime
-from livro.livroModel import Livro
+from cliente.clienteModel import Cliente  # importe Cliente se for usar aqui
 
-@app.route("/autor", methods=['GET'])
+autor_bp = Blueprint('autor', __name__)
+
+@autor_bp.route("/autor", methods=['GET'])
 def listarAutores():
     autores = Autor.query.all()
     return render_template("listarAutores.html", autores=autores)
 
-
-@app.route("/autor/<path:nome>/livros", methods=['GET'])
+@autor_bp.route("/autor/<path:nome>/livros", methods=['GET'])
 def listarAutorLivros(nome):
     autor = Autor.query.filter(Autor.nome.ilike(f'%{nome}%')).first()
-    
     if not autor:
         return f'Erro: Autor(a) não encontrado(a)', 404
-    
     return render_template('livrosAutor.html', autor=autor, livros=autor.livros)
 
-
-@app.route("/cadastrarAutor", defaults={'autor_id': None}, methods=["GET", "POST"])
-@app.route("/cadastrarAutor/<int:autor_id>", methods=["GET", "POST"])
+@autor_bp.route("/cadastrarAutor", defaults={'autor_id': None}, methods=["GET", "POST"])
+@autor_bp.route("/cadastrarAutor/<int:autor_id>", methods=["GET", "POST"])
 def gerenciarAutor(autor_id):
     autor = None
     if autor_id:
@@ -36,7 +34,7 @@ def gerenciarAutor(autor_id):
         if action == 'excluir' and autor:
             db.session.delete(autor)
             db.session.commit()
-            return redirect(url_for("listarAutores")) 
+            return redirect(url_for("autor.listarAutores"))
 
         target_autor = autor if autor else Autor() 
         
@@ -59,6 +57,28 @@ def gerenciarAutor(autor_id):
             
         db.session.commit()
         
-        return redirect(url_for("listarAutores"))
+        return redirect(url_for("autor.listarAutores"))
 
     return render_template("cadastrarAutor.html", autor=autor)
+
+
+
+from flask import Blueprint, flash  
+auth_bp = Blueprint("auth_bp", __name__)
+
+@auth_bp.route("/login", methods=["GET", "POST"])
+def login():
+    if request.method == "POST":
+        username = request.form.get("user_name")
+        senha = request.form.get("password")
+
+        cliente = Cliente.query.filter_by(username=username, senha=senha).first()
+        if cliente:
+            session['nome_cliente'] = cliente.nome  
+            flash(f"✅ Bem-vindo, {cliente.nome}!", "sucesso")
+            return redirect(url_for("livro.index"))
+        else:
+            flash("⚠ Usuário ou senha incorretos!", "erro")
+            return redirect(url_for("auth_bp.login"))
+    
+    return render_template("login.html")
