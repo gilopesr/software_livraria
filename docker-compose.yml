@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   sistemalivraria:
     build: .
@@ -10,7 +12,8 @@ services:
       - FLASK_ENV=development
     command: python /sistemalivraria/app.py
     depends_on:
-      - db
+      db:
+        condition: service_healthy 
 
   db:
     image: mysql:8.0
@@ -20,9 +23,16 @@ services:
       MYSQL_ROOT_PASSWORD: 27052005
       MYSQL_DATABASE: livraria
     ports:
-      - "3307:3306"
+      - "3310:3306"
     volumes:
       - mysql_data:/var/lib/mysql
+    #verificação sql 
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p27052005"]
+      interval: 5s
+      timeout: 10s
+      retries: 5
+      start_period: 20s
 
 volumes:
   mysql_data:

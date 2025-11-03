@@ -5,7 +5,7 @@ class Autor(db.Model):
 
     id = db.Column(db.Integer, primary_key = True)
     nome = db.Column(db.String(100))
-    dataNasc = db.Column(db.Date, nullable=False)
+    dataNasc = db.Column(db.Date, nullable=True)
     livros = db.relationship("Livro", back_populates="autor")
 
 

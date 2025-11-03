@@ -1,14 +1,34 @@
-import os
-from flask import Flask
+from flask import Flask, session
 from flask_sqlalchemy import SQLAlchemy
 
+db = SQLAlchemy()
 
-app = Flask(__name__)
+def create_app():
+    app = Flask(__name__)
 
-app.config['HOST'] = '0.0.0.0'
-app.config['PORT']=5000
-app.config['DEBUG'] = True
-app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://root:27052005@db/livraria"
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    app.secret_key = "uma_chave_super_secreta"
+    app.config['HOST'] = '0.0.0.0'
+    app.config['PORT'] = 5000
+    app.config['DEBUG'] = True
+    app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://root:27052005@mysql_livraria:3306/livraria"
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    app.config['SECRET_KEY'] = "chave_secreta"
 
-db = SQLAlchemy(app)
+    db.init_app(app)
+
+    from cliente.clienteRoutes import cliente_bp
+    from livro.livroRoutes import livro_bp
+    from autor.autorRoutes import autor_bp
+    from auth.authRoutes import auth_bp
+
+    app.register_blueprint(cliente_bp)
+    app.register_blueprint(livro_bp)
+    app.register_blueprint(autor_bp)
+    app.register_blueprint(auth_bp) # login agora é totalmente controlado pelo auth_bp
+
+    
+    @app.route("/")
+    def home():
+        return "Sistema Livraria está funcionando!"
+
+    return app

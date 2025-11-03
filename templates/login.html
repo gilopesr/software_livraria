@@ -1,30 +1,29 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
 <head>
-    <meta charset='utf-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Login</title>
-    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-    <link rel='stylesheet' type='text/css' media='screen' href='/static/style.css'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src='/static/index.js' defer></script>
 </head>
-<body>
-    <header id="header_login">
-      Faça seu login
-    </header>
-
+<body class="login">
     <main>
-      <form method="POST" class="login">
-         <h2>Faça seu login</h2>
-         <label for="user_name">Usuário:</label>
-         <input type="text" name="user_name" id="user_name">
-         <label for="senha">Senha:</label>
-         <input type="password" id="password">
-         <button type="button" onclick="login()">Entrar</button>
-         <p>Não tem conta?<a href="/cadastroClientes">Criar uma</a></p> 
-      
-    </form>
+        <form method="POST" action="{{ url_for('auth_bp.login') }}" class="login">
+            <h2>Faça seu login</h2>
+
+            <label for="user_name">Usuário:</label>
+            <input type="text" name="username" id="user_name" required>
+
+            <label for="password">Senha:</label>
+            <input type="password" name="password" id="password" required>
+
+            <button type="submit">Entrar</button>
+
+            <p>Não tem conta? <a href="{{ url_for('cliente_bp.cadastro') }}">Criar uma</a></p>
+        </form>
     </main>
 </body>
 </html>
+

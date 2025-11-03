@@ -3,34 +3,60 @@
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Cadastro</title>
+    <title>Cadastro de Cliente</title>
     <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-    <link rel='stylesheet' type='text/css' media='screen' href='/static/style.css'>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <script src='/static/index.js' defer></script>
+    <link rel='stylesheet' href='/static/style.css'>
 </head>
-<body>
-    <h1>Cadastro de cliente</h1>
-
+<body class="login">
     <main>
-        <form>
-            <label for="nome">Nome: </label>
-            <input type="text" name="name" id="name">
-            <label for="email">Email: </label>
-            <input type="email" name="email" id="email">
-            <label for="data_nasc">Data de Nascimento:</label>
-            <input type="date" name="data_nasc" id='data_nasc'>
-            <label for="endereco">Endereço:</label>
-            <input type="text" name="endereco" id="endereco">
-            <label for="user_name">Nome de usuário:</label>
-            <input type="text" name="user" id="user">
-            <label for="password_user">Senha de usuário</label>
-            <input type="password" name="password_user" id="password_user">
-            <label for="confirm_password">Confirme sua senha:</label>
-            <input type="password" id="confirm_password" name="confirm_password"> 
-            <button onclick="cadastro()" type="button">Próxima página</button>
-            <p id="error"></p>
+        <form action="{{ url_for('cliente_bp.salvar_cliente') }}" method="POST">
+            <h2>Cadastro de Cliente</h2>
+
+            <fieldset>
+                <legend>Dados Pessoais</legend>
+                <label for="nome">Nome Completo: <span class="required">*</span></label>
+                <input type="text" name="nome" id="nome" required autocomplete="name" autofocus>
+
+                <label for="email">Email: <span class="required">*</span></label>
+                <input type="email" name="email" id="email" required autocomplete="email">
+
+                <label for="telefone">Telefone: <span class="required">*</span></label>
+                <input type="tel" name="telefone" id='telefone' required 
+                       placeholder="(XX) 9XXXX-XXXX" pattern="^\(\d{2}\)\s\d{5}-\d{4}$"> 
+
+                <label for="data_nasc">Data de Nascimento: <span class="required">*</span></label>
+                <input type="date" name="data_nasc" id='data_nasc' required>
+
+                <label for="endereco">Endereço Completo:</label>
+                <input type="text" name="endereco" id="endereco" autocomplete="street-address">
+            </fieldset>
+
+            <fieldset>
+                <legend>Login</legend>
+                <label for="username">Usuário (Login): <span class="required">*</span></label>
+                <input type="text" name="username" id='username' required autocomplete="username"> 
+
+                <label for="senha">Senha: <span class="required">*</span></label>
+                <input type="password" name="senha" id="senha" required minlength="8" autocomplete="new-password">
+
+                <label for="confirmar_senha">Confirme a Senha: <span class="required">*</span></label>
+                <input type="password" name="confirmar_senha" id="confirmar_senha" required minlength="8" autocomplete="new-password"> 
+            </fieldset>
+            
+            <button type="submit">Finalizar Cadastro</button>
+
+            {% with mensagens = get_flashed_messages(with_categories=True) %}
+                {% if mensagens %}
+                    <div class="flash-messages">
+                    {% for categoria, mensagem in mensagens %}
+                        <p class="{{ categoria }}">{{ mensagem }}</p>
+                    {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+            
+            <p class="login-link">Já tem uma conta? <a href="{{ url_for('auth_bp.login') }}">Fazer Login</a></p>
+
         </form>
     </main>
 </body>
