@@ -8,13 +8,8 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body>
-    <header id="header_login">
-        Faça seu login
-    </header>
-
+<body class="login">
     <main>
-        <!-- Formulário envia os dados para a rota do blueprint -->
         <form method="POST" action="{{ url_for('auth_bp.login') }}" class="login">
             <h2>Faça seu login</h2>
 
@@ -26,7 +21,7 @@
 
             <button type="submit">Entrar</button>
 
-            <p>Não tem conta? <a href="{{ url_for('cliente_bp.salvar_cliente') }}">Criar uma</a></p>
+            <p>Não tem conta? <a href="{{ url_for('cliente_bp.cadastro') }}">Criar uma</a></p>
         </form>
     </main>
 </body>

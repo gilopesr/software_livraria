@@ -26,7 +26,11 @@
         <div class="right-menu">
         <div class="login">
             <i class="fa fa-user"></i>
-            <span>Seja bem-vindo!<a href="/login" id="login"> <strong>Faça seu login</strong></a></span>
+            {% if session.nome_cliente %}
+                <span>Bem-vindo, {{ session.nome_cliente }}! <a href="{{ url_for('auth_bp.logout') }}"><strong>Sair</strong></a></span>
+            {% else %}
+                <span>Seja bem-vindo! <a style="text-decoration: none;" href="{{ url_for('auth_bp.login') }}"><strong>Faça seu login</strong></a></span>
+            {% endif %}
         </div>
 
         <div class="cart-container">

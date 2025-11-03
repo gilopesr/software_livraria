@@ -15,7 +15,7 @@ def login():
             # Salva o nome do cliente na sessão
             session['nome_cliente'] = cliente.nome
 
-            flash(f"✅ Bem-vindo, {cliente.nome}!", "sucesso")
+            flash(f"Bem-vindo, {cliente.nome}!", "sucesso")
             # Redireciona para a página inicial de livros (ajuste se necessário)
             return redirect(url_for("livro.index"))
         else:
@@ -29,6 +29,6 @@ def login():
 @auth_bp.route("/logout")
 def logout():
     session.pop('nome_cliente', None)
-    flash("✅ Você saiu da sua conta.", "sucesso")
+    flash("Você saiu da sua conta.", "sucesso")
     return redirect(url_for("auth_bp.login"))
 

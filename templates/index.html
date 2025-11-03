@@ -25,18 +25,18 @@
             <i id="search-icon" class="fa fa-search"></i>
         </div>
 
-
             
+        <div class="right-menu">
         <div class="login">
             <i class="fa fa-user"></i>
             {% if session.nome_cliente %}
                 <span>Bem-vindo, {{ session.nome_cliente }}! <a href="{{ url_for('auth_bp.logout') }}"><strong>Sair</strong></a></span>
             {% else %}
-                <span>Seja bem-vindo! <a href="{{ url_for('auth_bp.login') }}"><strong>Faça seu login</strong></a></span>
+                <span>Seja bem-vindo! <a style="text-decoration: none;" href="{{ url_for('auth_bp.login') }}"><strong>Faça seu login</strong></a></span>
             {% endif %}
         </div>
-    
- <div class="cart-container">
+
+        <div class="cart-container">
             <a href="#" id="cart-icon" class="cart">
                 <i class="fa fa-shopping-bag"></i>
                 <span class="count">0</span>
