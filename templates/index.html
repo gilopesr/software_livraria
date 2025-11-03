@@ -25,14 +25,14 @@
             <i id="search-icon" class="fa fa-search"></i>
         </div>
 
-
             
+        <div class="right-menu">
         <div class="login">
             <i class="fa fa-user"></i>
             {% if session.nome_cliente %}
                 <span>Bem-vindo, {{ session.nome_cliente }}! <a href="{{ url_for('auth_bp.logout') }}"><strong>Sair</strong></a></span>
             {% else %}
-                <span>Seja bem-vindo! <a href="{{ url_for('auth_bp.login') }}"><strong>Faça seu login</strong></a></span>
+                <span>Seja bem-vindo! <a style="text-decoration: none;" href="{{ url_for('auth_bp.login') }}"><strong>Faça seu login</strong></a></span>
             {% endif %}
 
             <a href="{{ url_for('cliente_bp.logout') }}">Sair</a>
@@ -128,7 +128,7 @@
             {% for livro in livros_destaque %}
             <div class="highlight-card">
                 
-                <a href="{{ url_for('listarLivros', id=livro.id) }}" class="book-link-simple">
+                <a href="{{ url_for('livro.listarLivros', id=livro.id) }}" class="book-link-simple">
                     
                     {% if livro.destaque_tag %}
                         <span class="destaque-tag">{{ livro.destaque_tag }}</span>

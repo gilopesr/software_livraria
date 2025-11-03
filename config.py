@@ -16,7 +16,6 @@ def create_app():
 
     db.init_app(app)
 
-    # Registra os blueprints **uma única vez**
     from cliente.clienteRoutes import cliente_bp
     from livro.livroRoutes import livro_bp
     from autor.autorRoutes import autor_bp
@@ -25,11 +24,11 @@ def create_app():
     app.register_blueprint(cliente_bp)
     app.register_blueprint(livro_bp)
     app.register_blueprint(autor_bp)
-    app.register_blueprint(auth_bp)  # login agora é totalmente controlado pelo auth_bp
+    app.register_blueprint(auth_bp) # login agora é totalmente controlado pelo auth_bp
 
-    # Rota raiz apenas para teste
+    
     @app.route("/")
     def home():
-        return "Sistema Livraria está funcionando! 🚀"
+        return "Sistema Livraria está funcionando!"
 
     return app
