@@ -27,7 +27,6 @@
             <label for="username">Usuario:</label>
             <input type="text" name="username" id='username'>           
 
-
             <label for="endereco">Endereço:</label>
             <input type="text" name="endereco" id="endereco">
 
@@ -39,14 +38,15 @@
 
             <button type="submit">Cadastrar</button>
 
-            <!-- Mostrar mensagens com flask -->
-            {% with mensagens = get_flashed_messages(with_categories=True) %}
-                {% if mensagens %}
-                    {% for categoria, mensagem in mensagens %}
-                        <p class="{{ categoria }}">{{ mensagem }}</p>
-                    {% endfor %}
-                {% endif %}
-            {% endwith %}
+            {% if sucesso %}
+              <script>
+                document.addEventListener("DOMContentLoaded", function() {
+                  if (confirm("{{ mensagem }}")) {
+                    window.location.href = "{{ url_for('livro.index') }}";
+                  }
+                });
+              </script>
+            {% endif %}
         </form>
     </main>
 </body>

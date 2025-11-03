@@ -34,7 +34,14 @@
             {% else %}
                 <span>Seja bem-vindo! <a href="{{ url_for('auth_bp.login') }}"><strong>Faça seu login</strong></a></span>
             {% endif %}
+
+            <a href="{{ url_for('cliente_bp.logout') }}">Sair</a>
+
+
         </div>
+
+        
+
     
  <div class="cart-container">
             <a href="#" id="cart-icon" class="cart">
