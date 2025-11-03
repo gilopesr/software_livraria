@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Saindo...</title>
+    <meta http-equiv="refresh" content="3;url={{ url_for('livro.index') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f8f8;
+            text-align: center;
+            padding-top: 100px;
+        }
+        .msg {
+            background-color: #fff;
+            border: 2px solid #ccc;
+            border-radius: 12px;
+            padding: 40px;
+            display: inline-block;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .msg h2 {
+            color: #444;
+        }
+    </style>
+</head>
+<body>
+    <div class="msg">
+        <h2>{{ mensagem }}</h2>
+        <p>Você será redirecionado para a página inicial em 3 segundos...</p>
+    </div>
+
+    <script>
+      // Mostra alerta antes de sair
+      alert("{{ mensagem }}");
+      window.location.href = "{{ url_for('livro.index') }}";
+    </script>
+</body>
+</html>

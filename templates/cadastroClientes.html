@@ -24,12 +24,8 @@
                 <input type="tel" name="telefone" id='telefone' required 
                        placeholder="(XX) 9XXXX-XXXX" pattern="^\(\d{2}\)\s\d{5}-\d{4}$"> 
 
-                <label for="data_nasc">Data de Nascimento: <span class="required">*</span></label>
-                <input type="date" name="data_nasc" id='data_nasc' required>
-
-                <label for="endereco">Endereço Completo:</label>
-                <input type="text" name="endereco" id="endereco" autocomplete="street-address">
-            </fieldset>
+            <label for="endereco">Endereço:</label>
+            <input type="text" name="endereco" id="endereco">
 
             <fieldset>
                 <legend>Login</legend>
@@ -45,18 +41,15 @@
             
             <button type="submit">Finalizar Cadastro</button>
 
-            {% with mensagens = get_flashed_messages(with_categories=True) %}
-                {% if mensagens %}
-                    <div class="flash-messages">
-                    {% for categoria, mensagem in mensagens %}
-                        <p class="{{ categoria }}">{{ mensagem }}</p>
-                    {% endfor %}
-                    </div>
-                {% endif %}
-            {% endwith %}
-            
-            <p class="login-link">Já tem uma conta? <a href="{{ url_for('auth_bp.login') }}">Fazer Login</a></p>
-
+            {% if sucesso %}
+              <script>
+                document.addEventListener("DOMContentLoaded", function() {
+                  if (confirm("{{ mensagem }}")) {
+                    window.location.href = "{{ url_for('livro.index') }}";
+                  }
+                });
+              </script>
+            {% endif %}
         </form>
     </main>
 </body>
