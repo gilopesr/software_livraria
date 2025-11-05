@@ -13,13 +13,13 @@ def login():
         cliente = Cliente.query.filter_by(username=username, senha=senha).first()
         if cliente:
             # Salva o nome do cliente na sessão
-            session['nome_cliente'] = cliente.nome
+            session['nome_cliente'] = cliente.username
 
-            flash(f"Bem-vindo, {cliente.nome}!", "sucesso")
+            flash(f"Bem-vindo, {cliente.username}!", "sucesso")
             # Redireciona para a página inicial de livros (ajuste se necessário)
             return redirect(url_for("livro.index"))
         else:
-            flash("⚠ Usuário ou senha incorretos!", "erro")
+            flash("Usuário ou senha incorretos!", "erro")
             return redirect(url_for("auth_bp.login"))
     
     return render_template("login.html")

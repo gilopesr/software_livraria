@@ -5,6 +5,10 @@ from sqlalchemy.exc import IntegrityError
 
 cliente_bp = Blueprint("cliente_bp", __name__)
 
+@cliente_bp.route('/login')
+def login():
+    return render_template('login.html')
+
 @cliente_bp.route("/cadastroClientes")
 def cadastro():
     return render_template("cadastroClientes.html")
@@ -26,7 +30,7 @@ def salvar_cliente():
             data_nasc = request.form.get("data_nasc")
             username = request.form.get("username")
 
-            # ✅ 1. Validações
+            # Validações
             if not nome or not email or not senha:
                 flash("⚠ Nome, Email e Senha são obrigatórios!", "erro")
                 return redirect(url_for("cliente_bp.salvar_cliente"))
@@ -39,13 +43,12 @@ def salvar_cliente():
                 flash("⚠ Username é obrigatório!", "erro")
                 return redirect(url_for("cliente_bp.salvar_cliente"))
 
-            # ✅ 2. Verificar se o email já existe
+            # Verificar se o email já existe
             cliente_existente = Cliente.query.filter_by(email=email).first()
             if cliente_existente:
                 flash("⚠ Este email já está cadastrado!", "erro")
                 return redirect(url_for("cliente_bp.salvar_cliente"))
 
-            # ✅ 3. Criar cliente
             novo_cliente = Cliente(
                 nome=nome,
                 email=email,
@@ -59,24 +62,37 @@ def salvar_cliente():
             db.session.add(novo_cliente)
             db.session.commit()
 
-            flash("✅ Cliente cadastrado com sucesso!", "sucesso")
-            return render_template("cadastroClientes.html", sucesso=True, mensagem="✅ Cliente cadastrado com sucesso!")
+            flash("Cliente cadastrado com sucesso!", "sucesso")
+            return redirect(url_for("cliente_bp.login"))
 
         except IntegrityError:
             db.session.rollback()
             flash("⚠ Erro no banco de dados!", "erro")
             return redirect(url_for("cliente_bp.salvar_cliente"))
 
-    # ✅ Se for GET → apenas mostra o formulário
     return render_template("cadastroClientes.html")
+
+@cliente_bp.route("/clientes/check_email", methods=["POST"])
+def check_email():
+    """Verifica se o email já está cadastrado (usado via Fetch API no JS)."""
+    email = request.json.get("email") # Pega o email do corpo JSON da requisição
+    
+    if not email:
+        return {"available": False, "message": "Email não fornecido."}, 400
+
+    # Verifica se o email já existe
+    cliente_existente = Cliente.query.filter_by(email=email).first()
+    
+    if cliente_existente:
+        # Retorna JSON indicando que o email NÃO está disponível
+        return {"available": False, "message": "Este email já está cadastrado!"}
+
+    
 
 from flask import session
 
 @cliente_bp.route("/logout")
 def logout():
-    # Remove o cliente da sessão
     session.clear()
-
-    # Exibe uma mensagem de agradecimento
-    return render_template("logout.html", mensagem="Você saiu com sucesso! Obrigado por visitar nossa livraria 😊")
+    return render_template("logout.html", mensagem="Você saiu da conta! Obrigado por visitar nossa livraria :)")
 
