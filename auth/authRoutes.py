@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session
 from config import db
 from cliente.clienteModel import Cliente
+from werkzeug.security import check_password_hash
 
 auth_bp = Blueprint("auth_bp", __name__)
 
@@ -8,15 +9,16 @@ auth_bp = Blueprint("auth_bp", __name__)
 def login():
     if request.method == "POST":
         username = request.form.get("username")
-        senha = request.form.get("password")
+        password = request.form.get("password")
 
-        cliente = Cliente.query.filter_by(username=username, senha=senha).first()
-        if cliente:
-            # Salva o nome do cliente na sessão
+        cliente = Cliente.query.filter_by(username=username).first()
+
+        # 2. Verifica se o cliente existe E se a senha fornecida corresponde ao hash armazenado
+        if cliente and check_password_hash(cliente.senha, password):
+            
             session['nome_cliente'] = cliente.username
 
             flash(f"Bem-vindo, {cliente.username}!", "sucesso")
-            # Redireciona para a página inicial de livros (ajuste se necessário)
             return redirect(url_for("livro.index"))
         else:
             flash("Usuário ou senha incorretos!", "erro")

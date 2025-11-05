@@ -150,23 +150,17 @@
                 .then(response => response.json())
                 .then(data => {
                     emailMessage.classList.remove('loading');
-                    emailMessage.textContent = data.message;
-                    
+                    emailMessage.textContent = ""; 
+                    emailMessage.classList.remove('erro', 'sucesso');
+
                     if (data.available === false) {
+                        emailMessage.textContent = data.message; 
                         emailMessage.classList.add('erro');
                         emailInput.setCustomValidity(data.message);
                     } else {
-                        emailMessage.classList.add('sucesso');
-                        emailInput.setCustomValidity('');
+                        emailInput.setCustomValidity(''); 
                     }
                 })
-                .catch(error => {
-                    console.error('Erro ao verificar email:', error);
-                    emailMessage.textContent = "Erro ao conectar com o servidor.";
-                    emailMessage.classList.add('erro');
-                    emailMessage.classList.remove('loading');
-                    emailInput.setCustomValidity("Erro de servidor.");
-                });
             }, 700);
         }
 
