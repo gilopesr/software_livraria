@@ -1,3 +1,61 @@
+document.addEventListener('DOMContentLoaded', () => {
+    const searchInput = document.getElementById('search-input');
+    const searchIcon = document.getElementById('search-icon');
+
+    if (searchInput && searchIcon) {
+        
+        searchIcon.addEventListener('click', () => {
+            const termo = searchInput.value.trim();
+            performSearch(termo);
+        });
+
+        searchInput.addEventListener('keypress', (event) => {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                const termo = searchInput.value.trim();
+                performSearch(termo);
+            }
+        });
+    }
+});
+
+async function performSearch(termo) {
+    if (!termo) {
+        alert("Por favor, digite um termo de busca.");
+        return;
+    }
+
+    try {
+        // Tenta a busca por ISBN
+        if (/^\d+$/.test(termo)) {
+            window.location.href = `/livros/${termo}`;
+            return;
+        }
+
+        // Tenta a busca por autor
+        const urlAutor = `/autor/${encodeURIComponent(termo)}/livros`;
+        const resAutor = await fetch(urlAutor);
+        if (resAutor.ok) {
+            window.location.href = urlAutor;
+            return;
+        }
+
+        // Tenta a busca por título
+        const urlTitulo = `/livros/titulo/${encodeURIComponent(termo)}`;
+        const resTitulo = await fetch(urlTitulo);
+        if (resTitulo.ok) {
+            window.location.href = urlTitulo;
+            return;
+        }
+
+        alert("Nenhum resultado encontrado para o termo de busca.");
+
+    } catch (err) {
+        console.error("Erro na busca:", err);
+        alert("Ocorreu um erro ao tentar realizar a busca.");
+    }
+}
+
 function getCart() {
     const cartJson = localStorage.getItem('shoppingCart');
     return cartJson ? JSON.parse(cartJson) : [];
@@ -125,44 +183,6 @@ function removeItemFromCart(itemId) {
             console.log(`${item.title} removido completamente.`);
         }
         saveCart(cart);
-    }
-}
-
-
-async function performSearch(termo) {
-    if (!termo) {
-        alert("Por favor, digite um termo de busca.");
-        return;
-    }
-
-    try {
-        // Tenta a busca por ISBN
-        if (/^\d+$/.test(termo)) {
-            window.location.href = `/livros/${termo}`;
-            return;
-        }
-
-        // Tenta a busca por autor
-        const urlAutor = `/autor/${encodeURIComponent(termo)}/livros`;
-        const resAutor = await fetch(urlAutor);
-        if (resAutor.ok) {
-            window.location.href = urlAutor;
-            return;
-        }
-
-        // Tenta a busca por título
-        const urlTitulo = `/livros/titulo/${encodeURIComponent(termo)}`;
-        const resTitulo = await fetch(urlTitulo);
-        if (resTitulo.ok) {
-            window.location.href = urlTitulo;
-            return;
-        }
-
-        alert("Nenhum resultado encontrado para o termo de busca.");
-
-    } catch (err) {
-        console.error("Erro na busca:", err);
-        alert("Ocorreu um erro ao tentar realizar a busca.");
     }
 }
 
