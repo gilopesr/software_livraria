@@ -703,3 +703,7 @@ form select:focus {
 #excluir:hover {
     background-color: #a81826; 
 }
+
+tr,td{
+   padding-left: 200px;
+}

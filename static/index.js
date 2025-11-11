@@ -343,4 +343,11 @@ window.onload = function() {
     autoTimeout = setTimeout(autoRotate, 5000);
 };
 
+var btn = document.querySelector("button.checkout-btn")
+btn.addEventListener('click', function(){
+    localtion.href = '/templates/compras.html'
+})
 
+function shoppingCart(){
+    
+}
