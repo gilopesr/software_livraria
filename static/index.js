@@ -85,7 +85,7 @@ function addToCart(itemData) {
     saveCart(cart);
 }
 
-function updateCartDisplay(cart) {
+/* */function updateCartDisplay(cart) {
     const cartCountElement = document.querySelector('#cart-icon .count');
     const cartItemsList = document.getElementById('cart-items-list');
     const cartTotalValue = document.getElementById('cart-total-value');
@@ -239,9 +239,26 @@ window.onload = function() {
 
 var btn = document.querySelector("button.checkout-btn")
 btn.addEventListener('click', function(){
-    localtion.href = '/templates/compras.html'
+    location.href = '/compras'
 })
 
-function shoppingCart(){
+function shoppingCart(cart){
+    const cartItemList = document.getElementById("cart-card");
+    var productCart = document.getElementById("product-cart");
+    var priceCart = document.getElementById("price-cart");
+    var qttdCart = document.getElementById("qttd-cart");
+    var totalCart = document.getElementById("total-cart");
+
     
+
+    cartItemList.forEach(item => {
+        productCart.innerHTML = 
+        `<img src={item.livro.url_img} alt="capa do livro">
+        `
+        priceCart.innerHTML = `
+    {for livro in ${cartItemList.ATTRIBUTE_NODE}}
+        
+        <p><strong>{livro.preco}</strong></p>
+        `
+    })
 }
