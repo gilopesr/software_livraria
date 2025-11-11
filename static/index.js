@@ -186,6 +186,46 @@ function removeItemFromCart(itemId) {
     }
 }
 
+///// VERIFICAÇÃO LOGIN 
+document.addEventListener('DOMContentLoaded', function() {
+    const checkoutButton = document.getElementById('checkout-button');
+    const loginPageUrl = '/login';
+    const checkoutPageUrl = '/checkout.html';
+
+    if (checkoutButton) {
+        checkoutButton.addEventListener('click', async function(event) {
+            event.preventDefault(); 
+            
+            const estaLogado = await isUserLoggedIn();
+            
+            if (estaLogado) {
+                // Usuáriologado: redireciona para a página de checkout
+                window.location.href = checkoutPageUrl;
+            } else {
+                // Usuário NÃO logado: redireciona para a página de login
+                window.location.href = loginPageUrl + '?next=' + encodeURIComponent(checkoutPageUrl);
+            }
+        });
+    }
+});
+
+
+async function isUserLoggedIn() {
+    try {
+        const response = await fetch('/status_login'); 
+        if (!response.ok) {
+            console.error('Erro na resposta do servidor:', response.statusText);
+            return false;
+        }
+
+        const data = await response.json();
+        return data.logged_in; 
+
+    } catch (error) {
+        console.error('Erro ao verificar status de login:', error);
+        return false; 
+    }
+}
 
 //CARROSSEL
 

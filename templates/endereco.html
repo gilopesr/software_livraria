@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='/static/style.css'>
+    <script src='/static/index.js'></script>
+</head>
+<body>
+    <form id="address-form">
+    <label for="cep">CEP:</label>
+    <input type="text" id="cep" name="cep" maxlength="8" onblur="consultarCEP(this.value)" required>
+    
+    <label for="logradouro">Rua:</label>
+    <input type="text" id="logradouro" name="logradouro" required>
+    
+    <label for="numero">Número:</label>
+    <input type="text" id="numero" name="numero" required>
+
+    <label for="complemento">Complemento:</label>
+    <input type="text" id="complemento" name="complemento" >
+    
+    <label for="bairro">Bairro:</label>
+    <input type="text" id="bairro" name="bairro" required>
+    
+    <label for="cidade">Cidade:</label>
+    <input type="text" id="cidade" name="cidade" required>
+    
+    <label for="uf">Estado:</label>
+    <input type="text" id="uf" name="uf" maxlength="2" required>
+    
+    <button type="submit">Salvar Endereço</button>
+</form>
+<script>
+    function limparFormularioCEP() {
+        document.getElementById('logradouro').value = "";
+        document.getElementById('bairro').value = "";
+        document.getElementById('cidade').value = "";
+        document.getElementById('uf').value = "";
+    }
+
+    async function consultarCEP(cepValue) {
+        const cep = cepValue.replace(/\D/g, ''); // /\D/g encontra tudo que não é dígito
+
+        // Verifica se o CEP tem 8 dígitos
+        if (cep.length !== 8) {
+            limparFormularioCEP();
+            return; 
+        }
+
+        const url = `https://viacep.com.br/ws/${cep}/json/`;
+
+        try {
+            const response = await fetch(url);
+            const data = await response.json();
+
+            if (data.erro) {
+                limparFormularioCEP();
+                alert("CEP não encontrado. Por favor, digite o endereço manualmente.");
+            } else {
+                document.getElementById('logradouro').value = data.logradouro;
+                document.getElementById('bairro').value = data.bairro;
+                document.getElementById('cidade').value = data.localidade;
+                document.getElementById('uf').value = data.uf;
+            }
+
+        } catch (error) {
+            console.error('Erro ao consultar ViaCEP:', error);
+            limparFormularioCEP();
+            alert("Erro ao tentar buscar o CEP. Por favor, tente novamente.");
+        }
+    }
+</script>
+</body>
+</html>
