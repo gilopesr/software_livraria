@@ -23,6 +23,10 @@ def listarLivros():
     livros = Livro.query.all()
     return render_template("listaLivros.html", livros=livros)
 
+@livro_bp.route('/compras')
+def carrinhoCompras():
+    return render_template("/compras.html")
+
 @livro_bp.route('/livros/titulo/<path:titulo>', methods=['GET'])
 def buscarLivro_titulo(titulo):
     livros = Livro.query.filter(Livro.titulo.ilike(f'%{titulo}%')).all()
