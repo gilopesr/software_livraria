@@ -362,10 +362,10 @@ function shoppingCart(){
     
 
     cart.forEach(item => {
-        const itemTotal = item.preco * item.quantity;
+        const itemTotal = item.price * item.quantity;
         totalFinal+= itemTotal;
 
-        const priceFormat = item.preco ? item.preco.toFixed(2).replace('.',',') :'0,00';
+        const priceFormat = item.price ? item.price.toFixed(2).replace('.',',') :'0,00';
         const itemTotalFormat = itemTotal.toFixed(2).replace('.',',');
 
         const row = document.createElement('tr');

@@ -14,22 +14,20 @@
         <h1>Carrinho de Compras</h1>
     </header>
     <main>
-        <table class="table-cart">
-            <tr>
+        <table class="table-cart" style="border: 5px pink solid;">
+            <tr style="border: 5px pink solid;">
                 <th>Livro</th>
-                
-                <img src='' alt="imagem do livro">
+                <img src='{livro.url_img}' alt="imagem do livro">
                 <th>Preço</th>
                 <th>Quantidade</th>
                 <th>Total</th>
             </tr>
-            <tbody id="cart-table-body">
+            <tbody id="cart-table-body" >
                 <tr>
                     <td colspan="2"></td>
                     <td id="final-total" colspan="2">R$ 0,00</td>
                 </tr>
-            </tbody>
-    
+            </tbody>   
         </table>
     </main>
     <footer>
