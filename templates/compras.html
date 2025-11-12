@@ -7,7 +7,7 @@
     <meta name='viewport' content='width=device-width, initial-scale=1'>
       <link rel='stylesheet' type='text/css' media='screen' href='/static/style.css'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src='main.js'></script>
+    <script src='/static/index.js' defer></script>
 </head>
 <body>
     <header>
@@ -16,17 +16,20 @@
     <main>
         <table class="table-cart">
             <tr>
-                <th>Produto</th>
+                <th>Livro</th>
+                
+                <img src='' alt="imagem do livro">
                 <th>Preço</th>
                 <th>Quantidade</th>
                 <th>Total</th>
             </tr>
-            <tr>
-                <td id="product-cart"></td>
-                <td id="price-cart"></td>
-                <td id="qttd-cart"></td>
-                <td id="total-cart"></td>
-            </tr>
+            <tbody id="cart-table-body">
+                <tr>
+                    <td colspan="2"></td>
+                    <td id="final-total" colspan="2">R$ 0,00</td>
+                </tr>
+            </tbody>
+    
         </table>
     </main>
     <footer>
