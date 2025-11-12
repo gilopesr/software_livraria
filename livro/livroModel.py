@@ -14,6 +14,7 @@ class Livro(db.Model):
     preco = db.Column(db.Float, nullable=False)
     isbn = db.Column(db.Integer,nullable=False)
     destaque = db.Column(db.Boolean, default=False)
+    estoque = db.Column(db.Integer, nullable=False, default=0)
 
 class LivroNaoEncontrado(Exception):
     pass

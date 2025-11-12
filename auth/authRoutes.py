@@ -16,6 +16,7 @@ def login():
         # 2. Verifica se o cliente existe E se a senha fornecida corresponde ao hash armazenado
         if cliente and check_password_hash(cliente.senha, password):
             
+            session['id_cliente'] = cliente.id_cliente
             session['nome_cliente'] = cliente.username
 
             flash(f"Bem-vindo, {cliente.username}!", "sucesso")
@@ -41,13 +42,12 @@ def status_login():
     Retorna o status de autenticação do usuário.
     """
     if 'nome_cliente' in session:
-        # Usuário está logado
         return jsonify({
             'logged_in': True,
-            'username': session['nome_cliente']
+            'username': session['nome_cliente'],
+            'id_cliente': session['id_cliente']
         })
     else:
-        # Usuário não está logado
         return jsonify({
             'logged_in': False
         })

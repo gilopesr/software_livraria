@@ -227,6 +227,72 @@ async function isUserLoggedIn() {
     }
 }
 
+
+//// FINALIZAR COMPRA 
+/**
+ * * Envia os dados do pedido para a API, finalizando a transação.
+ * * @param {object} enderecoData - O objeto contendo o CEP, numero, complemento, etc., do formulário.
+ */
+async function finalizarCompra(enderecoData) {
+    const cart = getCart();
+    
+    // 1. Verificação de Carinho Vazio (Safety Check)
+    if (cart.length === 0) {
+        alert("Seu carrinho está vazio.");
+        window.location.href = '/'; 
+        return;
+    }
+    
+    // 2. Mapeamento dos Itens para o Formato Esperado pela API
+    // A API espera 'id_livro' e 'quantidade'
+    const itensParaAPI = cart.map(item => ({
+        id_livro: item.id,      
+        quantidade: item.quantity
+    }));
+
+    // 3. Montagem do Payload JSON Completo
+    const payload = {
+        endereco: enderecoData, 
+        itens: itensParaAPI
+    };
+
+    try {
+        // 4. Chamada à API (Backend Python)
+        const response = await fetch('/pedidos', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(payload)
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+            // 🚀 SUCESSO (Status 201)
+            
+            // 5. Limpeza do Carrinho e Redirecionamento
+            saveCart([]); // Esvazia o carrinho APENAS após a confirmação do servidor!
+            
+            // Redireciona para a página de confirmação usando o ID do novo pedido
+            window.location.href = '/pedido_concluido.html?id=' + result.id_pedido;
+        } else {
+            // ❌ FALHA (Status 4xx ou 5xx)
+            // A mensagem de erro da API (ex: "Estoque insuficiente") é exibida
+            alert("Não foi possível concluir o pedido. Erro: " + result.message);
+            // O carrinho PERMANECE intacto
+        }
+
+    } catch (error) {
+        console.error('Erro de rede ao finalizar compra:', error);
+        alert("Erro de conexão com o servidor. Verifique sua rede e tente novamente.");
+    }
+}
+
+
+
+
+
 //CARROSSEL
 
 let slideIndex = 1;
