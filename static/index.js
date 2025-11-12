@@ -78,7 +78,8 @@ function addToCart(itemData) {
             id: itemData.id,
             title: itemData.titulo,
             price: parseFloat(itemData.preco), 
-            quantity: 1
+            quantity: 1,
+            url_img: itemData.url_img
         });
     }
 
@@ -115,8 +116,7 @@ function addToCart(itemData) {
 
         itemElement.innerHTML = `
             <p class="item-details">${item.title} (${item.quantity}x)</p>
-            <span class="item-price-unitario">R$ ${precoUnitarioFormatado}</span>
-            
+            <span class="item-price-unitario">R$ ${precoUnitarioFormatado}</span> 
             <button class="remove-item-btn" data-item-id="${item.id}">
                 <i class="fa fa-trash"></i>
             </button>
@@ -145,7 +145,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const itemData = {
                 id: button.dataset.id,
                 titulo: button.dataset.titulo,
-                preco: button.dataset.preco
+                preco: button.dataset.preco,
+                url_img: button.dataset.url_img
             };
             addToCart(itemData);
         });
@@ -370,7 +371,8 @@ function shoppingCart(){
 
         const row = document.createElement('tr');
         row.innerHTML = `
-        <td>Livro: ${item.title}</td>
+        <td><img src=${item.url_img} alt="imagem do livro" style="height:150px; width:150px;"></td>
+        <td>${item.title}</td>
         <td>R$: ${priceFormat}</td>
         <td>${item.quantity || 1}</td>
         <td>${itemTotalFormat}</td>
