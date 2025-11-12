@@ -383,3 +383,9 @@ function shoppingCart(){
 }
 
 document.addEventListener('DOMContentLoaded',shoppingCart);
+
+
+var btn = document.querySelector("button.checkout-btn")
+btn.addEventListener('click', function(){
+    location.href = '/compras'
+})
