@@ -708,3 +708,5 @@ tr,td{
    padding-left: 200px;
    border:2px gray solid;
 }
+
+th{ color: pink;}

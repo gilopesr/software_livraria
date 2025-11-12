@@ -106,7 +106,8 @@
                 class="add-to-cart-btn" 
                 data-id="{{ livro.isbn }}" 
                 data-titulo="{{ livro.titulo }}" 
-                data-preco="{{ livro.preco }}">
+                data-preco="{{ livro.preco }}"
+                data-url_img="{{livro.url_img}}">
                 Comprar
             </button>
             <a href="{{ url_for('livro.gerenciarLivro', livro_id=livro.id) }}" id="editar" class="btn">Editar</a>
