@@ -704,9 +704,23 @@ form select:focus {
     background-color: #a81826; 
 }
 
+.table-cart{
+    border: 5px pink solid;  
+    max-width: 100%;
+}
+
 tr,td{
    padding-left: 200px;
    border:2px gray solid;
 }
 
-th{ color: pink;}
+
+th{ 
+    background-color: pink;
+    color: white;
+}
+
+button.close-order{
+    background-color: #d63646;
+    font-family: monospace;
+}
