@@ -192,7 +192,7 @@ function removeItemFromCart(itemId) {
 document.addEventListener('DOMContentLoaded', function() {
     const checkoutButton = document.getElementById('checkout-button');
     const loginPageUrl = '/login';
-    const checkoutPageUrl = '/checkout.html';
+    const checkoutPageUrl = '/compras';
 
     if (checkoutButton) {
         checkoutButton.addEventListener('click', async function(event) {
@@ -271,7 +271,6 @@ async function finalizarCompra(enderecoData) {
         const result = await response.json();
 
         if (response.ok) {
-            // 🚀 SUCESSO (Status 201)
             
             // 5. Limpeza do Carrinho e Redirecionamento
             saveCart([]); // Esvazia o carrinho APENAS após a confirmação do servidor!
@@ -279,8 +278,6 @@ async function finalizarCompra(enderecoData) {
             // Redireciona para a página de confirmação usando o ID do novo pedido
             window.location.href = '/pedido_concluido.html?id=' + result.id_pedido;
         } else {
-            // ❌ FALHA (Status 4xx ou 5xx)
-            // A mensagem de erro da API (ex: "Estoque insuficiente") é exibida
             alert("Não foi possível concluir o pedido. Erro: " + result.message);
             // O carrinho PERMANECE intacto
         }
@@ -345,7 +342,7 @@ window.onload = function() {
     autoTimeout = setTimeout(autoRotate, 5000);
 };
 
-
+///// COMPRAS 
 function shoppingCart(){
     const cart = JSON.parse(localStorage.getItem("shoppingCart")) || [];
     const tableBody = document.getElementById("cart-table-body");
@@ -377,9 +374,9 @@ function shoppingCart(){
 
         const row = document.createElement('tr');
         row.innerHTML = `
-        <td><img src=${item.url_img} alt="imagem do livro" style="height:150px; width:150px;"></td>
+        <td><img src=${item.url_img} alt="imagem do livro" style="height:80px; width:70px;"></td>
         <td>${item.title}</td>
-        <td>R$: ${priceFormat}</td>
+        <td>R$ ${priceFormat}</td>
         <td>${item.quantity || 1}</td>
         <td>${itemTotalFormat}</td>
         `;

@@ -16,7 +16,7 @@ def login():
         # 2. Verifica se o cliente existe E se a senha fornecida corresponde ao hash armazenado
         if cliente and check_password_hash(cliente.senha, password):
             
-            session['id_cliente'] = cliente.id_cliente
+            session['id_cliente'] = cliente.id
             session['nome_cliente'] = cliente.username
 
             flash(f"Bem-vindo, {cliente.username}!", "sucesso")

@@ -5,46 +5,61 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>Carrinho de Compras</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-      <link rel='stylesheet' type='text/css' media='screen' href='/static/style.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='/static/checkout.css'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src='/static/index.js' defer></script>
 </head>
 <body>
-    <header>
-        <h1>Carrinho de Compras</h1>
-    </header>
-    <main>
-        <table class="table-cart">
-            <tr style="border: 5px pink solid;">
-                <th>Imagem</th>
-                <th>Livro</th>
-                <th>Preço</th>
-                <th>Quantidade</th>
-                <th>Total</th>
+<header>
+    <h1>Carrinho de Compras</h1>
+</header>
+<main>
+    <table class="table-cart">
+        <tr>
+            <th>Imagem</th>
+            <th>Produto</th>
+            <th>Preço</th>
+            <th>Quantidade</th>
+            <th>Total</th>
+        </tr>
+        <tbody id="cart-table-body" >
+            <tr>
+                <td id="final-total" colspan="5">R$ 0,00</td> 
             </tr>
-            <tbody id="cart-table-body" >
-                <tr>
-                    <td colspan="2"></td>
-                    <td id="final-total" colspan="2">R$ 0,00</td>
+        </tbody> 
+    </table>
+    
+    <div class="summary-actions-wrapper"> 
+        
+        <div class="payment-content-wrapper"> 
+            
+            <table class="payment" id="payment">
+                <tr class="pay">
+                    <th>Subtotal</th>
+                    <td id="subtotal">R$ 0,00</td>
                 </tr>
-            </tbody> 
-        </table><br>
-        <table class="payment" id="payment">
-            <tr class="pay">
-                <th>Subtotal</th>
-                <td id="subtotal">R$ 0,00</td>
-            </tr>
-            <tr class="pay">
-                <th>Entrega</th>
-                <td id="delivery"></td>
-            </tr>
-            <tr class="pay">
-                <th>Total da Compra</th>
-                <td id="total"></td>
-            </tr>
-        </table>
-        <button id="close-order" class="close-order" style="border-radius: 15px; font-family: Arial, Helvetica, sans-serif; color: black; padding: 14px;">Fechar pedido</button>
-    </main>
+                <tr class="pay">
+                    <th>Entrega</th>
+                    <td id="delivery"></td>
+                </tr>
+                <tr class="pay">
+                    <th>Total da Compra</th>
+                    <td id="total"></td>
+                </tr>
+            </table>
+
+            <div class="coupon-and-buttons">
+                <div class="coupon-field">
+                    <input type="text" placeholder="Adicionar Cupom de Desconto" class="coupon-input">
+                    <button class="btn btn-secondary coupon-button">Aplicar</button>
+                </div>
+                <div class="button-group">
+                    <button id="close-order" class="btn btn-close">FECHAR PEDIDO</button>
+                    <button id="continuarCompra" class="btn btn-compras">CONTINUAR COMPRANDO</button>
+                </div>
+            </div>
+
+        </div> </div> </main>
 
     <footer>
 

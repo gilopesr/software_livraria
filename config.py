@@ -20,11 +20,13 @@ def create_app():
     from livro.livroRoutes import livro_bp
     from autor.autorRoutes import autor_bp
     from auth.authRoutes import auth_bp
+    from compras.comprasRoute import compra_bp
 
     app.register_blueprint(cliente_bp)
     app.register_blueprint(livro_bp)
     app.register_blueprint(autor_bp)
-    app.register_blueprint(auth_bp) # login agora é totalmente controlado pelo auth_bp
+    app.register_blueprint(auth_bp) # login é controlado pelo auth_bp
+    app.register_blueprint(compra_bp)
 
     
     @app.route("/")
