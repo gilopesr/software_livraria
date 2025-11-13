@@ -413,12 +413,25 @@ document.addEventListener('DOMContentLoaded',shoppingCart);
 
 
 var btn = document.querySelector("button.checkout-btn")
-btn.addEventListener('click', function(){
+    btn.addEventListener('click', function(){
     location.href = '/compras'
-})
+    })
+    
+document.addEventListener("DOMContentLoaded",function(){
+ var btnCloseOrder = document.getElementById("close-order");
+    if(btnCloseOrder){
+    btnCloseOrder.addEventListener('click', function(){
+        window.alert('Compra finalizada com sucesso✅. Entregue em até 7 dias!🚚')
+        window.location.href = '/'
+    })}
 
-/*var btnCloseOrder = document.getElementById("close-order");
-btnCloseOrder.addEventListener('click',function(){
-    window.alert('Compra finalizada com sucesso✅. Entregue em até 7 dias!🚚')
-    location.href = '/'
-})*/
+    var btnContinueBuy = document.getElementById("continue-buy")
+    if(btnContinueBuy){
+    btnContinueBuy.addEventListener("click", function(){
+        location.href = '/livros'  
+
+})}
+})
+//document.addEventListener('DOMContentLoaded',function(){});
+
+
