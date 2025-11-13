@@ -102,7 +102,8 @@ function addToCart(itemData) {
         
         if (cart.length === 0) {
             cartItemsList.innerHTML = '<p class="empty-message">Sua sacola está vazia.</p>';
-        } else {
+        }else  {
+
     cart.forEach(item => {
         const subtotal = item.price * item.quantity;
         total += subtotal;
@@ -343,28 +344,42 @@ window.onload = function() {
     autoTimeout = setTimeout(autoRotate, 5000);
 };
 
-var btn = document.querySelector("button.checkout-btn")
-btn.addEventListener('click', function(){
-    location.href = '/compras'
-})
 
-function shoppingCart(cart){
-    const cartItemList = document.getElementById("cart-card");
-    var productCart = document.getElementById("product-cart");
-    var priceCart = document.getElementById("price-cart");
-    var qttdCart = document.getElementById("qttd-cart");
-    var totalCart = document.getElementById("total-cart");
+function shoppingCart(){
+    //localStorage.setItem("url_img",'{item.url_img}')
+    const cart = JSON.parse(localStorage.getItem("shoppingCart")) || [];
+    const tableBody = document.getElementById("cart-table-body");
+    const totalDisplay = document.getElementById("final-total");
+   
+    tableBody.innerHTML = '';
+    let totalFinal = 0;
 
+    if(cart.length ===0){
+        tableBody.innerHTML = '<tr><td colspan="4" style="text-align: center;">Não há livro cadastrado ainda!!</tr>';
+        if(totalDisplay) totalDisplay.textContent = 'R$ 0,00';
+        return 
+    }
     
 
-    cartItemList.forEach(item => {
-        productCart.innerHTML = 
-        `<img src={item.livro.url_img} alt="capa do livro">
-        `
-        priceCart.innerHTML = `
-    {for livro in ${cartItemList.ATTRIBUTE_NODE}}
-        
-        <p><strong>{livro.preco}</strong></p>
-        `
+    cart.forEach(item => {
+        const itemTotal = item.preco * item.quantity;
+        totalFinal+= itemTotal;
+
+        const priceFormat = item.preco ? item.preco.toFixed(2).replace('.',',') :'0,00';
+        const itemTotalFormat = itemTotal.toFixed(2).replace('.',',');
+
+        const row = document.createElement('tr');
+        row.innerHTML = `
+        <td>Livro: ${item.title}</td>
+        <td>R$: ${priceFormat}</td>
+        <td>${item.quantity || 1}</td>
+        <td>${itemTotalFormat}</td>
+        `;
+        tableBody.appendChild(row);
     })
+    if(totalDisplay){
+        totalDisplay.textContent = `R$ ${totalFinal.toFixed(2).replace('.',',')}`;
+    }
 }
+
+document.addEventListener('DOMContentLoaded',shoppingCart);
