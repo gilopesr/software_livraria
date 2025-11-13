@@ -14,7 +14,7 @@
         <h1>Carrinho de Compras</h1>
     </header>
     <main>
-        <table class="table-cart" style="border: 5px pink solid;  max-width: 100%;">
+        <table class="table-cart">
             <tr style="border: 5px pink solid;">
                 <th>Imagem</th>
                 <th>Livro</th>
@@ -28,14 +28,24 @@
                     <td id="final-total" colspan="2">R$ 0,00</td>
                 </tr>
             </tbody> 
-            <tfoot>
-                <tr>
-                    <td colspan="4">Total da Compra</td>
-                </tr>
-            </tfoot>  
+        </table><br>
+        <table class="payment" id="payment">
+            <tr class="pay">
+                <th>Subtotal</th>
+                <td id="subtotal">R$ 0,00</td>
+            </tr>
+            <tr class="pay">
+                <th>Entrega</th>
+                <td id="delivery"></td>
+            </tr>
+            <tr class="pay">
+                <th>Total da Compra</th>
+                <td id="total"></td>
+            </tr>
         </table>
-        <button style="border-radius: 15px; font-family: Arial, Helvetica, sans-serif; color: black; padding: 14px;">Finalizar Compra</button>
+        <button id="close-order" class="close-order" style="border-radius: 15px; font-family: Arial, Helvetica, sans-serif; color: black; padding: 14px;">Fechar pedido</button>
     </main>
+
     <footer>
 
     </footer>

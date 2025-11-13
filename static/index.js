@@ -241,24 +241,30 @@ window.onload = function() {
 
 
 function shoppingCart(){
-    //localStorage.setItem("url_img",'{item.url_img}')
     const cart = JSON.parse(localStorage.getItem("shoppingCart")) || [];
     const tableBody = document.getElementById("cart-table-body");
     const totalDisplay = document.getElementById("final-total");
-   
+    const subtotal = document.getElementById("subtotal");
+    const delivery = document.getElementById("delivery");
+    const total = document.getElementById("total");
+
     tableBody.innerHTML = '';
     let totalFinal = 0;
+    const taxa = 9.67;
+    let subtotalProduct = 0;
 
     if(cart.length ===0){
         tableBody.innerHTML = '<tr><td colspan="4" style="text-align: center;">Não há livro cadastrado ainda!!</tr>';
         if(totalDisplay) totalDisplay.textContent = 'R$ 0,00';
+        if(subtotal) subtotal.textContent = 'R$ 0,00';
+        if(delivery) delivery.textContent = `R$ ${taxa.toFixed(2).replace(".",",")}`;
+        if(total) total.textContent = 'R$ 0,00';
         return 
     }
-    
 
     cart.forEach(item => {
         const itemTotal = item.price * item.quantity;
-        totalFinal+= itemTotal;
+        subtotalProduct += itemTotal
 
         const priceFormat = item.price ? item.price.toFixed(2).replace('.',',') :'0,00';
         const itemTotalFormat = itemTotal.toFixed(2).replace('.',',');
@@ -271,11 +277,30 @@ function shoppingCart(){
         <td>${item.quantity || 1}</td>
         <td>${itemTotalFormat}</td>
         `;
+        
+
         tableBody.appendChild(row);
     })
+    const totalOfBuy = taxa + subtotalProduct
+
+
     if(totalDisplay){
         totalDisplay.textContent = `R$ ${totalFinal.toFixed(2).replace('.',',')}`;
     }
+    if(subtotal){
+        const subtotalFormat = subtotalProduct.toFixed(2).replace(".",",")
+        subtotal.textContent = `R$ ${subtotalFormat}`
+    }
+    if(delivery){
+        const deliveryFormat = taxa.toFixed(2).replace(".",",")
+        delivery.textContent = `R$ ${deliveryFormat}`
+    }
+     if(total){
+        const totalFormat = totalOfBuy.toFixed(2).replace(".",",")
+        total.textContent = `R$ ${totalFormat}`
+        
+    }
+
 }
 
 document.addEventListener('DOMContentLoaded',shoppingCart);
@@ -285,3 +310,9 @@ var btn = document.querySelector("button.checkout-btn")
 btn.addEventListener('click', function(){
     location.href = '/compras'
 })
+
+/*var btnCloseOrder = document.getElementById("close-order");
+btnCloseOrder.addEventListener('click',function(){
+    window.alert('Compra finalizada com sucesso✅. Entregue em até 7 dias!🚚')
+    location.href = '/'
+})*/
