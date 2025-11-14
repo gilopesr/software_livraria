@@ -40,7 +40,6 @@ main {
     border-collapse: collapse;
     width: 100%;
     min-width: unset;
-    margin-bottom: 30px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.04); 
 }
 
@@ -175,3 +174,94 @@ main {
     color: #333;
     border-radius: 0;
 }
+
+
+#address-form-container {
+    margin: 40px auto;
+    padding: 30px;
+    max-width: 800px; /* Limita a largura */
+    border: 1px solid #dedcdc;
+    border-radius: 8px;
+    background-color: var(--color-bg-light);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+#address-form-container h2 {
+    color: #ad5289;
+    border-bottom: 2px solid #b65b90; /* Cor do seu botão */
+    padding-bottom: 10px;
+    margin-bottom: 25px;
+    text-align: left; /* Alinhar o título à esquerda */
+}
+
+/* --- Estilos para os campos do Formulário --- */
+#address-form {
+    display: flex;
+    flex-direction: column; /* Organiza os grupos de campos verticalmente */
+    gap: 20px; /* Espaço entre as linhas de campos */
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Duas colunas de largura igual */
+    gap: 20px; /* Espaço entre os campos na mesma linha */
+}
+
+.form-field {
+    display: flex;
+    flex-direction: column; /* Rótulo acima do input */
+}
+
+.form-field label {
+    font-weight: 600;
+    color: #555;
+    margin-bottom: 8px; /* Espaço entre o rótulo e o input */
+    display: block; /* Garante que o rótulo ocupe a largura */
+}
+
+.form-field input[type="text"] {
+    width: 100%;
+    padding: 12px;
+    background-color: rgb(241, 241, 241);
+    border-radius: 8px;
+    border: 1px solid #a5a5a5;
+    box-sizing: border-box;
+    font-size: 1rem;
+}
+
+/* Campos de largura total */
+.full-width {
+    grid-column: 1 / -1; /* Faz o campo ocupar a largura total do grid */
+}
+
+/* --- Botão FINALIZAR PEDIDO --- */
+.btn-checkout { /* Altere para esta classe para não afetar outros botões */
+    width: 100%; /* Ocupa a largura total disponível no form-field */
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    background-color: #b65b90; /* Cor do botão */
+    color: #fff;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s;
+    margin-top: auto; /* Alinha o botão ao final do seu container flex */
+    align-self: flex-end; /* Garante que ele se alinhe na parte inferior do form-field */
+    height: 65%; /* Para que ocupe a mesma altura do campo de Estado ao lado */
+}
+
+.btn-checkout:hover {
+    background-color: #9c4c77;
+}
+
+/* Ajustes específicos para o campo do botão */
+.form-field.button-field {
+    display: flex; /* Transforma em flex para alinhar o botão */
+    justify-content: flex-end; /* Alinha o botão à direita se houver espaço */
+    align-items: flex-end; /* Alinha o botão com a base do campo de texto ao lado */
+}
+
+.hidden {
+    display: none;
+}
+

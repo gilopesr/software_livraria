@@ -230,68 +230,6 @@ async function isUserLoggedIn() {
 }
 
 
-//// FINALIZAR COMPRA 
-/**
- * * Envia os dados do pedido para a API, finalizando a transação.
- * * @param {object} enderecoData - O objeto contendo o CEP, numero, complemento, etc., do formulário.
- */
-async function finalizarCompra(enderecoData) {
-    const cart = getCart();
-    
-    // 1. Verificação de Carinho Vazio (Safety Check)
-    if (cart.length === 0) {
-        alert("Seu carrinho está vazio.");
-        window.location.href = '/'; 
-        return;
-    }
-    
-    // 2. Mapeamento dos Itens para o Formato Esperado pela API
-    // A API espera 'id_livro' e 'quantidade'
-    const itensParaAPI = cart.map(item => ({
-        id_livro: item.id,      
-        quantidade: item.quantity
-    }));
-
-    // 3. Montagem do Payload JSON Completo
-    const payload = {
-        endereco: enderecoData, 
-        itens: itensParaAPI
-    };
-
-    try {
-        // 4. Chamada à API (Backend Python)
-        const response = await fetch('/pedidos', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(payload)
-        });
-
-        const result = await response.json();
-
-        if (response.ok) {
-            
-            // 5. Limpeza do Carrinho e Redirecionamento
-            saveCart([]); // Esvazia o carrinho APENAS após a confirmação do servidor!
-            
-            // Redireciona para a página de confirmação usando o ID do novo pedido
-            window.location.href = '/pedido_concluido.html?id=' + result.id_pedido;
-        } else {
-            alert("Não foi possível concluir o pedido. Erro: " + result.message);
-            // O carrinho PERMANECE intacto
-        }
-
-    } catch (error) {
-        console.error('Erro de rede ao finalizar compra:', error);
-        alert("Erro de conexão com o servidor. Verifique sua rede e tente novamente.");
-    }
-}
-
-
-
-
-
 //CARROSSEL
 
 let slideIndex = 1;
@@ -407,28 +345,164 @@ function shoppingCart(){
 }
 
 document.addEventListener('DOMContentLoaded',shoppingCart);
+// var btn = document.querySelector("button.checkout-btn")
+//     btn.addEventListener('click', function(){
+//     location.href = '/compras'
+//     })
 
-
-var btn = document.querySelector("button.checkout-btn")
-    btn.addEventListener('click', function(){
-    location.href = '/compras'
-    })
+async function finalizarCompra(enderecoData) {
+    const cart = getCart();
     
+    // 1. Verificação de Carinho Vazio (Safety Check)
+    if (cart.length === 0) {
+        alert("Seu carrinho está vazio.");
+        window.location.href = '/'; 
+        return;
+    }
+
+    // Calculando o total e mapeando os itens
+    let valorTotal = 0;
+    const taxaEntrega = 9.67; // A taxa de entrega está fixa no JS do carrinho
+
+    const itensParaAPI = cart.map(item => {
+        valorTotal += item.price * item.quantity; // Acumula o valor dos produtos
+
+        // A API espera 'id_livro', 'quantidade' e 'preco_unitario'
+        // Assumimos que item.id é o id_livro
+        return {
+            id_livro: item.id, 
+            quantidade: item.quantity,
+            preco_unitario: item.price // Preço unitário do item
+        };
+    });
+
+    valorTotal += taxaEntrega; // Adiciona a taxa de entrega ao total do pedido
+    
+    // 3. Montagem do Payload JSON Completo
+    const payload = {
+        endereco: enderecoData, 
+        carrinho: itensParaAPI, 
+        valor_total: valorTotal // Total Final (Produtos + Taxa)
+    };
+
+    try {
+        // 4. Chamada à API (Backend Python) - USANDO A ROTA CORRETA (AGORA SEM O PREFIXO /compras)
+        const response = await fetch('/finalizar-pedido', { // <-- ROTA AJUSTADA
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(payload)
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+            
+            // 5. Limpeza do Carrinho e Redirecionamento
+            saveCart([]); // Esvazia o carrinho APENAS após a confirmação do servidor!
+            
+            // Mensagem de sucesso solicitada
+            window.alert('Compra finalizada com sucesso✅. Entregue em até 7 dias!🚚');
+            window.location.href = '/'; // Redireciona
+            
+        } else {
+            alert("Não foi possível concluir o pedido. Erro: " + result.message);
+            // O carrinho PERMANECE intacto
+        }
+
+    } catch (error) {
+        console.error('Erro de rede ao finalizar compra:', error);
+        alert("Erro de conexão com o servidor. Verifique sua rede e tente novamente.");
+    }
+}
+
 document.addEventListener("DOMContentLoaded",function(){
- var btnCloseOrder = document.getElementById("close-order");
-    if(btnCloseOrder){
-    btnCloseOrder.addEventListener('click', function(){
-        window.alert('Compra finalizada com sucesso✅. Entregue em até 7 dias!🚚')
-        window.location.href = '/'
-    })}
+    var btnCloseOrder = document.getElementById('close-order');
+    var formContainer = document.getElementById('address-form-container');
+    var addressForm = document.getElementById('address-form');
+    var btnContinueBuy = document.getElementById('continue-buy');
 
-    var btnContinueBuy = document.getElementById("continue-buy")
-    if(btnContinueBuy){
-    btnContinueBuy.addEventListener("click", function(){
-        location.href = '/livros'  
+    if (btnCloseOrder && formContainer) {
+        btnCloseOrder.addEventListener('click', function(event) {
+            formContainer.classList.remove('hidden');
+            formContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            btnCloseOrder.disabled = true;
+        });
+    }
 
-})}
-})
-//document.addEventListener('DOMContentLoaded',function(){});
+    if (addressForm) {
+        addressForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            // 1. Coleta os dados do endereço
+            const enderecoData = coletarDadosDoFormulario(addressForm);
+            
+            // 2. Chama a função que envia dados para o Flask e processa a resposta
+            finalizarCompra(enderecoData);
 
+            // A chamada alert/redirecionamento foi movida para dentro do .then(data) da função finalizarCompra
+        });
+    }
 
+    if (btnContinueBuy) {
+        btnContinueBuy.addEventListener('click', function() {
+            location.href = '/livros';
+        });
+    }
+
+}); 
+
+function coletarDadosDoFormulario(form) {
+    const dados = {};
+    const formData = new FormData(form);
+    
+    for (const [key, value] of formData.entries()) {
+        dados[key] = value;
+    }
+    
+    if (dados.cep) {
+        dados.cep = dados.cep.replace(/\D/g, ''); 
+    }
+    
+    return dados;
+}
+
+function limparFormularioCEP() {
+        document.getElementById('logradouro').value = "";
+        document.getElementById('bairro').value = "";
+        document.getElementById('cidade').value = "";
+        document.getElementById('uf').value = "";
+    }
+
+    async function consultarCEP(cepValue) {
+        const cep = cepValue.replace(/\D/g, ''); // /\D/g encontra tudo que não é dígito
+
+        // Verifica se o CEP tem 8 dígitos
+        if (cep.length !== 8) {
+            limparFormularioCEP();
+            return; 
+        }
+
+        const url = `https://viacep.com.br/ws/${cep}/json/`;
+
+        try {
+            const response = await fetch(url);
+            const data = await response.json();
+
+            if (data.erro) {
+                limparFormularioCEP();
+                alert("CEP não encontrado. Por favor, digite o endereço manualmente.");
+            } else {
+                document.getElementById('logradouro').value = data.logradouro;
+                document.getElementById('bairro').value = data.bairro;
+                document.getElementById('cidade').value = data.localidade;
+                document.getElementById('uf').value = data.uf;
+            }
+
+        } catch (error) {
+            console.error('Erro ao consultar ViaCEP:', error);
+            limparFormularioCEP();
+            alert("Erro ao tentar buscar o CEP. Por favor, tente novamente.");
+        }
+    }

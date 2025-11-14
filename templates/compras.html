@@ -55,11 +55,58 @@
                 </div>
                 <div class="button-group">
                     <button id="close-order" class="btn btn-close">FECHAR PEDIDO</button>
-                    <button id="continuarCompra" class="btn btn-compras">CONTINUAR COMPRANDO</button>
+                    <button id="continue-buy" class="btn btn-compras">CONTINUAR COMPRANDO</button>
                 </div>
             </div>
-
-        </div> </div> </main>
+        </div>
+    </div>
+    <div id="address-form-container" class="hidden">
+        <form id="address-form">
+            <h2>Endereço de Entrega</h2>
+        <div class="form-field full-width">
+            <label for="cep">CEP:</label>
+            <input type="text" id="cep" name="cep" maxlength="8" onblur="consultarCEP(this.value)" required>
+        </div>
+        
+        <div class="form-field full-width">
+            <label for="logradouro">Rua:</label>
+            <input type="text" id="logradouro" name="logradouro" required>
+        </div>
+        
+        <div class="form-row">
+            <div class="form-field">
+                <label for="numero">Número:</label>
+                <input type="text" id="numero" name="numero" required>
+            </div>
+            <div class="form-field">
+                <label for="complemento">Complemento:</label>
+                <input type="text" id="complemento" name="complemento">
+            </div>
+        </div>
+        
+        <div class="form-row">
+            <div class="form-field">
+                <label for="bairro">Bairro:</label>
+                <input type="text" id="bairro" name="bairro" required>
+            </div>
+            <div class="form-field">
+                <label for="cidade">Cidade:</label>
+                <input type="text" id="cidade" name="cidade" required>
+            </div>
+        </div>
+        
+        <div class="form-row">
+            <div class="form-field">
+                <label for="uf">Estado:</label>
+                <input type="text" id="uf" name="uf" maxlength="2" required>
+            </div>
+            <div class="form-field button-field">
+                <button type="submit" class="btn btn-checkout">FINALIZAR PEDIDO</button>
+            </div>
+        </div>
+    </form>
+    </div>
+</main>
 
     <footer>
 

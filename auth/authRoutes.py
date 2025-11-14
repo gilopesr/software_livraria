@@ -36,18 +36,19 @@ def logout():
     return redirect(url_for("auth_bp.login"))
 
 
-@auth_bp.route("/status_login", methods=["GET"])
+@auth_bp.route('/status_login', methods=['GET'])
 def status_login():
     """
     Retorna o status de autenticação do usuário.
+    Usa 'nome_cliente' na sessão como indicador de login.
     """
     if 'nome_cliente' in session:
         return jsonify({
             'logged_in': True,
             'username': session['nome_cliente'],
             'id_cliente': session['id_cliente']
-        })
+        }), 200
     else:
         return jsonify({
             'logged_in': False
-        })
+        }), 200

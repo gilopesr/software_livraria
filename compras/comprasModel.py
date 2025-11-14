@@ -9,7 +9,7 @@ class Pedido(db.Model):
     id_endereco_entrega = db.Column(db.Integer, db.ForeignKey('enderecos.id'), nullable=False)
     id_cliente = db.Column(db.Integer, db.ForeignKey('clientes.id'), nullable=False)
     data_pedido = db.Column(db.Date, nullable=True, default=datetime.date.today)
-    status = db.Column(db.String(50), nullable=False)
+    status = db.Column(db.String(50), nullable=False, default='pedido realizado')
     valor_total = db.Column(db.Float, nullable=False)
 
     endereco = db.relationship("Endereco", backref="pedidos")
