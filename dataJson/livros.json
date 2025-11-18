@@ -7,6 +7,7 @@
         "data_lancamento": "1971-01-01",
         "preco": "44,90",
         "isbn": "978853",
+        "estoque": "10",
         "url_img": "https://m.media-amazon.com/images/I/711lRhyTjIL.jpg"
     },
     {
@@ -17,6 +18,7 @@
         "data_lancamento": "1865-01-01",
         "preco": "59,90",
         "isbn": "978972",
+        "estoque": "10",
         "url_img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQn-p3SRKbFxEu2keOpTKlUJUDsjlb1Atsv2A&s"
     },
     {
@@ -27,6 +29,7 @@
         "data_lancamento": "1985-12-05",
         "preco": "38,90",
         "isbn": "40887",
+        "estoque": "10",
         "url_img": "https://m.media-amazon.com/images/I/91KQLMVwqBL._UF1000,1000_QL80_.jpg"
     },
     {
@@ -37,6 +40,7 @@
         "data_lancamento": "1992-07-06",
         "preco": "35,90",
         "isbn": "9784063",
+        "estoque": "10",
         "url_img": "https://m.media-amazon.com/images/I/71cb3CRmnAL._UF1000,1000_QL80_.jpg"
     },
     {
@@ -47,6 +51,7 @@
         "data_lancamento": "1999-03-04",
         "preco": "36,90",
         "isbn": "408872",
+        "estoque": "10",
         "url_img": "https://m.media-amazon.com/images/I/81YJjycp4FL._UF1000,1000_QL80_.jpg"
     },
     {
@@ -57,6 +62,7 @@
         "data_lancamento": "1937-09-21",
         "preco": "79,90",
         "isbn": "978859",
+        "estoque": "10",
         "url_img": "https://m.media-amazon.com/images/I/91M9xPIf10L.jpg"
     },
     {
@@ -67,6 +73,7 @@
         "data_lancamento": "1997-06-26",
         "preco": "69,90",
         "isbn": "9788532",
+        "estoque": "10",
         "url_img": "https://m.media-amazon.com/images/I/81ibfYk4qmL._UF1000,1000_QL80_.jpg"
     },
     {
@@ -77,6 +84,7 @@
         "data_lancamento": "2001-06-19",
         "preco": "20,90",
         "isbn": "9788551",
+        "estoque": "10",
         "url_img": "https://m.media-amazon.com/images/I/61R+m9G+l7L._UF1000,1000_QL80_.jpg"
     },
     {
@@ -87,6 +95,7 @@
         "data_lancamento": "2007-03-27",
         "preco": "46,45",
         "isbn": "978850",
+        "estoque": "10",
         "url_img": "https://m.media-amazon.com/images/I/91MWcXJPigL.jpg"
     },
     {
@@ -97,6 +106,7 @@
         "data_lancamento": "1859-01-01",
         "preco": "24,90",
         "isbn": "978854",
+        "estoque": "10",
         "url_img": "https://m.media-amazon.com/images/I/61fD+SMxHeL._UF1000,1000_QL80_.jpg"
     },
     {
@@ -107,6 +117,7 @@
         "data_lancamento": "1925-05-14",
         "preco": "39,90",
         "isbn": "9788520",
+        "estoque": "10",
         "url_img": "https://m.media-amazon.com/images/I/91rOgmnZpJS.jpg"
     }
 ]
