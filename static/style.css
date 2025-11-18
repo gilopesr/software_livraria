@@ -390,7 +390,7 @@ h2.section-title {
 }
 
 .highlight-card {
-    background-color: var(--color-highlight-card); 
+    background-color: var(#bbb); 
     width: 30%;
     max-width: 300px;
     height: 250px;
@@ -402,9 +402,15 @@ h2.section-title {
     color: white;
     font-size: 1.5rem;
     font-weight: bold;
-    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-    transition: transform 0.3s;
+    box-shadow: 0px 12px 24px #bb82a37e;
+    transition: transform 0.3s ease-in-out;
     padding: 10px; 
+    
+}
+
+.highlight-card:hover {
+    transform: scale(1.05); /* Aumenta o card em 5% */
+    cursor: pointer;
 }
 
 .book-cover-simple {
