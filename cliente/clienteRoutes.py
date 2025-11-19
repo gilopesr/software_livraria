@@ -25,7 +25,6 @@ def salvar_cliente():
             nome = request.form.get("nome")
             email = request.form.get("email")
             telefone = request.form.get("telefone")
-            endereco = request.form.get("endereco")
             senha = request.form.get("senha")
             confirmar_senha = request.form.get("confirmar_senha")
             data_nasc = request.form.get("data_nasc")
@@ -57,7 +56,6 @@ def salvar_cliente():
                 nome=nome,
                 email=email,
                 telefone=telefone,
-                endereco=endereco,
                 senha=hashed_password,
                 data_nasc=data_nasc if data_nasc else None,
                 username=username,

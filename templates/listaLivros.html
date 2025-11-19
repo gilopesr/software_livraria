@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <title>Livros</title>
     <link rel="shortcut icon" type="imagex/png" href="/static/img/livro_img.png">
-    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/global.css">
+    <link rel="stylesheet" href="/static/form.css">
     <script src="/static/index.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -95,7 +96,7 @@
             <div class="card-image-wrapper"> 
                 <img src="{{ livro.url_img }}" alt="Capa do livro">
             </div>
-            <h2>{{ livro.titulo }}</h2>
+            <h3>{{ livro.titulo }}</h3>
             <p>{{ livro.autor.nome }}</p>
             <p><strong>Formato:</strong> {{ livro.formato }}</p>
             <p><strong>Gênero:</strong> {{ livro.genero }}</p>
@@ -108,7 +109,7 @@
                 data-titulo="{{ livro.titulo }}" 
                 data-preco="{{ livro.preco }}"
                 data-url_img="{{livro.url_img}}">
-                Comprar
+                Adicionar ao Carrinho
             </button>
             <a href="{{ url_for('livro.gerenciarLivro', livro_id=livro.id) }}" id="editar" class="btn">Editar</a>
         </div>

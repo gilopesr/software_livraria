@@ -6,7 +6,8 @@
     <title>Livraria Entrelinhas</title>
     <link rel="shortcut icon" type="imagex/png" href="/static/img/livro_img.png">
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel='stylesheet' type='text/css' media='screen' href='/static/style.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='/static/home.css'>
+    <link rel="stylesheet" type='text/css' media='screen' href="/static/global.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
 </head>
@@ -113,42 +114,101 @@
             <span class="dot" onclick="currentSlide(2)"></span>
             <span class="dot" onclick="currentSlide(3)"></span>
         </div>
+    </div>
 
-        <h2 class="section-title">Destaques do Mês</h2>
+        <div class="highlights-section">
+            <h2 class="section-title">Destaques do Mês</h2>
 
-        <section class="highlight-container">
-            
-            {% for livro in livros_destaque %}
-            <div class="highlight-card">
+            <section class="highlight-container">
                 
-                <a href="{{ url_for('livro.listarLivros', id=livro.id) }}" class="book-link-simple">
+                {% for livro in livros_destaque %}
+                <div class="highlight-card">
                     
-                    {% if livro.destaque_tag %}
-                        <span class="destaque-tag">{{ livro.destaque_tag }}</span>
-                    {% endif %}
-
-                    <img src="{{ livro.url_img }}" alt="Capa de {{ livro.titulo }}" class="book-cover-simple">
-                    
-                    <span class="book-title-simple">{{ livro.titulo }}</span>
-                    
-                </a>
-            </div>
-            {% endfor %}
-            
-            {% if livros_destaque|length < 3 %}
-                {% for _ in range(3 - livros_destaque|length) %}
-                    <div class="highlight-card">
-                        <span>Disponível em Breve!</span>
-                    </div>
+                    <a href="{{ url_for('livro.listarLivros', id=livro.id) }}" class="book-link-simple">
+                        
+                        {% if livro.destaque_tag %}
+                            <span class="destaque-tag">{{ livro.destaque_tag }}</span>
+                        {% endif %}
+                        <div class="book-cover-wrapper">
+                            <img src="{{ livro.url_img }}" alt="Capa de {{ livro.titulo }}" class="book-cover-simple">
+                        </div>
+                        
+                        <span class="book-title-simple">{{ livro.titulo }}</span>
+                        
+                    </a>
+                </div>
                 {% endfor %}
-            {% endif %}
+                
+                {% if livros_destaque|length < 3 %}
+                    {% for _ in range(3 - livros_destaque|length) %}
+                        <div class="highlight-card">
+                            <span>Disponível em Breve!</span>
+                        </div>
+                    {% endfor %}
+                {% endif %}
 
-        </section>
+            </section>
+        </div>
 
         <div id="resultado" class="cards-container">
             <!-- resultados aqui -->
         </div>
-    </div>
+
+        <footer class="main-footer">
+            <div class="container footer-content">
+                
+                <div class="footer-column">
+                    <h3>Livraria Entrelinhas</h3>
+                    <ul>
+                        <li><a href="/sobre">Quem Somos</a></li>
+                        <li><a href="/trabalhe-conosco">Trabalhe Conosco</a></li>
+                        <li><a href="/politica-privacidade">Política de Privacidade</a></li>
+                        <li><a href="/termos-uso">Termos de Uso</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Atendimento</h3>
+                    <ul>
+                        <li><a href="/contato">Fale Conosco</a></li>
+                        <li><a href="/ajuda">Central de Ajuda</a></li>
+                        <li><a href="/trocas-devolucoes">Trocas e Devoluções</a></li>
+                        <li><a href="/faq">FAQ (Perguntas Frequentes)</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Minha Conta</h3>
+                    <ul>
+                        <li><a href="/login">Login / Cadastro</a></li>
+                        <li><a href="/pedidos">Meus Pedidos</a></li>
+                        <li><a href="/carrinho">Carrinho</a></li>
+                        <li><a href="/enderecos">Meus Endereços</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column social-column">
+                    <h3>Siga-nos</h3>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                    
+                    <h3 class="mt-20">Pagamento Seguro</h3>
+                    <div class="payment-icons">
+                        <i class="fab fa-cc-visa"></i>
+                        <i class="fab fa-cc-mastercard"></i>
+                        <i class="fab fa-cc-paypal"></i>
+                        </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Livraria Entrelinhas. Todos os direitos reservados.</p>
+            </div>
+        </footer>
     <script src="/static/index.js"></script>
+
 </body>
 </html>

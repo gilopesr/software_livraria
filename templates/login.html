@@ -3,47 +3,105 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Login</title>
+    <title>Login - Livraria Entrelinhas</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='login.css') }}">
+    <link rel="stylesheet" type="text/css" href="/static/login.css"> 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body class="login">
-    <header class="top-bar">
-        <div class="header__logo">
-            <a href="{{ url_for('livro.index') }}" style="text-decoration: none; color: inherit;">
-                <img src="{{ url_for('static', filename='img/livro_img.png') }}" alt="Logo Livraria">
-                <span>Livraria Entrelinhas</span>
+<body>
+    <div class="login-container">
+        <div class="login-form-side">
+            <a href="{{ url_for('livro.index') }}" class="back-button">
+                <i class="fas fa-arrow-left"></i>
+                <span>Voltar</span>
             </a>
-        </div>
-        <a href="{{ url_for('livro.index') }}" class="top-bar-back-link">
-             <i class="fas fa-arrow-left"></i> Voltar
-        </a>
-    </header>
-    <main>
-        <form method="POST" action="{{ url_for('auth_bp.login') }}" class="login">
-            <h2>Faça seu login</h2>
 
-            <label for="user_name">Usuário:</label>
-            <input type="text" name="username" id="user_name" required>
-
-            <label for="password">Senha:</label>
-            <input type="password" name="password" id="password" required>
-
-            <div class="message-container"> 
-                {% with messages = get_flashed_messages(with_categories=true) %}
-                    {% if messages %}
-                        {% for category, message in messages %}
-                            <div class="validation-message {{ category }}">
-                                {{ message | safe }} </div>
-                        {% endfor %}
-                    {% endif %}
-                {% endwith %}
+            <div class="logo-section">
+                <a href="{{ url_for('livro.index') }}" class="logo-link">
+                    <div class="logo-icon">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <span class="logo-text">Livraria Entrelinhas</span>
+                </a>
             </div>
-            <button type="submit">Entrar</button>
 
-            <p>Não tem conta? <a href="{{ url_for('cliente_bp.cadastro') }}">Criar uma</a></p>
-        </form>
-    </main>
+            <div class="login-card">
+                <div class="login-header">
+                    <h1>Bem-vindo de volta!</h1>
+                    <p>Faça seu Login para continuar</p>
+                </div>
+
+                <form method="POST" action="{{ url_for('auth_bp.login') }}" id="loginForm" class="login-form">
+                    <div class="form-group">
+                        <label for="username">Usuário</label>
+                        <input 
+                            type="text" 
+                            id="username" 
+                            name="username" placeholder="Digite seu usuário"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <div class="form-label-row">
+                            <label for="password">Senha</label>
+                            <a href="recuperar-senha.html" class="forgot-password">
+                                Esqueceu a senha?
+                            </a>
+                        </div>
+                        <input 
+                            type="password" 
+                            id="password" 
+                            name="password" placeholder="Digite sua senha"
+                            required
+                        >
+                    </div>
+
+                    <div class="message-container" id="messageContainer">
+                        {% with messages = get_flashed_messages(with_categories=true) %}
+                            {% if messages %}
+                                {% for category, message in messages %}
+                                    <div class="validation-message {{ category }}">
+                                        {{ message | safe }}
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                        {% endwith %}
+                    </div>
+
+                    <button type="submit" class="btn-login">Entrar</button>
+                </form>
+
+                <div class="signup-prompt">
+                    <p>
+                        Não tem uma conta? 
+                        <a href="{{ url_for('cliente_bp.cadastro') }}">Criar uma agora</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="illustration-side">
+            <div class="illustration-overlay"></div>
+            
+            <div class="decorative-circle circle-1"></div>
+            <div class="decorative-circle circle-2"></div>
+            
+            <div class="illustration-content">
+                <div class="illustration-wrapper">
+                    <img 
+                        src="static/img/reading-book.png" 
+                        alt="Pessoa lendo um livro"
+                        class="illustration-image"
+                    >
+                    <div class="illustration-text">
+                        <h2>Mergulhe no mundo da leitura</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='index.js') }}"></script>
 </body>
 </html>

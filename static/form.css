@@ -1,0 +1,297 @@
+/* --- BASE.CSS (Formulários, Listagens, Compras) --- */
+
+/* 1. LINKS DE CADASTRO */
+.cadastro-links-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin: 30px 0;
+}
+.add-livro {
+    padding: 10px 20px;
+    text-align: center;
+    background-color: var(--color-primary);
+    color: var(--color-text); /* Texto na cor escura para contraste */
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+.add-livro:hover {
+    background-color: hsl(30, 50%, 50%);
+}
+
+
+/* --- SEÇÃO 2: CARDS DE RESULTADO (Lista de Livros/Autores) --- */
+
+.cards-container, .livros-container {
+    display: grid;
+    /* Ajustando o minmax para acomodar cards ligeiramente menores (com imagem de 300px) */
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+    gap: 20px;
+    padding: 20px;
+    margin: 0 auto;
+}
+.livros-container {
+    grid-template-columns: repeat(4, 1fr); 
+}
+
+.livros-container .card p {
+    flex-grow: 1;
+}
+
+.card {
+    background-color: var(--color-card);
+    border-radius: 12px;
+    box-shadow: var(--shadow-card);
+    padding: 20px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    height: 100%; 
+    min-height: 100px; 
+    display: flex; 
+    flex-direction: column;
+}
+.card:hover {
+    box-shadow: var(--shadow-soft);
+    transform: translateY(-2px);
+}
+.card h2 {
+    color: var(--color-text);
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+}
+.card p {
+    margin-bottom: 8px;
+    font-size: 0.95rem;
+    color: var(--color-text-muted);
+    flex-grow: 1; /* Empurra os botões para o final */
+}
+
+/* Botões de Ação nos Cards (mantidos) */
+.card #compra, 
+.card #editar { 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 50px; 
+    border: none;
+    color: white; 
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%; 
+    margin-bottom: 5px;
+    flex-shrink: 0; 
+}
+.card #compra { 
+    background-color: var(--color-secondary); 
+}
+.card #compra:hover {
+    background-color: hsl(140, 25%, 45%);
+}
+.card #editar {
+    background-color: var(--color-primary); 
+    color: var(--color-text); 
+}
+.card #editar:hover { 
+    background-color: hsl(30, 50%, 50%);
+}
+
+.cards-container .card p {
+    flex-grow: 0; 
+}
+
+/* ------------------------------------- */
+/* --- SEÇÃO 3: ESTILOS DE AUTORES E IMAGENS --- */
+/* ------------------------------------- */
+
+/* Wrapper da Imagem (para Livros) */
+.card-image-wrapper {
+    background-color: var(--color-card);
+    border-radius: 8px;
+    height: 300px; 
+    width: 100%;
+    overflow: hidden;
+    margin-bottom: 15px; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0; 
+}
+
+.card-image-wrapper img {
+    object-fit: contain; 
+    max-height: 100%;
+    max-width: 100%;
+    width: auto;
+    display: block;
+}
+
+/* ESTILOS DE AUTORES (Foco na correção do layout) */
+
+/* Cabeçalho do Card (Nome, Data, Botão) */
+.card-header {
+    /* Usando flexbox para alinhar o nome e o botão de editar */
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start; /* Alinha o texto do nome com o botão */
+    margin-bottom: 15px;
+}
+
+.card-header h2 {
+    margin: 0; 
+    font-size: 1.3rem;
+    color: var(--color-text);
+    /* Garante que o nome não quebre de forma estranha */
+    line-height: 1.2; 
+    flex-grow: 1; 
+}
+
+/* Informações do Autor (Data de Nascimento) */
+.author-details p {
+    margin-bottom: 8px;
+    color: var(--color-text-muted);
+    font-size: 0.95rem;
+    /* Remove o flex-grow adicionado na regra geral .card p */
+    flex-grow: 0; 
+}
+
+/* Botão de Editar do Autor (Lápis) */
+.edit-btn {
+    text-decoration: none;
+    color: var(--color-accent); 
+    font-size: 1.5em; 
+    padding: 0;
+    cursor: pointer;
+    transition: color 0.2s ease;
+    flex-shrink: 0;
+    margin-left: 10px; 
+    margin-top: -5px; 
+}
+.edit-btn:hover {
+    color: hsl(5, 70%, 60%);
+}
+
+/* Título da Seção Livros: */
+.card-author-title {
+    font-weight: bold;
+    color: var(--color-text);
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+
+/* Lista de Livros Publicados (Visualização de lista mais limpa) */
+.card ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 10px 0 0 0;
+    border-top: 1px solid var(--color-border); 
+    padding-top: 10px;
+    flex-grow: 1;
+}
+
+.card ul li {
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-border);
+    padding: 6px 10px;
+    margin-bottom: 5px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+}
+
+/* 4. FORMULÁRIO (Cadastro/Edição) */
+form {
+    max-width: 500px;
+    margin: 0 auto;
+    background-color: var(--color-card);
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: var(--shadow-soft);
+}
+form input, form button, form select {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 8px;
+    border: 1px solid var(--color-border);
+    background-color: var(--color-input-bg);
+}
+form button {
+    background-color: var(--color-primary);
+    color: var(--color-text);
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+form button:hover {
+    background-color: hsl(30, 50%, 50%);
+}
+form select:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 5px hsl(30, 50%, 60%, 0.5);
+    outline: none;
+}
+
+/* Botoes de Atualizar e Excluir */
+.botoes-edicao {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+#atualizar {
+    background-color: var(--color-secondary);
+}
+#atualizar:hover {
+    background-color: hsl(140, 25%, 45%); 
+}
+#excluir {
+    background-color: var(--color-danger);
+    color: white;
+}
+#excluir:hover {
+    background-color: hsl(0, 80%, 45%); 
+}
+
+/* 5. ESTILOS DE COMPRAS (CHECKOUT/TABELA) */
+.table-cart {
+    border: 1px solid var(--color-border);
+    max-width: 100%;
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: var(--color-card);
+    box-shadow: var(--shadow-card);
+    border-radius: 8px;
+    overflow: hidden;
+}
+tr, td, th {
+    /* Removendo padding e border hard-coded para deixar a tabela clean */
+    padding: 12px 20px; 
+    border: 1px solid var(--color-border);
+    text-align: left;
+}
+th { 
+    background-color: var(--color-primary);
+    color: var(--color-text);
+    font-weight: bold;
+}
+button.close-order,
+button.continue-buy {
+    background-color: var(--color-accent);
+    border-radius: 15px; 
+    font-family: inherit; 
+    color: white; 
+    padding: 14px 20px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+button.close-order:hover,
+button.continue-buy:hover {
+    background-color: hsl(5, 70%, 60%);
+}
