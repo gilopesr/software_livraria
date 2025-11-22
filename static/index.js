@@ -1,5 +1,3 @@
-// --- FUNÇÕES DE LÓGICA CORE ---
-
 // Funções de Carrinho
 function getCart() {
     const cartJson = localStorage.getItem('shoppingCart');
@@ -30,6 +28,42 @@ function addToCart(itemData) {
     saveCart(cart);
 }
 
+// Funções Auxiliares para Atualização de Quantidade (NOVO)
+
+/**
+ * Atualiza a quantidade de um produto específico no array do carrinho e o salva.
+ * @param {string} productId - O ID do produto.
+ * @param {number} newQuantity - A nova quantidade.
+ */
+function updateCartItemQuantity(productId, newQuantity) {
+    let cart = getCart();
+    const itemIndex = cart.findIndex(item => item.id === productId);
+
+    if (itemIndex > -1) {
+        cart[itemIndex].quantity = newQuantity;
+        saveCart(cart); // Salva o carrinho atualizado
+        return true;
+    }
+    return false;
+}
+
+/**
+ * Remove completamente um item do carrinho.
+ * @param {string} productId - O ID do produto.
+ */
+function removeFullItemFromCart(productId) {
+    let cart = getCart();
+    cart = cart.filter(item => item.id !== productId);
+    saveCart(cart); // Salva o carrinho atualizado
+    
+    // Remove a linha da tabela no HTML
+    const rowToRemove = document.querySelector(`tr[data-product-id="${productId}"]`); 
+    if (rowToRemove) {
+        rowToRemove.remove();
+    }
+}
+
+// Lógica de remoção original (diminui em 1)
 function removeItemFromCart(itemId) {
     let cart = getCart();
     const existingItemIndex = cart.findIndex(item => item.id === itemId);
@@ -39,7 +73,9 @@ function removeItemFromCart(itemId) {
         if (item.quantity > 1) {
             item.quantity -= 1;
         } else {
-            cart.splice(existingItemIndex, 1);
+            // Usa a nova função para remover o item inteiro
+            removeFullItemFromCart(itemId);
+            return; // Sai da função após a remoção completa
         }
         saveCart(cart);
     }
@@ -163,11 +199,8 @@ async function finalizarCompra(enderecoData) {
 }
 
 
-// --- FUNÇÕES DE INICIALIZAÇÃO (INIT) ---
+// --- FUNÇÕES DE INICIALIZAÇÃO ---
 
-/** * Inicializa a funcionalidade de Busca (Search Bar)
- * Usado em todas as páginas onde a barra de busca está presente.
- */
 function initSearch() {
     const searchInput = document.getElementById('search-input');
     const searchIcon = document.getElementById('search-icon');
@@ -188,8 +221,7 @@ function initSearch() {
     }
 }
 
-/** * Atualiza o display do carrinho (ícone no cabeçalho e card)
- */
+
 function updateCartDisplay(cart) {
     const cartCountElement = document.querySelector('#cart-icon .count');
     const cartItemsList = document.getElementById('cart-items-list');
@@ -228,6 +260,8 @@ function updateCartDisplay(cart) {
                     removeButton.addEventListener('click', (e) => {
                         e.stopPropagation(); 
                         removeItemFromCart(item.id);
+                        // Atualiza o display da mini-sacola após remoção/diminuição
+                        updateCartDisplay(getCart()); 
                     });
                 }
                 cartItemsList.appendChild(itemElement);
@@ -240,10 +274,7 @@ function updateCartDisplay(cart) {
     }
 }
 
-/**
- * Inicializa a funcionalidade do Carrinho (botões de adicionar e ícone)
- * Usado em todas as páginas onde o carrinho está visível.
- */
+
 function initCart() {
     const buyButtons = document.querySelectorAll('.add-to-cart-btn');
     buyButtons.forEach(button => {
@@ -264,13 +295,11 @@ function initCart() {
     const cartCard = document.getElementById('cart-card');
     
     if (cartIcon && cartCard) {
-        // Toggle do carrinho
         cartIcon.addEventListener('click', (e) => {
             e.preventDefault();
             cartCard.classList.toggle('hidden');
         });
 
-        // Fechar carrinho ao clicar fora
         document.addEventListener('click', (e) => {
             if (!cartCard.contains(e.target) && !cartIcon.contains(e.target) && !cartCard.classList.contains('hidden')) {
                 cartCard.classList.add('hidden');
@@ -279,10 +308,7 @@ function initCart() {
     }
 }
 
-/**
- * Inicializa a verificação de login para o botão de Checkout.
- * Usado em todas as páginas onde o botão de checkout está presente.
- */
+//verificação de login
 function initCheckout() {
     const checkoutButton = document.getElementById('checkout-button');
     const loginPageUrl = '/login';
@@ -304,7 +330,59 @@ function initCheckout() {
 }
 
 
-// --- Funções Específicas da Página de Compras (/compras) ---
+// --- Funções da Página de Compras---
+
+/**
+ * Lógica para atualizar a quantidade do item na página de compras. (NOVO)
+ * @param {string} productId - O ID do produto.
+ * @param {number} change - O valor da mudança (+1 ou -1).
+ */
+function handleQuantityChange(productId, change) {
+    const quantityDisplay = document.getElementById(`quantity-${productId}`);
+    let currentQuantity = parseInt(quantityDisplay.textContent);
+
+    let newQuantity = currentQuantity + change;
+
+    if (newQuantity < 1) {
+        // Se a nova quantidade for menor que 1 (clicou em '-' em 1 item)
+        if (confirm("Deseja remover este item do carrinho?")) {
+            removeFullItemFromCart(productId);
+            shoppingCart(); // Recarrega o carrinho após a remoção
+            return;
+        }
+        return; // Não faz nada se o usuário cancelar
+    }
+
+    // 1. Atualiza a quantidade no modelo de dados (localStorage)
+    if (updateCartItemQuantity(productId, newQuantity)) {
+        // 2. Atualiza a exibição da quantidade no HTML
+        quantityDisplay.textContent = newQuantity;
+        
+        // 3. Recalcula e atualiza o Total do Item e o Total Geral
+        shoppingCart(); // Recarrega a tabela e os totais
+    }
+}
+
+/**
+ * Configura os event listeners para os botões + e - da página de compras. (NOVO)
+ */
+function setupQuantityControls() {
+    // Escuta cliques no corpo da tabela para lidar com botões gerados dinamicamente
+    document.getElementById('cart-table-body').addEventListener('click', (event) => {
+        const target = event.target;
+
+        if (target.classList.contains('quantity-button')) {
+            const productId = target.getAttribute('data-id');
+            
+            if (target.classList.contains('plus-btn')) {
+                handleQuantityChange(productId, 1); // Aumenta em 1
+            } else if (target.classList.contains('minus-btn')) {
+                handleQuantityChange(productId, -1); // Diminui em 1
+            }
+        }
+    });
+}
+
 
 function shoppingCart() {
     const cart = getCart();
@@ -317,11 +395,10 @@ function shoppingCart() {
     const taxa = 9.67;
     let subtotalProduct = 0;
     
-    // Lógica de exibição e cálculo (mantida a sua lógica original)
     if (cart.length === 0) {
-        // ... (código para carrinho vazio)
-        tableBody.innerHTML = '<tr><td colspan="5" style="text-align: center;">Não há livro cadastrado ainda!!</tr>';
+        tableBody.innerHTML = '<tr><td colspan="5" style="text-align: center;">Seu carrinho está vazio :( </tr>';
         if(subtotal) subtotal.textContent = 'R$ 0,00';
+        // A entrega deve ser mantida, mas o total deve ser zero
         if(delivery) delivery.textContent = `R$ ${taxa.toFixed(2).replace(".",",")}`;
         if(total) total.textContent = 'R$ 0,00';
         return; 
@@ -334,12 +411,19 @@ function shoppingCart() {
         const itemTotalFormat = itemTotal.toFixed(2).replace('.',',');
 
         const row = document.createElement('tr');
+        row.setAttribute('data-product-id', item.id); // Adiciona um ID para remoção/manipulação
         row.innerHTML = `
-        <td><img src=${item.url_img} alt="imagem do livro" style="height:80px; width:70px;"></td>
-        <td>${item.title}</td>
-        <td>R$ ${priceFormat}</td>
-        <td>${item.quantity || 1}</td>
-        <td>R$ ${itemTotalFormat}</td>
+            <td><img src=${item.url_img} alt="imagem do livro" style="height:80px; width:70px;"></td>
+            <td>${item.title}</td>
+            <td>R$ ${priceFormat}</td>
+            <td class="quantity-controls">
+                <div class="quantity-wrapper">
+                    <button class="quantity-button minus-btn" data-id="${item.id}">-</button> 
+                    <span class="quantity-display" id="quantity-${item.id}">${item.quantity || 1}</span>
+                    <button class="quantity-button plus-btn" data-id="${item.id}">+</button>
+                </div>
+            </td>
+            <td id="total-${item.id}">R$ ${itemTotalFormat}</td>
         `;
         tableBody.appendChild(row);
     });
@@ -373,7 +457,6 @@ async function consultarCEP(cepValue) {
         limparFormularioCEP();
         return; 
     }
-    // ... (Sua lógica de ViaCEP)
     const url = `https://viacep.com.br/ws/${cep}/json/`;
     try {
         const response = await fetch(url);
@@ -396,28 +479,29 @@ async function consultarCEP(cepValue) {
     }
 }
 
-/**
- * Inicializa a funcionalidade da página de Compras (tabela e formulário de endereço).
- * Usado APENAS na página de Compras (/compras).
- */
+// pagina do carrinho
 function initOrderPage() {
-    shoppingCart(); // Carrega a tabela do carrinho
+    shoppingCart();
+    setupQuantityControls(); // Configura os event listeners para os botões +/-
     
     var btnCloseOrder = document.getElementById('close-order');
     var formContainer = document.getElementById('address-form-container');
     var addressForm = document.getElementById('address-form');
     var btnContinueBuy = document.getElementById('continue-buy');
-    
-    // Mostrar formulário
+
     if (btnCloseOrder && formContainer) {
         btnCloseOrder.addEventListener('click', function(event) {
+            // Verifica se o carrinho está vazio antes de prosseguir
+            if (getCart().length === 0) {
+                 alert("Adicione itens ao carrinho antes de fechar o pedido.");
+                 return;
+            }
             formContainer.classList.remove('hidden');
             formContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
             btnCloseOrder.disabled = true;
         });
     }
 
-    // Submissão do formulário de endereço
     if (addressForm) {
         addressForm.addEventListener('submit', function(event) {
             event.preventDefault();
@@ -426,14 +510,12 @@ function initOrderPage() {
         });
     }
 
-    // Botão continuar comprando
     if (btnContinueBuy) {
         btnContinueBuy.addEventListener('click', function() {
             location.href = '/livros';
         });
     }
     
-    // Listener do CEP no formulário de endereço
     const cepInput = document.getElementById('cep');
     if (cepInput) {
         cepInput.addEventListener('blur', (e) => consultarCEP(e.target.value));
@@ -445,7 +527,6 @@ let slideIndex = 1;
 let autoTimeout;
 
 function showSlides(n) {
-    // ... (sua lógica de showSlides)
     let i;
     const slides = document.getElementsByClassName("mySlides");
     const dots = document.getElementsByClassName("dot");
@@ -472,17 +553,14 @@ function autoRotate() {
     autoTimeout = setTimeout(autoRotate, 5000);
 }
 
-// Expõe a função para que os botões do HTML (dot) possam chamá-la
+// Expõe a função para que os botões do HTML (dot) possam chamar
 window.currentSlide = function(n) {
     clearTimeout(autoTimeout);
     showSlides(slideIndex = n);
     autoTimeout = setTimeout(autoRotate, 5000); 
 }
 
-/**
- * Inicializa o Carrossel.
- * Usado APENAS nas páginas onde o carrossel está presente.
- */
+
 function initCarousel() {
     const slides = document.getElementsByClassName("mySlides");
     if (slides.length > 0) {
@@ -494,25 +572,16 @@ function initCarousel() {
 // --- PONTO DE ENTRADA CENTRALIZADO ---
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Estas funcionalidades são globais e necessárias em quase todas as páginas:
     initSearch();
     initCart();
-    initCheckout(); // Verifica login para o botão de checkout
-
-    // Inicialização condicional para módulos grandes:
+    initCheckout();
     
-    // 1. Carrossel: Se houver a classe 'slideshow-container' (geralmente na home)
     if (document.querySelector('.slideshow-container')) {
-        // A função initCarousel é chamada aqui
         initCarousel();
     }
     
-    // 2. Página de Compras: Se a URL for a página de compras
+    // 2. Página de Compras
     if (window.location.pathname === '/compras') {
-        // A função initOrderPage é chamada aqui
         initOrderPage();
     }
-
-    // Nota: O seu carrossel estava usando 'window.onload', 
-    // mudei para ser chamado aqui no DOMContentLoaded condicionalmente.
 });

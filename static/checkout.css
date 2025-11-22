@@ -1,30 +1,14 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Arial', Helvetica, sans-serif;
-}
-
-:root {
-    --color-primary: #d17cae;
-    --color-bg-light: #f5f5f5;
-    --color-text-dark: #333;
-    --color-highlight-card: #e0b0d6;
-}
-
-
-body {
-    background-color: var(--color-bg-light);
-    color: var(--color-text-dark);
-}
-
 header {
-    background-color: var(--color-primary);
-    color: white;
-    padding: 20px 0;
+    background-color: var(--color-border);
+    color: var(--color-text);
+    padding: 15px 0;
     text-align: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-bottom: 30px;
+    box-shadow: 0 2px 4px var(--shadow-soft);
+    margin-bottom: 20px;
+}
+
+header h1{
+    color: var(--color-text);
 }
 
 main {
@@ -32,10 +16,33 @@ main {
     margin: 0 auto;
 }
 
+.back-button {
+    position: absolute;
+    top: 1.5rem;
+    left: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: var(--transition-smooth);
+}
+
+.back-button:hover {
+    color: var(--color-text);
+}
+
+.back-button i {
+    font-size: 1rem;
+}
+
 /* Tabela do Carrinho de Compras */
 .table-cart {
     flex-grow: 2;
     min-width: 500px;
+    table-layout: fixed;
     border: 1px solid #ccc;
     border-collapse: collapse;
     width: 100%;
@@ -44,7 +51,7 @@ main {
 }
 
 .table-cart th {
-    background-color: var(--color-primary);
+    background-color: var(--color-text-muted);
     color: white;
     padding: 10px 10px;
     text-align: left;
@@ -57,6 +64,26 @@ main {
     padding: 10px 10px;
     vertical-align: middle;
     border-bottom: 1px solid #ccc;
+}
+
+.table-cart th:nth-child(1),
+.table-cart td:nth-child(1) { 
+    width: 150px;
+}
+
+.table-cart th:nth-child(3),
+.table-cart td:nth-child(3) { 
+    width: 120px;
+}
+
+.table-cart th:nth-child(4),
+.table-cart td:nth-child(4) { 
+    width: 140px;
+}
+
+.table-cart th:nth-child(5),
+.table-cart td:nth-child(5) { 
+    width: 140px;
 }
 
 /* Tabela de Resumo de Pagamento */
@@ -85,7 +112,7 @@ main {
 
 /* Mantém o destaque na cor do Total */
 .payment tr:last-child td {
-    color: var(--color-primary);
+    color: var(--color-text-muted);
 }
 
 /* Ajusta o alinhamento do texto à direita dos valores */
@@ -133,14 +160,14 @@ main {
 }
 
 .btn-close {
-    background-color: #4CAF50;
+    background-color: var(--color-secondary);
     color: white; 
 }
 
 .btn-compras {
     background-color: var(--color-bg-light);
-    border: 1px solid #b83d87;
-    color: #b83d87;
+    border: 1px solid var( --color-accent);
+    color: var(--color-accent);
 }
 
 .btn-close:hover {
@@ -148,7 +175,7 @@ main {
 }
 
 .btn-compras:hover {
-    background-color: #ad5289;
+    background-color: hsl(5, 33%, 45%);
     color: #f5f5f5;
 }
 
@@ -179,7 +206,7 @@ main {
 #address-form-container {
     margin: 40px auto;
     padding: 30px;
-    max-width: 800px; /* Limita a largura */
+    max-width: 800px;
     border: 1px solid #dedcdc;
     border-radius: 8px;
     background-color: var(--color-bg-light);
@@ -187,36 +214,36 @@ main {
 }
 
 #address-form-container h2 {
-    color: #ad5289;
-    border-bottom: 2px solid #b65b90; /* Cor do seu botão */
+    color: var(--color-text-muted);
+    border-bottom: 2px solid var(--color-text-muted);
     padding-bottom: 10px;
     margin-bottom: 25px;
-    text-align: left; /* Alinhar o título à esquerda */
+    text-align: left;
 }
 
-/* --- Estilos para os campos do Formulário --- */
+/* --- Estilo campo de endereço --- */
 #address-form {
     display: flex;
-    flex-direction: column; /* Organiza os grupos de campos verticalmente */
-    gap: 20px; /* Espaço entre as linhas de campos */
+    flex-direction: column;
+    gap: 20px;
 }
 
 .form-row {
     display: grid;
-    grid-template-columns: 1fr 1fr; /* Duas colunas de largura igual */
-    gap: 20px; /* Espaço entre os campos na mesma linha */
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
 }
 
 .form-field {
     display: flex;
-    flex-direction: column; /* Rótulo acima do input */
+    flex-direction: column;
 }
 
 .form-field label {
     font-weight: 600;
     color: #555;
-    margin-bottom: 8px; /* Espaço entre o rótulo e o input */
-    display: block; /* Garante que o rótulo ocupe a largura */
+    margin-bottom: 8px;
+    display: block;
 }
 
 .form-field input[type="text"] {
@@ -229,39 +256,79 @@ main {
     font-size: 1rem;
 }
 
-/* Campos de largura total */
 .full-width {
-    grid-column: 1 / -1; /* Faz o campo ocupar a largura total do grid */
+    grid-column: 1 / -1;
 }
 
-/* --- Botão FINALIZAR PEDIDO --- */
-.btn-checkout { /* Altere para esta classe para não afetar outros botões */
-    width: 100%; /* Ocupa a largura total disponível no form-field */
+.btn-checkout { 
+    width: 100%;
     padding: 12px;
     border-radius: 8px;
     border: none;
-    background-color: #b65b90; /* Cor do botão */
+    background-color: var( --color-accent);
     color: #fff;
     cursor: pointer;
     font-weight: bold;
     transition: background-color 0.2s;
-    margin-top: auto; /* Alinha o botão ao final do seu container flex */
-    align-self: flex-end; /* Garante que ele se alinhe na parte inferior do form-field */
-    height: 65%; /* Para que ocupe a mesma altura do campo de Estado ao lado */
+    margin-top: auto;
+    align-self: flex-end;
+    height: 65%;
 }
 
 .btn-checkout:hover {
-    background-color: #9c4c77;
+    background-color: hsl(5, 33%, 45%);
 }
 
-/* Ajustes específicos para o campo do botão */
 .form-field.button-field {
-    display: flex; /* Transforma em flex para alinhar o botão */
-    justify-content: flex-end; /* Alinha o botão à direita se houver espaço */
-    align-items: flex-end; /* Alinha o botão com a base do campo de texto ao lado */
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
 }
 
 .hidden {
     display: none;
 }
 
+.quantity-controls {
+    text-align: center;
+    vertical-align: middle !important; 
+}
+
+.quantity-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    margin: 0 auto;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.quantity-button {
+    background-color: var(--color-bg-light);
+    color: var(--color-secondary);
+    border: none;
+    padding: 6px 10px;
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: bold;
+    line-height: 1; 
+    transition: background-color 0.2s, color 0.2s;
+    user-select: none;
+}
+
+.quantity-button:hover {
+    background-color: var(--color-secondary);
+}
+
+.quantity-display {
+    padding: 6px 10px;
+    min-width: 25px; 
+    text-align: center;
+    font-weight: 500;
+    color: var(--color-text);
+    background-color: white;
+    border-left: 1px solid var(--color-border); 
+    border-right: 1px solid var(--color-border);
+}
