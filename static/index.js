@@ -134,18 +134,17 @@ async function isUserLoggedIn() {
 
 // Funções de Finalização de Compra (Checkout)
 function coletarDadosDoFormulario(form) {
-    const dados = {};
+    const data = {};
     const formData = new FormData(form);
-    for (const [key, value] of formData.entries()) {
-        dados[key] = value;
+
+    for (let [key, value] of formData.entries()) {
+        data[key] = value;
     }
-    if (dados.cep) {
-        dados.cep = dados.cep.replace(/\D/g, '');
-    }
-    return dados;
+
+    return data;
 }
 
-async function finalizarCompra(enderecoData) {
+async function processarPagamento(enderecoData, metodoPagamento) {
     const cart = getCart();
     if (cart.length === 0) {
         alert("Seu carrinho está vazio.");
@@ -169,6 +168,7 @@ async function finalizarCompra(enderecoData) {
 
     const payload = {
         endereco: enderecoData,
+        metodo_pagamento: metodoPagamento,
         carrinho: itensParaAPI,
         valor_total: valorTotal
     };
@@ -331,12 +331,6 @@ function initCheckout() {
 
 
 // --- Funções da Página de Compras---
-
-/**
- * Lógica para atualizar a quantidade do item na página de compras. (NOVO)
- * @param {string} productId - O ID do produto.
- * @param {number} change - O valor da mudança (+1 ou -1).
- */
 function handleQuantityChange(productId, change) {
     const quantityDisplay = document.getElementById(`quantity-${productId}`);
     let currentQuantity = parseInt(quantityDisplay.textContent);
@@ -344,43 +338,38 @@ function handleQuantityChange(productId, change) {
     let newQuantity = currentQuantity + change;
 
     if (newQuantity < 1) {
-        // Se a nova quantidade for menor que 1 (clicou em '-' em 1 item)
         if (confirm("Deseja remover este item do carrinho?")) {
             removeFullItemFromCart(productId);
-            shoppingCart(); // Recarrega o carrinho após a remoção
+            shoppingCart();
             return;
         }
-        return; // Não faz nada se o usuário cancelar
+        return;
     }
 
-    // 1. Atualiza a quantidade no modelo de dados (localStorage)
     if (updateCartItemQuantity(productId, newQuantity)) {
-        // 2. Atualiza a exibição da quantidade no HTML
         quantityDisplay.textContent = newQuantity;
-        
-        // 3. Recalcula e atualiza o Total do Item e o Total Geral
-        shoppingCart(); // Recarrega a tabela e os totais
+        shoppingCart();
     }
 }
 
-/**
- * Configura os event listeners para os botões + e - da página de compras. (NOVO)
- */
-function setupQuantityControls() {
-    // Escuta cliques no corpo da tabela para lidar com botões gerados dinamicamente
-    document.getElementById('cart-table-body').addEventListener('click', (event) => {
-        const target = event.target;
 
-        if (target.classList.contains('quantity-button')) {
-            const productId = target.getAttribute('data-id');
-            
-            if (target.classList.contains('plus-btn')) {
-                handleQuantityChange(productId, 1); // Aumenta em 1
-            } else if (target.classList.contains('minus-btn')) {
-                handleQuantityChange(productId, -1); // Diminui em 1
+function setupQuantityControls() {
+    const tableBody = document.getElementById('cart-table-body');
+    if (tableBody) {
+        tableBody.addEventListener('click', (event) => {
+            const target = event.target;
+
+            if (target.classList.contains('quantity-button')) {
+                const productId = target.getAttribute('data-id');
+                
+                if (target.classList.contains('plus-btn')) {
+                    handleQuantityChange(productId, 1);
+                } else if (target.classList.contains('minus-btn')) {
+                    handleQuantityChange(productId, -1);
+                }
             }
-        }
-    });
+        });
+    }
 }
 
 
@@ -391,6 +380,8 @@ function shoppingCart() {
     const delivery = document.getElementById("delivery");
     const total = document.getElementById("total");
 
+    if (!tableBody) return; // Evita erros se não estiver na página de carrinho
+
     tableBody.innerHTML = '';
     const taxa = 9.67;
     let subtotalProduct = 0;
@@ -398,7 +389,6 @@ function shoppingCart() {
     if (cart.length === 0) {
         tableBody.innerHTML = '<tr><td colspan="5" style="text-align: center;">Seu carrinho está vazio :( </tr>';
         if(subtotal) subtotal.textContent = 'R$ 0,00';
-        // A entrega deve ser mantida, mas o total deve ser zero
         if(delivery) delivery.textContent = `R$ ${taxa.toFixed(2).replace(".",",")}`;
         if(total) total.textContent = 'R$ 0,00';
         return; 
@@ -411,7 +401,7 @@ function shoppingCart() {
         const itemTotalFormat = itemTotal.toFixed(2).replace('.',',');
 
         const row = document.createElement('tr');
-        row.setAttribute('data-product-id', item.id); // Adiciona um ID para remoção/manipulação
+        row.setAttribute('data-product-id', item.id);
         row.innerHTML = `
             <td><img src=${item.url_img} alt="imagem do livro" style="height:80px; width:70px;"></td>
             <td>${item.title}</td>
@@ -445,10 +435,14 @@ function shoppingCart() {
 }
 
 function limparFormularioCEP() {
-    document.getElementById('logradouro').value = "";
-    document.getElementById('bairro').value = "";
-    document.getElementById('cidade').value = "";
-    document.getElementById('uf').value = "";
+    const logradouro = document.getElementById('logradouro');
+    if (logradouro) logradouro.value = "";
+    const bairro = document.getElementById('bairro');
+    if (bairro) bairro.value = "";
+    const cidade = document.getElementById('cidade');
+    if (cidade) cidade.value = "";
+    const uf = document.getElementById('uf');
+    if (uf) uf.value = "";
 }
 
 async function consultarCEP(cepValue) {
@@ -479,19 +473,36 @@ async function consultarCEP(cepValue) {
     }
 }
 
+// Handler para finalizar o pagamento (Etapa 2)
+function handleFinishOrder(dadosEndereco, addressForm) {
+    const metodoPagamento = addressForm.querySelector('input[name="paymentMethod"]:checked');
+    
+    if (!metodoPagamento) {
+        alert('Por favor, selecione um método de pagamento.');
+        return;
+    }
+    processarPagamento(dadosEndereco, metodoPagamento.value);
+}
+
 // pagina do carrinho
 function initOrderPage() {
     shoppingCart();
-    setupQuantityControls(); // Configura os event listeners para os botões +/-
+    setupQuantityControls(); 
     
     var btnCloseOrder = document.getElementById('close-order');
     var formContainer = document.getElementById('address-form-container');
     var addressForm = document.getElementById('address-form');
     var btnContinueBuy = document.getElementById('continue-buy');
+    
+    let dadosEndereco = {}; 
+    
+    var paymentSection = document.getElementById('metodo-pagamento');
+    var addressFields = addressForm.querySelectorAll('.form-field:not(.button-field)'); 
+    var addressSubmitButtonContainer = addressForm.querySelector('#address-submit-button-container');
+    var finishButton = document.getElementById('finish-order-button');
 
     if (btnCloseOrder && formContainer) {
         btnCloseOrder.addEventListener('click', function(event) {
-            // Verifica se o carrinho está vazio antes de prosseguir
             if (getCart().length === 0) {
                  alert("Adicione itens ao carrinho antes de fechar o pedido.");
                  return;
@@ -505,8 +516,35 @@ function initOrderPage() {
     if (addressForm) {
         addressForm.addEventListener('submit', function(event) {
             event.preventDefault();
-            const enderecoData = coletarDadosDoFormulario(addressForm);
-            finalizarCompra(enderecoData);
+            
+            if (paymentSection.classList.contains('hidden')) { 
+                
+                if (!addressForm.checkValidity()) {
+                    addressForm.reportValidity();
+                    return;
+                }
+                
+                dadosEndereco = coletarDadosDoFormulario(addressForm);
+                
+                addressFields.forEach(field => {
+                    field.style.display = 'none';
+                });
+                
+                if (addressSubmitButtonContainer) {
+                    addressSubmitButtonContainer.style.display = 'none';
+                }
+                
+                paymentSection.classList.remove('hidden');
+                addressForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                
+                const formTitle = addressForm.querySelector('h2');
+                if (formTitle) formTitle.textContent = 'Confirmação de Pagamento';
+
+                if (finishButton) {
+                    finishButton.removeEventListener('click', () => handleFinishOrder(dadosEndereco, addressForm));
+                    finishButton.addEventListener('click', () => handleFinishOrder(dadosEndereco, addressForm)); 
+                }
+            } 
         });
     }
 
@@ -543,7 +581,7 @@ function showSlides(n) {
     }
 
     if (slides.length > 0) {
-        slides[slideIndex - 1].style.display = "block";  
+        slides[slideIndex - 1].style.display = "block";  
         dots[slideIndex - 1].className += " active";
     }
 }

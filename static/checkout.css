@@ -103,19 +103,15 @@ main {
     border-bottom: 1px solid #ccc;
 }
 
-
-/* Estilo para a linha do Total Geral */
 .payment tr:last-child {
     font-weight: bold;
     font-size: 1.1em;
 }
 
-/* Mantém o destaque na cor do Total */
 .payment tr:last-child td {
     color: var(--color-text-muted);
 }
 
-/* Ajusta o alinhamento do texto à direita dos valores */
 .payment td {
     text-align: right; 
 }
@@ -217,7 +213,7 @@ main {
     color: var(--color-text-muted);
     border-bottom: 2px solid var(--color-text-muted);
     padding-bottom: 10px;
-    margin-bottom: 25px;
+    margin-bottom: 10px;
     text-align: left;
 }
 
@@ -331,4 +327,56 @@ main {
     background-color: white;
     border-left: 1px solid var(--color-border); 
     border-right: 1px solid var(--color-border);
+}
+
+.payment-options {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 5px;
+}
+
+.payment-option-label {
+    display: block;
+    padding: 15px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+}
+
+.payment-option-label:hover {
+    border-color: var(--color-accent);
+    background-color: hsla(25, 15%, 45%, 0.46);
+}
+
+.visually-hidden-input:checked + .payment-option-label {
+    border-color: var(--color-accent);
+    background-color: hsl(25, 15%, 45%);
+    box-shadow: 0 0 10px var(--shadow-soft);
+}
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+.visually-hidden-input {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border-width: 0 !important;
 }

@@ -108,11 +108,27 @@
                 <label for="uf">Estado:</label>
                 <input type="text" id="uf" name="uf" maxlength="2" required>
             </div>
-            <div class="form-field button-field">
-                <button type="submit" class="btn btn-checkout">FINALIZAR PEDIDO</button>
+            <div class="form-field button-field" id="address-submit-button-container">
+                <button type="submit" class="btn btn-checkout">AVANÇAR PARA PAGAMENTO</button> 
             </div>
         </div>
-    </form>
+            <div id="metodo-pagamento" class="hidden">
+                <div class="payment-options">
+                    <input type="radio" id="radio-cc" name="paymentMethod" value="creditCard" class="visually-hidden-input">
+                    <label for="radio-cc" class="payment-option-label"> Cartão de Crédito </label>
+
+                    <input type="radio" id="radio-pix" name="paymentMethod" value="pix" class="visually-hidden-input">
+                    <label for="radio-pix" class="payment-option-label"> Pix </label>
+
+                    <input type="radio" id="radio-boleto" name="paymentMethod" value="bankSlip" class="visually-hidden-input">
+                    <label for="radio-boleto" class="payment-option-label"> Boleto Bancário </label>
+                </div>
+                <div class="form-field full-width button-field" style="margin-top: 20px;">
+                    <button type="button" id="finish-order-button" class="btn btn-checkout">CONFIRMAR PAGAMENTO</button> 
+                </div>
+            </div>
+        </form>
+        </div>
     </div>
 </main>
     <script src='/static/index.js' defer></script>
