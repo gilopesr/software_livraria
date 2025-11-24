@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash, session
+from flask import Blueprint, render_template, request, redirect, url_for, flash, session, jsonify
 from config import db
 from cliente.clienteModel import Cliente
 from werkzeug.security import check_password_hash
@@ -16,6 +16,7 @@ def login():
         # 2. Verifica se o cliente existe E se a senha fornecida corresponde ao hash armazenado
         if cliente and check_password_hash(cliente.senha, password):
             
+            session['id_cliente'] = cliente.id
             session['nome_cliente'] = cliente.username
 
             flash(f"Bem-vindo, {cliente.username}!", "sucesso")
@@ -34,3 +35,20 @@ def logout():
     flash("Você saiu da sua conta.", "sucesso")
     return redirect(url_for("auth_bp.login"))
 
+
+@auth_bp.route('/status_login', methods=['GET'])
+def status_login():
+    """
+    Retorna o status de autenticação do usuário.
+    Usa 'nome_cliente' na sessão como indicador de login.
+    """
+    if 'nome_cliente' in session:
+        return jsonify({
+            'logged_in': True,
+            'username': session['nome_cliente'],
+            'id_cliente': session['id_cliente']
+        }), 200
+    else:
+        return jsonify({
+            'logged_in': False
+        }), 200

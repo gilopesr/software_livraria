@@ -5,49 +5,186 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>Carrinho de Compras</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-      <link rel='stylesheet' type='text/css' media='screen' href='/static/style.css'>
+    <link rel="shortcut icon" type="imagex/png" href="/static/img/open-book.png">
+    <link rel='stylesheet' type='text/css' media='screen' href='/static/checkout.css'>
+    <link rel="stylesheet" href="/static/global.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src='/static/index.js' defer></script>
+    
 </head>
 <body>
-    <header>
-        <h1>Carrinho de Compras</h1>
-    </header>
-    <main>
-        <table class="table-cart">
-            <tr style="border: 5px pink solid;">
-                <th>Imagem</th>
-                <th>Livro</th>
-                <th>Preço</th>
-                <th>Quantidade</th>
-                <th>Total</th>
+<header>
+    <h1>Carrinho de Compras</h1>
+    <div class="login-form-side">
+            <a href="{{ url_for('livro.index') }}" class="back-button">
+                <i class="fas fa-arrow-left"></i>
+                <span>Voltar</span>
+            </a>
+    </div>
+</header>
+<main>
+    <table class="table-cart">
+        <tr>
+            <th>Imagem</th>
+            <th>Produto</th>
+            <th>Preço</th>
+            <th>Quantidade</th>
+            <th>Total</th>
+        </tr>
+        <tbody id="cart-table-body" >
+            <tr>
+                <td id="final-total" colspan="5">R$ 0,00</td> 
             </tr>
-            <tbody id="cart-table-body" >
-                <tr>
-                    <td colspan="2"></td>
-                    <td id="final-total" colspan="2">R$ 0,00</td>
+        </tbody> 
+    </table>
+    
+    <div class="summary-actions-wrapper"> 
+        
+        <div class="payment-content-wrapper"> 
+            
+            <table class="payment" id="payment">
+                <tr class="pay">
+                    <th>Subtotal</th>
+                    <td id="subtotal">R$ 0,00</td>
                 </tr>
-            </tbody> 
-        </table><br>
-        <table class="payment" id="payment">
-            <tr class="pay">
-                <th>Subtotal</th>
-                <td id="subtotal">R$ 0,00</td>
-            </tr>
-            <tr class="pay">
-                <th>Entrega</th>
-                <td id="delivery"></td>
-            </tr>
-            <tr class="pay">
-                <th>Total da Compra</th>
-                <td id="total"></td>
-            </tr>
-        </table>
-        <button id="close-order" class="close-order" style="border-radius: 15px; font-family: Arial, Helvetica, sans-serif; color: black; padding: 14px;">Fechar pedido</button>
-    </main>
+                <tr class="pay">
+                    <th>Entrega</th>
+                    <td id="delivery"></td>
+                </tr>
+                <tr class="pay">
+                    <th>Total da Compra</th>
+                    <td id="total"></td>
+                </tr>
+            </table>
 
-    <footer>
+            <div class="coupon-and-buttons">
+                <div class="coupon-field">
+                    <input type="text" placeholder="Adicionar Cupom de Desconto" class="coupon-input">
+                    <button class="btn btn-secondary coupon-button">Aplicar</button>
+                </div>
+                <div class="button-group">
+                    <button id="close-order" class="btn btn-close">FECHAR PEDIDO</button>
+                    <button id="continue-buy" class="btn btn-compras">CONTINUAR COMPRANDO</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="address-form-container" class="hidden">
+        <form id="address-form">
+            <h2>Endereço de Entrega</h2>
+        <div class="form-field full-width">
+            <label for="cep">CEP:</label>
+            <input type="text" id="cep" name="cep" maxlength="8" onblur="consultarCEP(this.value)" required>
+        </div>
+        
+        <div class="form-field full-width">
+            <label for="logradouro">Rua:</label>
+            <input type="text" id="logradouro" name="logradouro" required>
+        </div>
+        
+        <div class="form-row">
+            <div class="form-field">
+                <label for="numero">Número:</label>
+                <input type="text" id="numero" name="numero" required>
+            </div>
+            <div class="form-field">
+                <label for="complemento">Complemento:</label>
+                <input type="text" id="complemento" name="complemento">
+            </div>
+        </div>
+        
+        <div class="form-row">
+            <div class="form-field">
+                <label for="bairro">Bairro:</label>
+                <input type="text" id="bairro" name="bairro" required>
+            </div>
+            <div class="form-field">
+                <label for="cidade">Cidade:</label>
+                <input type="text" id="cidade" name="cidade" required>
+            </div>
+        </div>
+        
+        <div class="form-row">
+            <div class="form-field">
+                <label for="uf">Estado:</label>
+                <input type="text" id="uf" name="uf" maxlength="2" required>
+            </div>
+            <div class="form-field button-field" id="address-submit-button-container">
+                <button type="submit" class="btn btn-checkout">AVANÇAR PARA PAGAMENTO</button> 
+            </div>
+        </div>
+            <div id="metodo-pagamento" class="hidden">
+                <div class="payment-options">
+                    <input type="radio" id="radio-cc" name="paymentMethod" value="creditCard" class="visually-hidden-input">
+                    <label for="radio-cc" class="payment-option-label"> Cartão de Crédito </label>
 
+                    <input type="radio" id="radio-pix" name="paymentMethod" value="pix" class="visually-hidden-input">
+                    <label for="radio-pix" class="payment-option-label"> Pix </label>
+
+                    <input type="radio" id="radio-boleto" name="paymentMethod" value="bankSlip" class="visually-hidden-input">
+                    <label for="radio-boleto" class="payment-option-label"> Boleto Bancário </label>
+                </div>
+                <div class="form-field full-width button-field" style="margin-top: 20px;">
+                    <button type="button" id="finish-order-button" class="btn btn-checkout">CONFIRMAR PAGAMENTO</button> 
+                </div>
+            </div>
+        </form>
+        </div>
+    </div>
+</main>
+    <script src='/static/index.js' defer></script>
+    <footer class="main-footer">
+            <div class="container footer-content">
+                
+                <div class="footer-column">
+                    <h3>Livraria Entrelinhas</h3>
+                    <ul>
+                        <li><a href="/sobre">Quem Somos</a></li>
+                        <li><a href="/trabalhe-conosco">Trabalhe Conosco</a></li>
+                        <li><a href="/politica-privacidade">Política de Privacidade</a></li>
+                        <li><a href="/termos-uso">Termos de Uso</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Atendimento</h3>
+                    <ul>
+                        <li><a href="/contato">Fale Conosco</a></li>
+                        <li><a href="/ajuda">Central de Ajuda</a></li>
+                        <li><a href="/trocas-devolucoes">Trocas e Devoluções</a></li>
+                        <li><a href="/faq">FAQ (Perguntas Frequentes)</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Minha Conta</h3>
+                    <ul>
+                        <li><a href="/login">Login / Cadastro</a></li>
+                        <li><a href="/pedidos">Meus Pedidos</a></li>
+                        <li><a href="/carrinho">Carrinho</a></li>
+                        <li><a href="/enderecos">Meus Endereços</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column social-column">
+                    <h3>Siga-nos</h3>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                    
+                    <h3 class="mt-20">Pagamento Seguro</h3>
+                    <div class="payment-icons">
+                        <i class="fab fa-cc-visa"></i>
+                        <i class="fab fa-cc-mastercard"></i>
+                        <i class="fab fa-cc-paypal"></i>
+                        </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Livraria Entrelinhas. Todos os direitos reservados.</p>
+            </div>
     </footer>
 </body>
 </html>

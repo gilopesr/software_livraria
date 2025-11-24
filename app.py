@@ -29,6 +29,7 @@ if __name__ == "__main__":
             from cliente import clienteModel
             from livro import livroModel
             from autor import autorModel
+            from compras import comprasModel
             print("Importação de modelos tentada com sucesso.")
             
         except ImportError as e:
