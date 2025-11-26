@@ -1,13 +1,30 @@
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask import Blueprint, render_template, request, redirect, url_for, flash
+from flask import Blueprint, render_template, request, redirect, url_for, flash,session
 from .clienteModel import Cliente
 from config import db
 from sqlalchemy.exc import IntegrityError
+import os
 
 cliente_bp = Blueprint("cliente_bp", __name__)
 
-@cliente_bp.route('/login')
+hash_admin='pbkdf2:sha256:6000000$pZdtIpYfkJxKyAeX$8898d92e3c84dbce3fb4f1def449f0c4dd0d088f76033d3dc8efa2c897b1f8d4'
+admin_passw = os.environ.get('admin_passw',hash_admin)
+
+@cliente_bp.route('/login',methods=['GET','POST'])
 def login():
+    if request.method == 'POST':
+        username = request.form.get('username')
+        senha = request.form.get('password')
+        if username == 'admin' and check_password_hash(admin_passw, senha):
+            session['logged_in'] = True
+            session['username'] = username
+            session['is_admin'] = True
+
+            flash('Login de administrador realizado com sucesso!!✅')
+            return redirect(url_for('home'))
+        else:
+            flash("❌Usuário ou senha inválidos!!❌")
+            return render_template('login.html')
     return render_template('login.html')
 
 @cliente_bp.route("/cadastroClientes")
@@ -94,6 +111,9 @@ from flask import session
 
 @cliente_bp.route("/logout")
 def logout():
+    session.pop('logged_in', None)
+    session.pop('username', None)
+    session.pop('is_admin', None)
     session.clear()
     return render_template("logout.html", mensagem="Você saiu da conta! Obrigado por visitar nossa livraria :)")
 

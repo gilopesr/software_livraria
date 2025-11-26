@@ -137,34 +137,13 @@ function coletarDadosDoFormulario(form) {
     const data = {};
     const formData = new FormData(form);
 
-<<<<<<< HEAD
-function addToCart(itemData) {
-    const cart = getCart();
-
-    const existingItem = cart.find(item => item.id === itemData.id);
-
-    if (existingItem) {
-        existingItem.quantity += 1;
-    } else {
-        cart.push({
-            id: itemData.id,
-            title: itemData.titulo,
-            price: parseFloat(itemData.preco), 
-            quantity: 1,
-            url_img: itemData.url_img
-        });
-=======
     for (let [key, value] of formData.entries()) {
         data[key] = value;
->>>>>>> main
     }
 
     return data;
 }
 
-<<<<<<< HEAD
-/* */function updateCartDisplay(cart) {
-=======
 async function processarPagamento(enderecoData, metodoPagamento) {
     const cart = getCart();
     if (cart.length === 0) {
@@ -244,7 +223,6 @@ function initSearch() {
 
 
 function updateCartDisplay(cart) {
->>>>>>> main
     const cartCountElement = document.querySelector('#cart-icon .count');
     const cartItemsList = document.getElementById('cart-items-list');
     const cartTotalValue = document.getElementById('cart-total-value');
@@ -261,31 +239,6 @@ function updateCartDisplay(cart) {
         
         if (cart.length === 0) {
             cartItemsList.innerHTML = '<p class="empty-message">Sua sacola está vazia.</p>';
-<<<<<<< HEAD
-        }else  {
-
-    cart.forEach(item => {
-        const subtotal = item.price * item.quantity;
-        total += subtotal;
-
-        const precoUnitarioFormatado = item.price.toFixed(2).replace('.', ',');
-        
-        const itemElement = document.createElement('div');
-        itemElement.classList.add('cart-item');
-
-        itemElement.innerHTML = `
-            <p class="item-details">${item.title} (${item.quantity}x)</p>
-            <span class="item-price-unitario">R$ ${precoUnitarioFormatado}</span> 
-            <button class="remove-item-btn" data-item-id="${item.id}">
-                <i class="fa fa-trash"></i>
-            </button>
-        `;
-        const removeButton = itemElement.querySelector('.remove-item-btn');
-        if (removeButton) {
-            removeButton.addEventListener('click', (e) => {
-                e.stopPropagation(); 
-                removeItemFromCart(item.id);
-=======
         } else {
             cart.forEach(item => {
                 const itemTotal = item.price * item.quantity;
@@ -312,7 +265,6 @@ function updateCartDisplay(cart) {
                     });
                 }
                 cartItemsList.appendChild(itemElement);
->>>>>>> main
             });
         }
     }
@@ -657,84 +609,6 @@ function initCarousel() {
 
 // --- PONTO DE ENTRADA CENTRALIZADO ---
 
-<<<<<<< HEAD
-function shoppingCart(){
-    const cart = JSON.parse(localStorage.getItem("shoppingCart")) || [];
-    const tableBody = document.getElementById("cart-table-body");
-    const totalDisplay = document.getElementById("final-total");
-    const subtotal = document.getElementById("subtotal");
-    const delivery = document.getElementById("delivery");
-    const total = document.getElementById("total");
-
-    tableBody.innerHTML = '';
-    let totalFinal = 0;
-    const taxa = 9.67;
-    let subtotalProduct = 0;
-
-    if(cart.length ===0){
-        tableBody.innerHTML = '<tr><td colspan="4" style="text-align: center;">Não há livro cadastrado ainda!!</tr>';
-        if(totalDisplay) totalDisplay.textContent = 'R$ 0,00';
-        if(subtotal) subtotal.textContent = 'R$ 0,00';
-        if(delivery) delivery.textContent = `R$ ${taxa.toFixed(2).replace(".",",")}`;
-        if(total) total.textContent = 'R$ 0,00';
-        return 
-    }
-
-    cart.forEach(item => {
-        const itemTotal = item.price * item.quantity;
-        subtotalProduct += itemTotal
-
-        const priceFormat = item.price ? item.price.toFixed(2).replace('.',',') :'0,00';
-        const itemTotalFormat = itemTotal.toFixed(2).replace('.',',');
-
-        const row = document.createElement('tr');
-        row.innerHTML = `
-        <td><img src=${item.url_img} alt="imagem do livro" style="height:150px; width:150px;"></td>
-        <td>${item.title}</td>
-        <td>R$: ${priceFormat}</td>
-        <td>${item.quantity || 1}</td>
-        <td>${itemTotalFormat}</td>
-        `;
-        
-
-        tableBody.appendChild(row);
-    })
-    const totalOfBuy = taxa + subtotalProduct
-
-
-    if(totalDisplay){
-        totalDisplay.textContent = `R$ ${totalFinal.toFixed(2).replace('.',',')}`;
-    }
-    if(subtotal){
-        const subtotalFormat = subtotalProduct.toFixed(2).replace(".",",")
-        subtotal.textContent = `R$ ${subtotalFormat}`
-    }
-    if(delivery){
-        const deliveryFormat = taxa.toFixed(2).replace(".",",")
-        delivery.textContent = `R$ ${deliveryFormat}`
-    }
-     if(total){
-        const totalFormat = totalOfBuy.toFixed(2).replace(".",",")
-        total.textContent = `R$ ${totalFormat}`
-        
-    }
-
-}
-
-document.addEventListener('DOMContentLoaded',shoppingCart);
-
-
-var btn = document.querySelector("button.checkout-btn")
-btn.addEventListener('click', function(){
-    location.href = '/compras'
-})
-
-/*var btnCloseOrder = document.getElementById("close-order");
-btnCloseOrder.addEventListener('click',function(){
-    window.alert('Compra finalizada com sucesso✅. Entregue em até 7 dias!🚚')
-    location.href = '/'
-})*/
-=======
 document.addEventListener('DOMContentLoaded', () => {
     initSearch();
     initCart();
@@ -749,4 +623,3 @@ document.addEventListener('DOMContentLoaded', () => {
         initOrderPage();
     }
 });
->>>>>>> main
