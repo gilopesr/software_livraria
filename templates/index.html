@@ -31,9 +31,9 @@
         <div class="login">
             <i class="fa fa-user"></i>
             {% if session.get("username") %}
-                <span>Bem-vindo, {{ session.username }}! <a href="{{ url_for('auth_bp.logout') }}"><strong>Sair</strong></a></span>
+                <span>Bem-vindo, {{ session.username }}! <a href="{{ url_for('auth_bp.logout') }}" id="logout-button"><strong>Sair</strong></a></span>
             {% elif session.get('is_admin') %}
-             <span>Bem-vindo, {{ session.get(username,'admin') }}! </span><a href="{{ url_for('auth_bp.logout') }}"><strong>Sair</strong></a>
+             <span>Bem-vindo, {{ session.get(username,'admin') }}! </span><a href="{{ url_for('auth_bp.logout') }}" id="logout-button"><strong>Sair</strong></a>
             {% else %}
                 <span>Seja bem-vindo! <a style="text-decoration: none;" href="{{ url_for('auth_bp.login') }}"><strong>Faça seu login</strong></a></span>
             {% endif %}
@@ -184,7 +184,7 @@
                     <ul>
                         <li><a href="/login">Login / Cadastro</a></li>
                         <li><a href="/pedidos">Meus Pedidos</a></li>
-                        <li><a href="/carrinho">Carrinho</a></li>
+                        <li><a href="/compras">Carrinho</a></li>
                         <li><a href="/enderecos">Meus Endereços</a></li>
                     </ul>
                 </div>

@@ -28,9 +28,9 @@
         <div class="login">
             <i class="fa fa-user"></i>
             {% if session.get('username') %}
-                <span>Bem-vindo, {{ session.username }}! <a href="{{ url_for('auth_bp.logout') }}"><strong>Sair</strong></a></span>
+                <span>Bem-vindo, {{ session.username }}! <a href="{{ url_for('auth_bp.logout') }}" id="logout-button"><strong>Sair</strong></a></span>
             {% elif session.get('is_admin') %}
-                <span>Bem-vindo, {{ session.get('username','admin') }}! <a href="{{ url_for('auth_bp.logout') }}"><strong>Sair</strong></a></span>
+                <span>Bem-vindo, {{ session.get('username','admin') }}! <a href="{{ url_for('auth_bp.logout') }}" id="logout-button"><strong>Sair</strong></a></span>
             {% else %}
                 <span>Seja bem-vindo! <a style="text-decoration: none;" href="{{ url_for('auth_bp.login') }}"><strong>Faça seu login</strong></a></span>
             {% endif %}
@@ -85,7 +85,9 @@
                 
                 <li><a href="/livros" class="nav-link">Livros</a></li>
                 <li><a href="/autor" class="nav-link">Autores</a></li>
-                <a href="/cadastrarLivro" class="add-livro">Cadastrar Novo Livro</a>
+                {% if session.get('is_admin') %}
+                    <a href="/cadastrarLivro" class="add-livro">Cadastrar Novo Livro</a>
+                {% endif %}
             </ul>
         </div>
     </nav>
@@ -109,18 +111,17 @@
            
                 {% if session.get('is_admin') %}
                 <a href="{{ url_for('livro.gerenciarLivro', livro_id=livro.id) }}" id="editar" class="btn">Editar</a>
-                {% elif session.get('username') %}
+                {% else%}
                 <button id="compra" 
                     class="add-to-cart-btn" 
                     data-id="{{ livro.isbn }}" 
                     data-titulo="{{ livro.titulo }}" 
                     data-preco="{{ livro.preco }}"
                     data-url_img="{{livro.url_img}}">
+                    <i class="fa fa-shopping-bag"></i>
                     Adicionar ao carrinho
                 </button>
                 {% endif %}
-            
-            
         </div>
         {% endfor %}
         
@@ -153,7 +154,7 @@
                     <ul>
                         <li><a href="/login">Login / Cadastro</a></li>
                         <li><a href="/pedidos">Meus Pedidos</a></li>
-                        <li><a href="/carrinho">Carrinho</a></li>
+                        <li><a href="/compras">Carrinho</a></li>
                         <li><a href="/enderecos">Meus Endereços</a></li>
                     </ul>
                 </div>

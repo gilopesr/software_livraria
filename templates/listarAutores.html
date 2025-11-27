@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-
     <!-- HEADER / TOP BAR -->
     <header class="top-bar">
         <div class="header__logo">
@@ -28,9 +27,9 @@
         <div class="login">
             <i class="fa fa-user"></i>
             {% if session.get('username') %}
-                <span>Bem-vindo, {{ session.username }}! <a href="{{ url_for('auth_bp.logout') }}"><strong>Sair</strong></a></span>
+                <span>Bem-vindo, {{ session.username }}! <a href="{{ url_for('auth_bp.logout') }}" id="logout-button"><strong>Sair</strong></a></span>
             {% elif session.get('is_admin') %}
-             <span>Bem-vindo, {{ session.get("username",'admin') }}! <a href="{{ url_for('auth_bp.logout') }}"><strong>Sair</strong></a></span>
+             <span>Bem-vindo, {{ session.get("username",'admin') }}! <a href="{{ url_for('auth_bp.logout') }}" id="logout-button"><strong>Sair</strong></a></span>
             {% else %}
                 <span>Seja bem-vindo! <a style="text-decoration: none;" href="{{ url_for('auth_bp.login') }}"><strong>Faça seu login</strong></a></span>
             {% endif %}
@@ -85,7 +84,9 @@
 
                 <li><a href="/livros" class="nav-link">Livros</a></li>
                 <li><a href="/autor" class="nav-link">Autores</a></li>
-                <a href="/cadastrarAutor" class="add-livro">Cadastrar Novo Autor</a>
+                {% if session.get('is_admin') %}
+                    <a href="/cadastrarAutor" class="add-livro">Cadastrar Novo Autor</a>
+                {% endif %}
             </ul>
         </div>
     </nav>
@@ -97,15 +98,16 @@
         <div class="card">
             <div class="card-header">
                 <h2>{{ autor.nome }}</h2>
+                
                 {% if session.get('is_admin') %}
                 <a href="{{ url_for('autor.gerenciarAutor', autor_id=autor.id) }}" class="edit-btn">
                     <i class="fa fa-pencil"></i>
                 </a>
                 {% elif session.get("username") %}
                 <i class="fa-solid fa-book"></i>
-            </div>
-            {% endif %}
-            <p><strong>Data de Nascimento:</strong> {{ autor.dataNasc }}</p>
+                {% endif %} 
+                
+            </div> <p><strong>Data de Nascimento:</strong> {{ autor.dataNasc }}</p>
             
             {% if autor.livros %}
             <p><strong>Livros:</strong></p>
@@ -120,6 +122,7 @@
         </div>
         {% endfor %}
     </div>
+
     <footer class="main-footer">
             <div class="container footer-content">
                 
@@ -148,7 +151,7 @@
                     <ul>
                         <li><a href="/login">Login / Cadastro</a></li>
                         <li><a href="/pedidos">Meus Pedidos</a></li>
-                        <li><a href="/carrinho">Carrinho</a></li>
+                        <li><a href="/compras">Carrinho</a></li>
                         <li><a href="/enderecos">Meus Endereços</a></li>
                     </ul>
                 </div>

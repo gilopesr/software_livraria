@@ -607,6 +607,12 @@ function initCarousel() {
     }
 }
 
+// LOGOUT
+function clearCartOnLogout() {
+    localStorage.removeItem('shoppingCart');
+    updateCartDisplay([]); 
+}
+
 // --- PONTO DE ENTRADA CENTRALIZADO ---
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -618,8 +624,19 @@ document.addEventListener('DOMContentLoaded', () => {
         initCarousel();
     }
     
+    const logoutLink = document.getElementById('logout-button');
+
+    if (logoutLink) {
+        logoutLink.addEventListener('click', function(event) {
+            event.preventDefault(); 
+            clearCartOnLogout();
+            window.location.href = this.href; 
+        });
+    }
+
     // 2. Página de Compras
     if (window.location.pathname === '/compras') {
         initOrderPage();
     }
 });
+

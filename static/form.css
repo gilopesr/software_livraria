@@ -101,6 +101,10 @@
     flex-grow: 0; 
 }
 
+.add-to-cart-btn i {
+    margin-right: 8px;
+}
+
 /* ------------------------------------- */
 /* --- SEÇÃO 3: ESTILOS DE AUTORES E IMAGENS --- */
 /* ------------------------------------- */
