@@ -1,6 +1,6 @@
 import requests
 from config import db
-from flask import request, jsonify, session, Blueprint, render_template, redirect, url_for
+from flask import request, jsonify, session, Blueprint, render_template, redirect, url_for,flash
 import datetime
 from compras.comprasModel import Pedido, Endereco, ItensPedido
 from livro.livroModel import Livro
@@ -11,6 +11,9 @@ compra_bp = Blueprint('compra', __name__)
 
 @compra_bp.route('/compras')
 def carrinhoCompras():
+    if not session.get('logged_in'):
+        return redirect(url_for('auth_bp.login'))
+
     return render_template('compras.html')
 
 

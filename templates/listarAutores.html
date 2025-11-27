@@ -27,8 +27,10 @@
         <div class="right-menu">
         <div class="login">
             <i class="fa fa-user"></i>
-            {% if session.nome_cliente %}
-                <span>Bem-vindo, {{ session.nome_cliente }}! <a href="{{ url_for('auth_bp.logout') }}"><strong>Sair</strong></a></span>
+            {% if session.get('username') %}
+                <span>Bem-vindo, {{ session.username }}! <a href="{{ url_for('auth_bp.logout') }}"><strong>Sair</strong></a></span>
+            {% elif session.get('is_admin') %}
+             <span>Bem-vindo, {{ session.get("username",'admin') }}! <a href="{{ url_for('auth_bp.logout') }}"><strong>Sair</strong></a></span>
             {% else %}
                 <span>Seja bem-vindo! <a style="text-decoration: none;" href="{{ url_for('auth_bp.login') }}"><strong>Faça seu login</strong></a></span>
             {% endif %}
@@ -95,11 +97,14 @@
         <div class="card">
             <div class="card-header">
                 <h2>{{ autor.nome }}</h2>
-                
+                {% if session.get('is_admin') %}
                 <a href="{{ url_for('autor.gerenciarAutor', autor_id=autor.id) }}" class="edit-btn">
                     <i class="fa fa-pencil"></i>
                 </a>
+                {% elif session.get("username") %}
+                <i class="fa-solid fa-book"></i>
             </div>
+            {% endif %}
             <p><strong>Data de Nascimento:</strong> {{ autor.dataNasc }}</p>
             
             {% if autor.livros %}

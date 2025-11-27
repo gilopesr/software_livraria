@@ -27,10 +27,10 @@
         <div class="right-menu">
         <div class="login">
             <i class="fa fa-user"></i>
-            {% if session.nome_cliente %}
-                <span>Bem-vindo, {{ session.nome_cliente }}! <a href="{{ url_for('auth_bp.logout') }}"><strong>Sair</strong></a></span>
-            {% elif session.username['is_admin'] %}
+            {% if session.get('username') %}
                 <span>Bem-vindo, {{ session.username }}! <a href="{{ url_for('auth_bp.logout') }}"><strong>Sair</strong></a></span>
+            {% elif session.get('is_admin') %}
+                <span>Bem-vindo, {{ session.get('username','admin') }}! <a href="{{ url_for('auth_bp.logout') }}"><strong>Sair</strong></a></span>
             {% else %}
                 <span>Seja bem-vindo! <a style="text-decoration: none;" href="{{ url_for('auth_bp.login') }}"><strong>Faça seu login</strong></a></span>
             {% endif %}
@@ -106,11 +106,19 @@
             <p><strong>Preço:</strong> R$ {{ livro.preco }}</p>
             <p><strong>ISBN:</strong> {{ livro.isbn}}</p>
          
-            {% for user in users %}
-            {% if username != "admin@livraria.com" %}
-            <a href="{{ url_for('livro.gerenciarLivro', livro_id=livro.id) }}" id="editar" class="btn">Editar</a>
-            {% endif %}
-            {% endfor %}
+           
+                {% if session.get('is_admin') %}
+                <a href="{{ url_for('livro.gerenciarLivro', livro_id=livro.id) }}" id="editar" class="btn">Editar</a>
+                {% elif session.get('username') %}
+                <button id="compra" 
+                    class="add-to-cart-btn" 
+                    data-id="{{ livro.isbn }}" 
+                    data-titulo="{{ livro.titulo }}" 
+                    data-preco="{{ livro.preco }}"
+                    data-url_img="{{livro.url_img}}">
+                    Adicionar ao carrinho
+                </button>
+                {% endif %}
             
             
         </div>

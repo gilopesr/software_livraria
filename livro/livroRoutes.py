@@ -2,7 +2,9 @@ from flask import Blueprint, jsonify, render_template, request, redirect, url_fo
 from config import db
 from livro.livroModel import Livro, LivroNaoEncontrado
 from autor.autorModel import Autor
+from cliente.clienteModel import Cliente
 from datetime import datetime
+from flask_sqlalchemy import session
 
 # Criando o Blueprint
 livro_bp = Blueprint('livro', __name__)
@@ -21,7 +23,8 @@ def cadastroClientes():
 @livro_bp.route("/livros", methods=['GET'])
 def listarLivros():
     livros = Livro.query.all()
-    return render_template("listaLivros.html", livros=livros)
+    username = Cliente.query.filter_by(username='admin')
+    return render_template("listaLivros.html", livros=livros,username=username)
 
 @livro_bp.route('/compras')
 def carrinhoCompras():
