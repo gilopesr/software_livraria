@@ -12,7 +12,7 @@ class Livro(db.Model):
     genero = db.Column(db.String(50), nullable=False)
     data_lancamento = db.Column(db.Date, nullable=False)
     preco = db.Column(db.Float, nullable=False)
-    isbn = db.Column(db.Integer,nullable=False)
+    isbn = db.Column(db.String(13),nullable=False)
     destaque = db.Column(db.Boolean, default=False)
     estoque = db.Column(db.Integer, nullable=False, default=0)
 

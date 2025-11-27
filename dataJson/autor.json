@@ -50,5 +50,33 @@
     {
         "nome": "Virginia Woolf",
         "dataNasc": "1882-01-25"
+    },
+    {
+        "nome": "Machado de Assis",
+        "dataNasc": "1839-06-21"
+    },
+    {
+        "nome": "Suzanne Collins",
+        "dataNasc": "1962-08-10"
+    },
+    {
+        "nome": "Yuval Noah Harari",
+        "dataNasc": "1976-02-24"
+    },
+    {
+        "nome": "Robert C. Martin",
+        "dataNasc": "1952-12-05"
+    },
+    {
+        "nome": "Isaac Asimov",
+        "dataNasc": "1920-01-02"
+    },
+    {
+        "nome": "Jane Austen",
+        "dataNasc": "1775-12-16"
+    },
+    {
+        "nome": "Gerald Brittle",
+        "dataNasc":"1947-01-01"
     }
 ]

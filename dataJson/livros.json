@@ -6,7 +6,7 @@
         "genero": "Romance",
         "data_lancamento": "1971-01-01",
         "preco": "44,90",
-        "isbn": "978853",
+        "isbn": "9788531142216",
         "estoque": "10",
         "url_img": "https://m.media-amazon.com/images/I/711lRhyTjIL.jpg"
     },
@@ -17,7 +17,7 @@
         "genero": "Fantasia",
         "data_lancamento": "1865-01-01",
         "preco": "59,90",
-        "isbn": "978972",
+        "isbn": "9789722445689",
         "estoque": "10",
         "url_img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQn-p3SRKbFxEu2keOpTKlUJUDsjlb1Atsv2A&s"
     },
@@ -28,7 +28,7 @@
         "genero": "Geek",
         "data_lancamento": "1985-12-05",
         "preco": "38,90",
-        "isbn": "40887",
+        "isbn": "4088744265589",
         "estoque": "10",
         "url_img": "https://m.media-amazon.com/images/I/91KQLMVwqBL._UF1000,1000_QL80_.jpg"
     },
@@ -39,7 +39,7 @@
         "genero": "Geek",
         "data_lancamento": "1992-07-06",
         "preco": "35,90",
-        "isbn": "9784063",
+        "isbn": "9784063332147",
         "estoque": "10",
         "url_img": "https://m.media-amazon.com/images/I/71cb3CRmnAL._UF1000,1000_QL80_.jpg"
     },
@@ -50,9 +50,49 @@
         "genero": "Geek",
         "data_lancamento": "1999-03-04",
         "preco": "36,90",
-        "isbn": "408872",
+        "isbn": "4088722241883",
         "estoque": "10",
         "url_img": "https://m.media-amazon.com/images/I/81YJjycp4FL._UF1000,1000_QL80_.jpg"
+    },
+    {
+        "titulo": "Ed & Lorraine Warren - Demonologistas",
+        "autor_id": 20,
+        "formato": "Capa Dura",
+        "genero": "Terror/Paranormal",
+        "data_lancamento": "2016-10-06",
+        "preco": "39,53",
+        "isbn": "8917174203918",
+        "url_img": "https://static.skeelo.com/remote/320/480/100/https://skoob.s3.amazonaws.com/livros/369593/ED_E_LORRAINE_WARREN_DEMONOLO_1473797531369593SK1473797531B.jpg"
+    },
+    {
+        "titulo": "ED & LORRAINE WARREN: LUGAR SOMBRIO",
+        "autor_id": 20,
+        "formato": "Capa Dura",
+        "genero": "Terror/Paranormal",
+        "data_lancamento": "2017-09-14",
+        "preco": "43,59",
+        "isbn": "0702864564161",
+        "url_img": "https://static.skeelo.com/remote/320/480/100/https://skoob.s3.amazonaws.com/livros/686520/ED_E_LORRAINE_WARREN_1724195131686520SK-V11724195133B.jpg"
+    },
+    {
+        "titulo": "ED & LORRAINE WARREN: VIDAS ETERNAS",
+        "autor_id": 20,
+        "formato": "Capa Dura",
+        "genero": "Terror/Paranormal",
+        "data_lancamento": "2019-06-08",
+        "preco": "33,64",
+        "isbn": "4378801510961",
+        "url_img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYbiybpI6jJsDY4WWMAuwiSSdZB3UMQPzcLw&s"
+    },
+    {
+        "titulo": "ED & LORRAINE WARREN: LUZ NAS TREVAS",
+        "autor_id": 20,
+        "formato": "Capa Dura",
+        "genero": "Terror/Paranormal",
+        "data_lancamento": "2023-04-04",
+        "preco": "56,33",
+        "isbn": "4746025989042",
+        "url_img": "https://m.media-amazon.com/images/I/A1J45Qmb3eL._SY466_.jpg"
     },
     {
         "titulo": "O Hobbit",
@@ -61,7 +101,7 @@
         "genero": "Fantasia",
         "data_lancamento": "1937-09-21",
         "preco": "79,90",
-        "isbn": "978859",
+        "isbn": "9788593395677",
         "estoque": "10",
         "url_img": "https://m.media-amazon.com/images/I/91M9xPIf10L.jpg"
     },
@@ -72,7 +112,7 @@
         "genero": "Fantasia",
         "data_lancamento": "1997-06-26",
         "preco": "69,90",
-        "isbn": "9788532",
+        "isbn": "9788532244578",
         "estoque": "10",
         "url_img": "https://m.media-amazon.com/images/I/81ibfYk4qmL._UF1000,1000_QL80_.jpg"
     },
@@ -83,7 +123,7 @@
         "genero": "Fantasia",
         "data_lancamento": "2001-06-19",
         "preco": "20,90",
-        "isbn": "9788551",
+        "isbn": "9788551123546",
         "estoque": "10",
         "url_img": "https://m.media-amazon.com/images/I/61R+m9G+l7L._UF1000,1000_QL80_.jpg"
     },
@@ -94,7 +134,7 @@
         "genero": "Fantasia",
         "data_lancamento": "2007-03-27",
         "preco": "46,45",
-        "isbn": "978850",
+        "isbn": "9788500310570",
         "estoque": "10",
         "url_img": "https://m.media-amazon.com/images/I/91MWcXJPigL.jpg"
     },
@@ -105,7 +145,7 @@
         "genero": "Romance",
         "data_lancamento": "1859-01-01",
         "preco": "24,90",
-        "isbn": "978854",
+        "isbn": "9788540012356",
         "estoque": "10",
         "url_img": "https://m.media-amazon.com/images/I/61fD+SMxHeL._UF1000,1000_QL80_.jpg"
     },
@@ -116,8 +156,107 @@
         "genero": "Drama",
         "data_lancamento": "1925-05-14",
         "preco": "39,90",
-        "isbn": "9788520",
+        "isbn": "9788520012358",
         "estoque": "10",
         "url_img": "https://m.media-amazon.com/images/I/91rOgmnZpJS.jpg"
+    },
+    {
+        "titulo": "One Piece Vol. 100: Haoshoku",
+        "autor_id": 2,
+        "formato": "Capa Dura",
+        "genero": "Mangá",
+        "data_lancamento": "2023-01-01",
+        "preco": "59,90",
+        "isbn": "9786559604110",
+        "estoque": "80",
+        "url_img": "https://m.media-amazon.com/images/I/61k8-2N+7GL.jpg"
+    },
+    {
+        "titulo": "Orgulho e Preconceito",
+        "autor_id": 19,
+        "formato": "Ebook",
+        "genero": "Romance",
+        "data_lancamento": "1813-01-28",
+        "preco": "9,99",
+        "isbn": "9780141439518",
+        "estoque": "2",
+        "url_img": "https://m.media-amazon.com/images/I/71Y873n4FzL.jpg"
+    },
+    {
+        "titulo": "Fundação",
+        "autor_id": 18,
+        "formato": "Capa Comum",
+        "genero": "Ficção Científica",
+        "data_lancamento": "1951-05-01",
+        "preco": "55,00",
+        "isbn": "9788595780018",
+        "estoque": "45",
+        "url_img": "https://m.media-amazon.com/images/I/81eW4hY0tGL.jpg"
+    },
+    {
+        "titulo": "Código Limpo: Habilidades Práticas do Agile Software",
+        "autor_id": 17,
+        "formato": "Capa Comum",
+        "genero": "Geek",
+        "data_lancamento": "2008-08-01",
+        "preco": "135,90",
+        "isbn": "9788573516616",
+        "estoque": "25",
+        "url_img": "https://m.media-amazon.com/images/I/71c-nE7fNnL.jpg"
+    },
+    {
+        "titulo": "Dom Casmurro",
+        "autor_id": 14,
+        "formato": "Ebook",
+        "genero": "Romance",
+        "data_lancamento": "1899-01-01",
+        "preco": "0,00",
+        "isbn": "9788572328105",
+        "estoque": "0",
+        "url_img": "https://m.media-amazon.com/images/I/81xU-Yg+hDL.jpg"
+    },
+    {
+        "titulo": "Jogos Vorazes (Vol. 1)",
+        "autor_id": 15,
+        "formato": "Capa Dura",
+        "genero": "Fantasia",
+        "data_lancamento": "2008-09-14",
+        "preco": "49,90",
+        "isbn": "9788580572710",
+        "estoque": "60",
+        "url_img": "https://m.media-amazon.com/images/I/81e+gT0H23L.jpg"
+    },
+    {
+        "titulo": "Sapiens: Uma Breve História da Humanidade",
+        "autor_id": 16,
+        "formato": "Audiobook",
+        "genero": "Biografia",
+        "data_lancamento": "2014-01-01",
+        "preco": "75,00",
+        "isbn": "9788535925619",
+        "estoque": "0",
+        "url_img": "https://m.media-amazon.com/images/I/814x-5f82kL.jpg"
+    },
+    {
+        "titulo": "One Piece Vol. 01: Romance Dawn - A Alvorada da Aventura",
+        "autor_id": 2,
+        "formato": "Capa Comum",
+        "genero": "Mangá",
+        "data_lancamento": "2012-02-01",
+        "preco": "44,90",
+        "isbn": "9788573516975",
+        "estoque": "100",
+        "url_img": "https://m.media-amazon.com/images/I/71u9Q5h75GL.jpg"
+    },
+    {
+        "titulo": "One Piece Vol. 02: Contra!! O Bando do Buggy",
+        "autor_id": 2,
+        "formato": "Capa Comum",
+        "genero": "Mangá",
+        "data_lancamento": "2012-03-01",
+        "preco": "44,90",
+        "isbn": "9788573518849",
+        "estoque": "95",
+        "url_img": "https://m.media-amazon.com/images/I/71D0Y7E+wQL.jpg"
     }
 ]

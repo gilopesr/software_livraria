@@ -1,3 +1,4 @@
+import random
 from flask import Blueprint, jsonify, render_template, request, redirect, url_for
 from config import db
 from livro.livroModel import Livro, LivroNaoEncontrado
@@ -62,11 +63,13 @@ def buscarLivro_isbn(isbn):
     else:
         return f'Erro: O livro com ISBN {isbn} não foi encontrado!', 404
 
+
+
 @livro_bp.route("/cadastrarLivro", defaults={'livro_id': None}, methods=["GET", "POST"])
 @livro_bp.route("/cadastrarLivro/<int:livro_id>", methods=["GET", "POST"])
 def gerenciarLivro(livro_id):
     lista_formato = ["Capa Comum", "Capa Dura", "Ebook", "Audiobook"]
-    lista_genero = ["Romance", "Ficção Científica", "Fantasia", "Biografia", "Geek", "Drama"]
+    lista_genero = ["Romance", "Ficção Científica", "Fantasia", "Biografia", "Geek", "Drama", "Mangá", "Terror/Paranormal"]
 
     livro = None
     if livro_id:
@@ -94,7 +97,10 @@ def gerenciarLivro(livro_id):
         isbn = data.get('isbn')
         url_img = data.get('url_img')
 
-        if not all([titulo, autor_id, formato_selecionado, genero_selecionado, data_lancamento_str, preco_str, isbn, url_img]):
+        if not isbn:
+            isbn = gerar_isbn_ficticio_unico()
+
+        if not all([titulo, autor_id, formato_selecionado, genero_selecionado, data_lancamento_str, preco_str, url_img]):
             return "Erro: todos os campos são obrigatórios", 400
 
         target_livro.titulo = titulo
@@ -128,3 +134,10 @@ def gerenciarLivro(livro_id):
         generos=lista_genero,
         livro=livro
     )
+
+
+def gerar_isbn_ficticio_unico():
+    while True:
+        novo_isbn = ''.join([str(random.randint(0, 9)) for _ in range(13)])
+        if not Livro.query.filter_by(isbn=novo_isbn).first():
+            return novo_isbn
