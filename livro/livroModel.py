@@ -1,12 +1,12 @@
 from config import db
 
 class Livro(db.Model):
-    __tablename__ = "livros"
+    __tablename__ = "livro"
 
     id = db.Column(db.Integer, primary_key = True)
     titulo = db.Column(db.String(100))
     autor_id = db.Column(db.Integer, db.ForeignKey("autores.id"), nullable=False)
-    autor = db.relationship("Autor", back_populates="livros")
+    autor = db.relationship("Autor", back_populates="livro")
     formato = db.Column(db.String(50), nullable=False)
     url_img = db.Column(db.String(500))
     genero = db.Column(db.String(50), nullable=False)

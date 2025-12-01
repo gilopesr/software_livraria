@@ -55,7 +55,7 @@ def buscarLivro_formato(formato):
     else:
         return f'Erro: Nenhum livro no formato {formato} foi encontrado', 404
 
-@livro_bp.route('/livros/<int:isbn>',methods=['GET'])
+@livro_bp.route('/livros/<string:isbn>',methods=['GET'])
 def buscarLivro_isbn(isbn):
     livro = Livro.query.filter_by(isbn=isbn).first()
     if livro:

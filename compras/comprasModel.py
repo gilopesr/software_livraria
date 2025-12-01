@@ -31,13 +31,13 @@ class Endereco(db.Model):
 
 
 class ItensPedido(db.Model):
-    __tablename__ = "itens_pedido"
+    __tablename__ = "itens_pedidos"
 
     id = db.Column(db.Integer, primary_key=True)
     id_pedido = db.Column(db.Integer, db.ForeignKey('pedidos.id_pedido'), nullable=False)
-    id_livro = db.Column(db.Integer, db.ForeignKey('livros.id'), nullable=False)
+    id_livro = db.Column(db.Integer, db.ForeignKey('livro.id'), nullable=False)
     quantidade = db.Column(db.Integer, nullable=False)
     preco_unit = db.Column(db.Float, nullable=False)
 
     pedido = db.relationship("Pedido", backref="itens")
-    livro = db.relationship("Livro", backref="itens_pedido")
+    livro = db.relationship("Livro", backref="itens_pedidos",passive_deletes=True)
